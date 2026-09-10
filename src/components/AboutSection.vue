@@ -1,13 +1,13 @@
 <template>
   <section id="about" class="about-section py-12">
-    <v-container>
+    <v-container fluid>
       <!-- About and Vision Section -->
-      <v-row align="center" class="mb-12">
+      <v-row align="stretch" class="mb-12 about-row">
         <!-- Left - Dark Box with About -->
         <v-col
-          class="mb-6 mb-md-0"
+          class="mb-6 mb-md-0 about-col"
           cols="12"
-          md="6"
+          md="4"
         >
           <div class="about-box">
             <h2 class="about-title mb-4">SOBRE A AQUAMBIENTE</h2>
@@ -29,8 +29,17 @@
           </div>
         </v-col>
 
+        <!-- Center - Image -->
+        <v-col cols="12" md="4" class="mb-6 mb-md-0 about-col">
+          <div class="about-visual">
+            <div class="about-visual__overlay">
+              <span class="about-visual__label">Reciclagem em casa</span>
+            </div>
+          </div>
+        </v-col>
+
         <!-- Right - Green Box with Vision -->
-        <v-col cols="12" md="6">
+        <v-col cols="12" md="4" class="about-col">
           <div class="vision-box">
             <div class="vision-quote">❝</div>
 
@@ -48,56 +57,64 @@
         <v-col cols="6" sm="3">
           <div class="stat-card">
             <v-icon
-              class="mb-2"
+              class="stat-icon"
               color="green-accent-4"
               size="48"
             >
               mdi-leaf
             </v-icon>
-            <div class="stat-number">6+</div>
-            <div class="stat-label">EXPERIÊNCIA</div>
+            <div class="stat-content">
+              <div class="stat-number">6+</div>
+              <div class="stat-label">EXPERIÊNCIA</div>
+            </div>
           </div>
         </v-col>
 
         <v-col cols="6" sm="3">
           <div class="stat-card">
             <v-icon
-              class="mb-2"
+              class="stat-icon"
               color="green-accent-4"
               size="48"
             >
               mdi-file-check
             </v-icon>
-            <div class="stat-number">200+</div>
-            <div class="stat-label">PROJECTOS REALIZADOS</div>
+            <div class="stat-content">
+              <div class="stat-number">200+</div>
+              <div class="stat-label">PROJECTOS REALIZADOS</div>
+            </div>
           </div>
         </v-col>
 
         <v-col cols="6" sm="3">
           <div class="stat-card">
             <v-icon
-              class="mb-2"
+              class="stat-icon"
               color="green-accent-4"
               size="48"
             >
               mdi-account-multiple
             </v-icon>
-            <div class="stat-number">100+</div>
-            <div class="stat-label">CLIENTES SATISFEITOS</div>
+            <div class="stat-content">
+              <div class="stat-number">100+</div>
+              <div class="stat-label">CLIENTES SATISFEITOS</div>
+            </div>
           </div>
         </v-col>
 
         <v-col cols="6" sm="3">
           <div class="stat-card">
             <v-icon
-              class="mb-2"
+              class="stat-icon"
               color="green-accent-4"
               size="48"
             >
               mdi-map-marker
             </v-icon>
-            <div class="stat-number">18</div>
-            <div class="stat-label">PROVÍNCIAS ATENDIDAS</div>
+            <div class="stat-content">
+              <div class="stat-number">18</div>
+              <div class="stat-label">PROVÍNCIAS ATENDIDAS</div>
+            </div>
           </div>
         </v-col>
       </v-row>
@@ -110,11 +127,33 @@
   background: white;
 }
 
+.about-row {
+  margin-left: 0;
+  margin-right: 0;
+  gap: 0;
+  justify-content: center;
+}
+
+.about-col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 !important;
+  margin: 0;
+}
+
 .about-box {
-  background: linear-gradient(135deg, #0d3b5c 0%, #0f4a6b 100%);
+  background: linear-gradient(135deg, #0f2d3d 0%, #0d4a62 60%, #0c6b52 100%);
   color: white;
-  padding: 3rem;
-  border-radius: 12px;
+  padding: 1.5rem 1.25rem;
+  border-radius: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .about-title {
@@ -125,20 +164,54 @@
 
 .about-text {
   color: rgba(255, 255, 255, 0.9);
-  font-size: 0.95rem;
-  line-height: 1.6;
-  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 0.75rem;
+}
+
+.about-visual {
+  position: relative;
+  min-height: 100%;
+  height: 100%;
+  min-height: 190px;
+  width: 100%;
+  border-radius: 0;
+  overflow: hidden;
+  background-image: linear-gradient(135deg, rgba(17, 94, 66, 0.25), rgba(15, 45, 61, 0.6)),
+    url('https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=900&q=80');
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 18px 36px rgba(17, 24, 39, 0.12);
+}
+
+.about-visual__overlay {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 1rem 1.25rem;
+  background: linear-gradient(180deg, transparent, rgba(12, 27, 22, 0.72));
+}
+
+.about-visual__label {
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08rem;
+  text-transform: uppercase;
 }
 
 .vision-box {
-  background: #1a7b3c;
+  background: linear-gradient(135deg, #1a7b3c 0%, #2f9d5c 55%, #78b76c 100%);
   color: white;
-  padding: 3rem;
-  border-radius: 12px;
-  min-height: 280px;
+  padding: 1.5rem 1.25rem;
+  border-radius: 0;
+  min-height: 190px;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .vision-quote {
@@ -163,36 +236,57 @@
 }
 
 .stats-row {
-  margin-top: 3rem;
-  gap: 1rem;
+  margin-top: 0.75rem;
+  gap: 0.5rem;
+  justify-content: center;
 }
 
 .stat-card {
-  text-align: center;
-  padding: 2rem 1rem;
-  background: #f5f5f5;
-  border-radius: 8px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: left;
+  gap: 0.75rem;
+  padding: 0.9rem 0.6rem;
+  background: linear-gradient(180deg, #f7faf7 0%, #edf3ee 100%);
+  border: 1px solid rgba(13, 59, 92, 0.08);
+  border-radius: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.stat-icon {
+  margin-bottom: 0 !important;
+  flex-shrink: 0;
+}
+
+.stat-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
 }
 
 .stat-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+  border-color: rgba(26, 123, 60, 0.28);
 }
 
 .stat-number {
-  font-size: 2.2rem;
+  font-size: 1.8rem;
   font-weight: 700;
   color: #0d3b5c;
-  margin: 0.5rem 0;
+  margin: 0.35rem 0;
 }
 
 .stat-label {
-  color: #666;
-  font-size: 0.8rem;
-  font-weight: 600;
+  color: #4b5563;
+  font-size: 0.72rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.08rem;
 }
 
 @media (max-width: 768px) {
