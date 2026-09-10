@@ -1,0 +1,102 @@
+/**
+ * src/styles/settings.scss
+ *
+ * Configures SASS variables and Vuetify overwrites
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+// https://vuetifyjs.com/features/sass-variables/`
+// @use 'vuetify/settings' with (
+//   $color-pack: false
+// );
+
+/* Global Styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Typography Enhancements */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Manrope', sans-serif;
+  color: #1a1a1a;
+}
+
+/* Link Styles */
+a {
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+/* Button Styles */
+.v-btn {
+  font-family: 'Inter', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease !important;
+}
+
+/* Card Enhancements */
+.v-card {
+  border-radius: 8px;
+}
+
+/* Rounded Container */
+.rounded-lg {
+  border-radius: 12px;
+}
+
+/* Spacing Utilities */
+.gap-2 {
+  gap: 0.5rem;
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+.gap-8 {
+  gap: 2rem;
+}
+
+/* Section Padding */
+.py-16 {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+/* Custom Colors */
+.text-green-accent-4 {
+  color: #66bb6a !important;
+}
+
+.bg-green-lighten-5 {
+  background-color: #e8f5e9 !important;
+}
+
+.border-s-lg {
+  border-left: 4px solid;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #66bb6a;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4caf50;
+}
