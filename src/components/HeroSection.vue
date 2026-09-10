@@ -200,6 +200,7 @@
   z-index: 0;
   margin: 0;
   opacity: 0.85;
+  height: 500px !important;
 }
 
 .hero-background :deep(.v-window__left .v-btn),
@@ -356,21 +357,47 @@ h4.pillar-title {
 }
 
 @media (max-width: 768px) {
+  .hero-background {
+    height: 420px !important;
+  }
+
   .hero-title {
     font-size: 2rem;
   }
 
   .cta-buttons {
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 0.5rem;
   }
 
   .cta-buttons .v-btn {
-    width: 100%;
+    width: auto;
+    flex: 1;
+    min-width: 0;
   }
 
   .pillars-card {
-    max-width: 100%;
-    margin-top: 2rem;
+    display: none;
+  }
+
+  .hero-background :deep(.v-window__left),
+  .hero-background :deep(.v-window__right) {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-background {
+    height: 360px !important;
+  }
+
+  .hero-title {
+    font-size: 1.7rem;
+  }
+
+  .hero-description {
+    font-size: 0.95rem;
   }
 }
 </style>

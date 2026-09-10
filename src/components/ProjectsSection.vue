@@ -190,6 +190,13 @@ const projectSlides = Array.from(
 
 .projects-carousel {
   width: 100%;
+  height: 280px;
+}
+
+.projects-carousel :deep(.v-window__container),
+.projects-carousel :deep(.v-window-item),
+.projects-carousel :deep(.v-carousel-item) {
+  height: auto !important;
 }
 
 .projects-carousel :deep(.v-carousel__controls) {
@@ -348,6 +355,32 @@ const projectSlides = Array.from(
 @media (max-width: 960px) {
   .project-card {
     height: 100%;
+  }
+
+  .projects-carousel {
+    height: auto;
+  }
+
+  .project-carousel-btn {
+    display: none;
+  }
+
+  .projects-grid {
+    padding: 0.75rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .projects-carousel :deep(.v-carousel__controls) {
+    margin-top: 12px;
+  }
+
+  .project-title {
+    font-size: 0.85rem;
+  }
+
+  .project-description {
+    font-size: 0.72rem;
   }
 }
 </style>
