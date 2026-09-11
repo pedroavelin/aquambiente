@@ -148,49 +148,96 @@
         </v-btn>
 
         <!-- Mobile Menu Button -->
-        <v-menu
-          v-model="mobileMenu"
-          location="bottom"
-        >
-          <template #activator="{ props }">
-            <v-btn
-              v-bind="props"
-              class="d-md-none"
-              icon="mdi-menu"
-              variant="text"
-            />
-          </template>
-          <v-list class="mobile-menu-list">
-            <v-list-item
-              title="INÍCIO"
-              to="/"
-            />
-            <v-list-item
-              href="#about"
-              title="EMPRESA"
-            />
-            <v-list-item
-              href="#services"
-              title="SERVIÇOS"
-            />
-            <v-list-item
-              href="#projects"
-              title="PROJECTOS"
-            />
-            <v-list-item
-              href="#academy"
-              title="ACADEMIA"
-            />
-            <v-list-item
-              href="#news"
-              title="NOTÍCIAS"
-            />
-            <v-list-item
-              href="#contact"
-              title="CONTACTOS"
-            />
-          </v-list>
-        </v-menu>
+        <v-btn
+          class="d-md-none"
+          icon="mdi-menu"
+          variant="text"
+          aria-label="Abrir menu"
+          @click="openMobileMenu"
+        />
+
+        <transition name="mobile-offcanvas-transition">
+          <div
+            v-if="mobileMenu"
+            class="mobile-offcanvas-overlay"
+            @click="closeMobileMenu"
+          />
+        </transition>
+
+        <transition name="mobile-offcanvas-transition">
+          <aside
+            v-if="mobileMenu"
+            class="mobile-offcanvas-panel"
+            aria-label="Menu mobile"
+          >
+            <div class="drawer-header">
+              <router-link to="/" class="drawer-brand" @click="closeMobileMenu">
+                <img
+                  alt="Aquambiente - Consultoria Ambiental"
+                  class="drawer-logo"
+                  src="@/assets/logo/logo2.png"
+                >
+              </router-link>
+
+              <v-btn
+                aria-label="Fechar menu"
+                icon="mdi-close"
+                variant="text"
+                @click="closeMobileMenu"
+              />
+            </div>
+
+            <v-divider />
+
+            <v-list nav density="comfortable" class="mobile-nav-list">
+              <v-list-item
+                v-for="item in mobileNavItems"
+                :key="item.title"
+                :title="item.title"
+                :to="item.to"
+                :href="item.href"
+                :prepend-icon="item.icon"
+                @click="closeMobileMenu"
+              />
+            </v-list>
+
+            <div class="drawer-footer">
+              <v-btn
+                class="drawer-cta"
+                color="green-accent-4"
+                rounded
+                block
+                size="large"
+                href="#contact"
+                @click="closeMobileMenu"
+              >
+                SOLICITAR PROPOSTA
+              </v-btn>
+
+              <div class="drawer-info">
+                <p class="drawer-info-title">
+                  AQUAMBIENTE
+                </p>
+
+                <a
+                  class="drawer-info-link"
+                  href="tel:+244925668789"
+                >
+                  <v-icon icon="mdi-phone" size="x-small" />
+                  <span>+244 925 668 789</span>
+                </a>
+
+                <a
+                  class="drawer-info-link"
+                  href="mailto:geral@aquambiente.ao"
+                >
+                  <v-icon icon="mdi-email" size="x-small" />
+                  <span>geral@aquambiente.ao</span>
+                </a>
+              </div>
+            </div>
+          </aside>
+        </transition>
       </div>
     </v-container>
   </v-app-bar>
@@ -200,6 +247,24 @@
   import { ref } from 'vue'
 
   const mobileMenu = ref(false)
+
+  const mobileNavItems = [
+    { title: 'INÍCIO', to: '/', icon: 'mdi-home' },
+    { title: 'EMPRESA', href: '#about', icon: 'mdi-domain' },
+    { title: 'SERVIÇOS', href: '#services', icon: 'mdi-tools' },
+    { title: 'PROJECTOS', href: '#projects', icon: 'mdi-folder-multiple-outline' },
+    { title: 'ACADEMIA', href: '#academy', icon: 'mdi-school-outline' },
+    { title: 'NOTÍCIAS', href: '#news', icon: 'mdi-newspaper-variant-outline' },
+    { title: 'CONTACTOS', href: '#contact', icon: 'mdi-phone' },
+  ]
+
+  const openMobileMenu = () => {
+    mobileMenu.value = true
+  }
+
+  const closeMobileMenu = () => {
+    mobileMenu.value = false
+  }
 </script>
 
 <style scoped>
@@ -362,8 +427,164 @@
   transform: translateY(-2px);
 }
 
-.mobile-menu-list {
-  min-width: 200px;
+.mobile-offcanvas-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(2px);
+  z-index: 1300;
+}
+
+.mobile-offcanvas-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: min(280px, 82vw);
+  height: 100vh;
+  background: #ffffff;
+  border-left: 1px solid rgba(0, 61, 122, 0.12);
+  box-shadow: -16px 0 28px rgba(0, 61, 122, 0.14);
+  z-index: 1400;
+  overflow-y: auto;
+}
+
+.mobile-offcanvas-transition-enter-active,
+.mobile-offcanvas-transition-leave-active {
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.mobile-offcanvas-transition-enter-from,
+.mobile-offcanvas-transition-leave-to {
+  opacity: 0;
+}
+
+.mobile-offcanvas-transition-enter-from .mobile-offcanvas-panel,
+.mobile-offcanvas-transition-leave-to .mobile-offcanvas-panel {
+  transform: translateX(110%);
+}
+
+.mobile-offcanvas-transition-enter-to .mobile-offcanvas-panel,
+.mobile-offcanvas-transition-leave-from .mobile-offcanvas-panel {
+  transform: translateX(0);
+}
+
+.drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1rem;
+  background: linear-gradient(90deg, rgba(0, 61, 122, 0.06), rgba(102, 187, 106, 0.08));
+  border-bottom: 1px solid rgba(0, 61, 122, 0.08);
+}
+
+.drawer-brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.drawer-logo {
+  width: 150px;
+  height: 48px;
+  object-fit: contain;
+  object-position: left center;
+  filter: drop-shadow(0 4px 4px rgba(0, 61, 122, 0.08));
+}
+
+.mobile-nav-list {
+  background: #ffffff;
+  padding: 0.75rem 0.25rem 0.5rem;
+}
+
+.mobile-nav-list :deep(.v-list-item) {
+  margin: 0.2rem 0.5rem;
+  border-radius: 14px;
+  padding: 0.12rem 0.5rem;
+  gap: 0.75rem;
+  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mobile-nav-list :deep(.v-list-item:hover) {
+  background: linear-gradient(90deg, rgba(102, 187, 106, 0.12), rgba(0, 61, 122, 0.04));
+  transform: translateX(-2px);
+  box-shadow: inset 0 0 0 1px rgba(102, 187, 106, 0.18);
+}
+
+.mobile-nav-list :deep(.v-list-item__prepend) {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  color: #1b7d44;
+  background: linear-gradient(135deg, rgba(0, 61, 122, 0.06), rgba(102, 187, 106, 0.18));
+  border-radius: 999px;
+  min-width: 2.5rem;
+  flex-shrink: 0;
+}
+
+.mobile-nav-list :deep(.v-list-item__prepend .v-icon),
+.mobile-nav-list :deep(.v-list-item__prepend > *) {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto -20px;
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.mobile-nav-list :deep(.v-list-item-title) {
+  color: #0d3b5c;
+  letter-spacing: 0.3px;
+  font-weight: 700;
+}
+
+.drawer-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: 0.5rem 1rem 1rem;
+  border-top: 1px solid rgba(0, 61, 122, 0.08);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.drawer-cta {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  box-shadow: 0 8px 18px rgba(102, 187, 106, 0.24);
+}
+
+.drawer-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(0, 61, 122, 0.08);
+}
+
+.drawer-info-title {
+  margin: 0;
+  color: #0d3b5c;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.drawer-info-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: #0d3b5c;
+  font-size: 0.76rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.drawer-info-link:hover {
+  color: #1b7d44;
+  transform: translateX(2px);
 }
 
 @media (max-width: 768px) {
