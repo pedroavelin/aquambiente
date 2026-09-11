@@ -4,6 +4,7 @@
     <ServicesSection />
     <AboutSection />
     <ProjectsSection />
+    <LaboratorySection />
     <WasteSection />
     <AcademySection />
     <NewsletterSection />
@@ -16,6 +17,7 @@
   import AboutSection from '@/components/AboutSection.vue'
   import ProjectsSection from '@/components/ProjectsSection.vue'
   import WasteSection from '@/components/WasteSection.vue'
+  import LaboratorySection from '@/components/LaboratorySection.vue'
   import AcademySection from '@/components/AcademySection.vue'
   import NewsletterSection from '@/components/NewsletterSection.vue'
 </script>
