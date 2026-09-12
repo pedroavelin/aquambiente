@@ -22,9 +22,12 @@
       <v-carousel-item
         v-for="image in heroImages"
         :key="image"
-        cover
-        :src="image"
-      />
+      >
+        <div
+          class="hero-slide"
+          :style="{ backgroundImage: `url('${image}')` }"
+        />
+      </v-carousel-item>
     </v-carousel>
 
     <div class="hero-overlay"></div>
@@ -201,6 +204,14 @@
   margin: 0;
   opacity: 0.85;
   height: 500px !important;
+}
+
+.hero-slide {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .hero-background :deep(.v-window__left .v-btn),

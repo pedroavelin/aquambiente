@@ -1,34 +1,11 @@
 <template>
   <footer id="contact" class="footer-section">
     <v-container class="footer-container">
-      <div class="newsletter-strip">
-        <div class="newsletter-icon">
-          <v-icon size="30" color="#0d3b5c">mdi-email-outline</v-icon>
-        </div>
-
-        <div class="newsletter-copy">
-          <p class="newsletter-title">Receba as nossas novidades</p>
-          <p class="newsletter-subtitle">
-            Receba as últimas informações sobre projectos, cursos e soluções ambientais.
-          </p>
-        </div>
-
-        <form class="newsletter-form" @submit.prevent>
-          <input type="email" placeholder="Seu e-mail" />
-          <button type="submit">INSCREVER-SE</button>
-        </form>
-      </div>
-
       <div class="footer-main">
         <v-row class="footer-grid">
           <v-col cols="12" md="3" class="brand-column">
             <div class="brand-box">
-              <div class="brand-mark">
-                <span class="brand-mark-text">A</span>
-              </div>
-              <div class="brand-wordmark">
-                <span class="brand-wordmark-top">AQUAMBIENTE</span>
-              </div>
+              <img :src="companyLogo" alt="Aquambiente" class="brand-logo" />
             </div>
 
             <p class="brand-description">
@@ -142,6 +119,7 @@
 
 <script setup lang="ts">
 import GoogleAngolaMap from './GoogleAngolaMap.vue'
+import companyLogo from '../assets/logo/logo2.png'
 </script>
 
 <style scoped>
@@ -156,84 +134,6 @@ import GoogleAngolaMap from './GoogleAngolaMap.vue'
   max-width: 1280px;
 }
 
-.newsletter-strip {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 20px;
-  padding: 1.1rem 1.25rem;
-  color: #0d3b5c;
-  margin-bottom: 2rem;
-  box-shadow: 0 18px 35px rgba(8, 47, 76, 0.15);
-}
-
-.newsletter-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 62px;
-  height: 62px;
-  border-radius: 16px;
-  background: linear-gradient(145deg, #d7f0e4 0%, #bfe6d2 100%);
-  flex-shrink: 0;
-}
-
-.newsletter-copy {
-  flex: 1;
-  min-width: 0;
-}
-
-.newsletter-title {
-  margin: 0;
-  font-size: 1.1rem;
-  font-weight: 800;
-  letter-spacing: 0.02rem;
-}
-
-.newsletter-subtitle {
-  margin: 0.2rem 0 0;
-  font-size: 0.82rem;
-  color: rgba(13, 59, 92, 0.8);
-}
-
-.newsletter-form {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  flex-shrink: 0;
-  width: min(100%, 420px);
-}
-
-.newsletter-form input {
-  flex: 1;
-  border: 1px solid rgba(13, 59, 92, 0.18);
-  border-radius: 999px;
-  background: #ffffff;
-  padding: 0.82rem 1rem;
-  font-size: 0.9rem;
-  color: #0d3b5c;
-}
-
-.newsletter-form input:focus {
-  outline: none;
-  border-color: rgba(26, 123, 60, 0.7);
-  box-shadow: 0 0 0 3px rgba(26, 123, 60, 0.15);
-}
-
-.newsletter-form button {
-  border: 0;
-  border-radius: 999px;
-  background: linear-gradient(135deg, #1a7b3c 0%, #4db36d 100%);
-  color: #ffffff;
-  padding: 0.82rem 1.4rem;
-  font-weight: 800;
-  letter-spacing: 0.03rem;
-  font-size: 0.82rem;
-  cursor: pointer;
-  box-shadow: 0 10px 20px rgba(26, 123, 60, 0.2);
-}
-
 .footer-main {
   padding-top: 0.25rem;
 }
@@ -241,8 +141,13 @@ import GoogleAngolaMap from './GoogleAngolaMap.vue'
 .brand-box {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.brand-logo {
+  display: block;
+  width: min(100%, 210px);
+  height: auto;
 }
 
 .brand-mark {
@@ -275,9 +180,9 @@ import GoogleAngolaMap from './GoogleAngolaMap.vue'
 .brand-description {
   margin: 0;
   color: rgba(255, 255, 255, 0.78);
-  font-size: 0.9rem;
-  line-height: 1.6;
-  max-width: 260px;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  max-width: 240px;
 }
 
 .social-links {
@@ -463,20 +368,6 @@ import GoogleAngolaMap from './GoogleAngolaMap.vue'
 }
 
 @media (max-width: 960px) {
-  .newsletter-strip {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .newsletter-copy {
-    width: 100%;
-  }
-
-  .newsletter-form {
-    width: 100%;
-    max-width: 100%;
-  }
-
   .brand-description {
     max-width: none;
   }
@@ -495,31 +386,6 @@ import GoogleAngolaMap from './GoogleAngolaMap.vue'
 @media (max-width: 600px) {
   .footer-section {
     padding-top: 1.5rem;
-  }
-
-  .newsletter-strip {
-    padding: 1rem;
-    border-radius: 16px;
-    gap: 0.85rem;
-  }
-
-  .newsletter-icon {
-    width: 50px;
-    height: 50px;
-  }
-
-  .newsletter-form {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .newsletter-form input,
-  .newsletter-form button {
-    width: 100%;
-  }
-
-  .newsletter-form button {
-    margin-top: 0.15rem;
   }
 
   .footer-main {
