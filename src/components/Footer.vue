@@ -61,7 +61,7 @@
               <li><a href="#projects">Projectos</a></li>
               <li><a href="#academy">Academia</a></li>
               <li><a href="#news">Notícias</a></li>
-              <li><a href="#contact">Contactos</a></li>
+              <li><router-link to="/contactos">Contactos</router-link></li>
             </ul>
           </v-col>
 
@@ -128,19 +128,21 @@ import companyLogo from '../assets/logo/logo2.png'
 
 .footer-section {
   background: linear-gradient(
-    180deg,
-    #0c2d4c 0%,
-    #0d3b5c 55%,
-    #0a2b46 100%
+    120deg,
+    #071f35 0%,
+    #0b304a 35%,
+    #0d4650 65%,
+    #0b5a3c 100%
   );
 
   color: #ffffff;
-
   padding: 1.5rem 0 0.65rem;
 
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
 
+  position: relative;
+  overflow: hidden;
+}
 .footer-container {
   max-width: 1180px !important;
 }
@@ -712,4 +714,5 @@ import companyLogo from '../assets/logo/logo2.png'
     gap: 0.5rem 1rem;
   }
 }
+
 </style>

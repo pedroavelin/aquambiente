@@ -1,386 +1,1041 @@
+```vue
 <template>
   <section id="projects" class="projects-section py-16">
     <v-container>
-      <h2 class="section-header text-h3 font-weight-bold">PROJECTOS EM DESTAQUE</h2>
+      <!-- Cabeçalho -->
+      <div class="section-heading">
+        <span class="section-eyebrow">PROJECTOS</span>
 
-      <div class="projects-carousel-shell">
+        <h2 class="section-header">
+          PROJECTOS EM DESTAQUE
+        </h2>
+
+        <p class="section-subtitle">
+          Conheça alguns dos projectos desenvolvidos nas áreas de
+          monitorização, ambiente e sustentabilidade.
+        </p>
+      </div>
+
+      <!-- CARROSSEL -->
+      <div
+        class="projects-carousel-shell"
+        @mouseenter="pauseAutoPlay"
+        @mouseleave="resumeAutoPlay"
+      >
+        <!-- Seta esquerda -->
         <button
           type="button"
           class="project-carousel-btn project-carousel-prev"
           aria-label="Projectos anteriores"
           @click="goToProjectSlide(-1)"
         >
-          <v-icon>mdi-chevron-left</v-icon>
+          <v-icon icon="mdi-chevron-left" />
         </button>
 
-        <v-carousel
-          v-model="activeProjectSlide"
-          :show-arrows="false"
-          height="280"
-          class="projects-carousel"
-        >
-          <v-carousel-item
-            v-for="(slide, slideIndex) in projectSlides"
-            :key="slideIndex"
+        <!-- Viewport -->
+        <div class="projects-carousel-viewport">
+          <div
+            class="projects-carousel-track"
+            :style="trackStyle"
           >
-            <v-row class="projects-grid">
-              <v-col
-                v-for="project in slide"
-                :key="project.id"
-                cols="12"
-                sm="6"
-                lg="3"
-                class="project-col"
-              >
-                <article class="project-card">
-                  <div class="project-image-wrap">
-                    <v-img
-                      :src="project.image"
-                      height="100"
-                      cover
-                      class="project-image"
-                    />
-                  </div>
+            <article
+              v-for="(project, index) in projects"
+              :key="project.id"
+              class="project-card"
+              :class="{
+                'is-active': index === activeProjectSlide
+              }"
+            >
+              <!-- Imagem -->
+              <div class="project-image-wrap">
+                <v-img
+                  :src="project.image"
+                  :alt="project.title"
+                  cover
+                  class="project-image"
+                  eager
+                />
 
-                  <div class="project-content">
-                    <h3 class="project-title">{{ project.title }}</h3>
-                    <p class="project-description">
-                      {{ project.description }}
-                    </p>
+                <div class="project-image-overlay"></div>
 
-                    <a
-                      class="project-link"
-                      href="#"
-                    >
-                      VER PROJECTOS
-                    </a>
-                  </div>
-                </article>
-              </v-col>
-            </v-row>
-          </v-carousel-item>
-        </v-carousel>
+                <span class="project-number">
+                  {{ String(project.id).padStart(2, '0') }}
+                </span>
+              </div>
 
+              <!-- Conteúdo -->
+              <div class="project-content">
+                <div class="project-meta">
+                  <span
+                    v-for="tag in project.tags.slice(0, 1)"
+                    :key="tag"
+                    class="project-category"
+                  >
+                    {{ tag }}
+                  </span>
+                </div>
+
+                <h3 class="project-title">
+                  {{ project.title }}
+                </h3>
+
+                <p class="project-description">
+                  {{ project.description }}
+                </p>
+
+                <a
+                  href="#"
+                  class="project-link"
+                  @click.prevent
+                >
+                  <span>VER PROJECTO</span>
+
+                  <v-icon
+                    icon="mdi-arrow-right"
+                    size="16"
+                  />
+                </a>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- Seta direita -->
         <button
           type="button"
           class="project-carousel-btn project-carousel-next"
           aria-label="Próximos projectos"
           @click="goToProjectSlide(1)"
         >
-          <v-icon>mdi-chevron-right</v-icon>
+          <v-icon icon="mdi-chevron-right" />
         </button>
+      </div>
+
+      <!-- Indicadores -->
+      <div class="carousel-footer">
+        <div class="carousel-progress">
+          <span
+            class="carousel-progress-active"
+            :style="progressStyle"
+          ></span>
+        </div>
+
+        <div class="carousel-counter">
+          <strong>
+            {{ String(activeProjectSlide + 1).padStart(2, '0') }}
+          </strong>
+
+          <span>/</span>
+
+          <span>
+            {{ String(projects.length).padStart(2, '0') }}
+          </span>
+        </div>
       </div>
     </v-container>
   </section>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import {
+  computed,
+  onBeforeUnmount,
+  onMounted,
+  ref
+} from 'vue'
 
 const activeProjectSlide = ref(0)
 
-const goToProjectSlide = (direction) => {
-  const totalSlides = projectSlides.length
+const isPaused = ref(false)
 
-  if (!totalSlides) {
-    return
-  }
+let autoplayTimer = null
 
-  activeProjectSlide.value = (activeProjectSlide.value + direction + totalSlides) % totalSlides
-}
+/*
+|--------------------------------------------------------------------------
+| Projectos
+|--------------------------------------------------------------------------
+*/
 
 const projects = [
   {
     id: 1,
     title: 'Monitorização Ambiental',
-    description:
-      'Porto do soio.',
-    image: 'https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=600&h=450&fit=crop',
+    description: 'Porto do Soyo.',
+    image:
+      'https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=900&h=650&fit=crop',
     tags: ['Auditoria', 'Conformidade', 'Relatório']
   },
+
   {
     id: 2,
-    title: 'Estudo de impacto ambiental',
-    description:
-      'Porjecto Mineiro.',
-    image: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=600&h=450&fit=crop',
+    title: 'Estudo de Impacte Ambiental',
+    description: 'Projecto mineiro.',
+    image:
+      'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=900&h=650&fit=crop',
     tags: ['Reciclagem', 'Resíduos', 'Sustentabilidade']
   },
+
   {
     id: 3,
     title: 'Monitorização Ambiental Contínua',
-    description:
-      'Município de Viana.',
-    image: 'https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=600&h=450&fit=crop',
+    description: 'Município de Viana.',
+    image:
+      'https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=900&h=650&fit=crop',
     tags: ['Monitorização', 'Qualidade', 'Relatórios']
   },
+
   {
     id: 4,
-    title: 'Laboreatório Ambiental',
-    description:
-      'Análise Fisico Quimico.',
-    image: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=600&h=450&fit=crop',
+    title: 'Laboratório Ambiental',
+    description: 'Análise físico-química.',
+    image:
+      'https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=900&h=650&fit=crop',
     tags: ['Conformidade', 'Regulamentação', 'Consultoria']
   },
+
   {
     id: 5,
     title: 'Gestão de Resíduos Urbanos',
     description:
       'Plano de recolha e valorização em cidade.',
-    image: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=600&h=450&fit=crop',
+    image:
+      'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=900&h=650&fit=crop',
     tags: ['Resíduos', 'Logística', 'Sustentabilidade']
   },
+
   {
     id: 6,
     title: 'Avaliação de Impacte Ambiental',
     description:
       'Estudo para implementação de nova infraestrutura.',
-    image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&h=450&fit=crop',
+    image:
+      'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=900&h=650&fit=crop',
     tags: ['Impacte', 'Planeamento', 'Consultoria']
   },
+
   {
     id: 7,
     title: 'Monitorização de Qualidade do Ar',
     description:
       'Análise contínua para zonas industriais.',
-    image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=450&fit=crop',
+    image:
+      'https://images.unsplash.com/photo-1518770660439-4636190af475?w=900&h=650&fit=crop',
     tags: ['Ar', 'Monitorização', 'Tecnologia']
   },
+
   {
     id: 8,
     title: 'Formação Ambiental',
     description:
       'Programas para equipas e comunidades locais.',
-    image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=450&fit=crop',
+    image:
+      'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=900&h=650&fit=crop',
     tags: ['Formação', 'Comunidades', 'Educação']
   }
 ]
 
-const projectSlides = Array.from(
-  { length: Math.ceil(projects.length / 4) },
-  (_, index) => projects.slice(index * 4, index * 4 + 4)
+/*
+|--------------------------------------------------------------------------
+| Número de cards visíveis
+|--------------------------------------------------------------------------
+*/
+
+const cardsPerView = ref(4)
+
+const updateCardsPerView = () => {
+  if (window.innerWidth <= 600) {
+    cardsPerView.value = 1
+  } else if (window.innerWidth <= 960) {
+    cardsPerView.value = 2
+  } else {
+    cardsPerView.value = 4
+  }
+
+  /*
+   * Evita que o índice actual fique fora dos limites
+   */
+  const maxIndex = Math.max(
+    0,
+    projects.length - cardsPerView.value
+  )
+
+  if (activeProjectSlide.value > maxIndex) {
+    activeProjectSlide.value = maxIndex
+  }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Movimento do carrossel
+|--------------------------------------------------------------------------
+*/
+
+const maxSlide = computed(() =>
+  Math.max(
+    0,
+    projects.length - cardsPerView.value
+  )
 )
+
+const trackStyle = computed(() => ({
+  transform: `translateX(-${
+    activeProjectSlide.value *
+    (100 / cardsPerView.value)
+  }%)`
+}))
+
+/*
+|--------------------------------------------------------------------------
+| Progresso
+|--------------------------------------------------------------------------
+*/
+
+const progressStyle = computed(() => {
+  const total = maxSlide.value || 1
+
+  const progress =
+    ((activeProjectSlide.value / total) * 100)
+
+  return {
+    width: `${Math.max(8, progress)}%`
+  }
+})
+
+/*
+|--------------------------------------------------------------------------
+| Navegação
+|--------------------------------------------------------------------------
+*/
+
+const goToProjectSlide = (direction) => {
+  if (!projects.length) {
+    return
+  }
+
+  let next =
+    activeProjectSlide.value + direction
+
+  /*
+   * Loop infinito
+   */
+  if (next > maxSlide.value) {
+    next = 0
+  }
+
+  if (next < 0) {
+    next = maxSlide.value
+  }
+
+  activeProjectSlide.value = next
+
+  restartAutoPlay()
+}
+
+/*
+|--------------------------------------------------------------------------
+| Auto Play
+|--------------------------------------------------------------------------
+*/
+
+const startAutoPlay = () => {
+  stopAutoPlay()
+
+  autoplayTimer = setInterval(() => {
+    if (!isPaused.value) {
+      goToProjectSlide(1)
+    }
+  }, 4500)
+}
+
+const stopAutoPlay = () => {
+  if (autoplayTimer) {
+    clearInterval(autoplayTimer)
+    autoplayTimer = null
+  }
+}
+
+const pauseAutoPlay = () => {
+  isPaused.value = true
+}
+
+const resumeAutoPlay = () => {
+  isPaused.value = false
+}
+
+/*
+|--------------------------------------------------------------------------
+| Reiniciar autoplay depois de navegação manual
+|--------------------------------------------------------------------------
+*/
+
+const restartAutoPlay = () => {
+  stopAutoPlay()
+  startAutoPlay()
+}
+
+/*
+|--------------------------------------------------------------------------
+| Lifecycle
+|--------------------------------------------------------------------------
+*/
+
+onMounted(() => {
+  updateCardsPerView()
+
+  window.addEventListener(
+    'resize',
+    updateCardsPerView
+  )
+
+  startAutoPlay()
+})
+
+onBeforeUnmount(() => {
+  stopAutoPlay()
+
+  window.removeEventListener(
+    'resize',
+    updateCardsPerView
+  )
+})
 </script>
 
 <style scoped>
+/* =========================================================
+   SECTION
+========================================================= */
+
 .projects-section {
-  background: linear-gradient(180deg, #f5f7f5 0%, #edf3ee 100%);
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle at 10% 20%,
+      rgba(26, 123, 60, 0.05),
+      transparent 30%
+    ),
+    linear-gradient(
+      180deg,
+      #f7faf8 0%,
+      #edf4ef 100%
+    );
 }
 
-.section-header {
+/* =========================================================
+   HEADER
+========================================================= */
+
+.section-heading {
+  max-width: 760px;
+  margin: 0 auto 3rem;
   text-align: center;
 }
 
-.projects-grid {
-  background: white;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  margin-top: 0;
-  margin-left: 0;
-  margin-right: 0;
-}
-
-.project-col {
-  display: flex;
-}
-
-.projects-carousel-shell {
-  position: relative;
-}
-
-.projects-carousel {
-  width: 100%;
-  height: 280px;
-}
-
-.projects-carousel :deep(.v-window__container),
-.projects-carousel :deep(.v-window-item),
-.projects-carousel :deep(.v-carousel-item) {
-  height: auto !important;
-}
-
-.projects-carousel :deep(.v-carousel__controls) {
-  margin-top: 26px;
-  padding-bottom: 0;
-  background: transparent !important;
-  box-shadow: none !important;
-  border: none !important;
-}
-
-.projects-carousel :deep(.v-carousel__controls .v-btn) {
-  box-shadow: none !important;
-  background: transparent !important;
-  border: none !important;
-  min-width: 8px;
-  width: 8px;
-  height: 8px;
-  padding: 0;
-  border-radius: 50%;
-  opacity: 0.15;
-  color: rgba(13, 59, 92, 0.3) !important;
-  transition: opacity 0.2s ease, transform 0.2s ease;
-}
-
-.projects-carousel :deep(.v-carousel__controls .v-btn--active) {
-  background: transparent !important;
-  opacity: 1;
-  transform: scale(1.3);
-  color: #1a7b3c !important;
-}
-
-.project-carousel-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.92);
-  border: 1px solid rgba(26, 123, 60, 0.2);
-  color: #1a7b3c;
-  display: flex;
+.section-eyebrow {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 3;
-  transition: transform 0.2s ease;
-}
+  gap: 0.55rem;
 
-.project-carousel-btn:hover {
-  transform: translateY(-50%) scale(1.03);
-}
+  margin-bottom: 0.75rem;
 
-.project-carousel-prev {
-  left: -50px;
-}
+  color: #1a7b3c;
 
-.project-carousel-next {
-  right: -50px;
-}
-
-.project-carousel-btn .v-icon {
-  font-size: 1.1rem;
-}
-
-.project-card {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  background: #ffffff;
-  border-radius: 18px;
-  overflow: hidden;
-  border: 1px solid rgba(13, 59, 92, 0.08);
-  box-shadow: 0 10px 22px rgba(13, 59, 92, 0.08);
-  transition: transform 0.3s ease;
-}
-
-.project-card:hover {
-  transform: none;
-}
-
-.project-image-wrap {
-  position: relative;
-}
-
-.project-image {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-.project-badge {
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
-  background: rgba(10, 61, 37, 0.85);
-  color: white;
-  padding: 0.4rem 0.75rem;
-  border-radius: 999px;
   font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.06rem;
+  font-weight: 800;
+
+  letter-spacing: 0.18em;
   text-transform: uppercase;
 }
 
+.section-eyebrow::before,
+.section-eyebrow::after {
+  content: '';
+
+  width: 24px;
+  height: 1px;
+
+  background: #1a7b3c;
+
+  opacity: 0.45;
+}
+
+.section-header {
+  margin: 0;
+
+  color: #0d3b5c;
+
+  font-size: clamp(
+    2rem,
+    4vw,
+    3rem
+  );
+
+  font-weight: 800;
+
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+}
+
+.section-subtitle {
+  max-width: 620px;
+
+  margin: 1rem auto 0;
+
+  color: #667085;
+
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+/* =========================================================
+   CAROUSEL
+========================================================= */
+
+.projects-carousel-shell {
+  position: relative;
+
+  width: 100%;
+  padding: 0 1px;
+}
+
+.projects-carousel-viewport {
+  width: 100%;
+
+  overflow: hidden;
+
+  padding: 12px 4px 22px;
+}
+
+.projects-carousel-track {
+  display: flex;
+
+  margin: 0 -10px;
+
+  transition:
+    transform 0.8s
+    cubic-bezier(
+      0.22,
+      1,
+      0.36,
+      1
+    );
+
+  will-change: transform;
+}
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.project-card {
+  position: relative;
+
+  flex: 0 0
+    calc(
+      25% - 20px
+    );
+
+  min-width: 0;
+
+  margin: 0 10px;
+
+  overflow: hidden;
+
+  background: #ffffff;
+
+  border: 1px solid
+    rgba(
+      13,
+      59,
+      92,
+      0.08
+    );
+
+  border-radius: 20px;
+
+  box-shadow:
+    0 8px 24px
+      rgba(
+        13,
+        59,
+        92,
+        0.07
+      );
+
+  transition:
+    transform 0.45s
+      cubic-bezier(
+        0.22,
+        1,
+        0.36,
+        1
+      ),
+    box-shadow 0.45s ease,
+    border-color 0.45s ease;
+}
+
+.project-card:hover {
+  transform:
+    translateY(-8px);
+
+  border-color:
+    rgba(
+      26,
+      123,
+      60,
+      0.2
+    );
+
+  box-shadow:
+    0 20px 40px
+      rgba(
+        13,
+        59,
+        92,
+        0.14
+      );
+}
+
+/* =========================================================
+   IMAGE
+========================================================= */
+
+.project-image-wrap {
+  position: relative;
+
+  height: 190px;
+
+  overflow: hidden;
+
+  background: #dfe8e2;
+}
+
+.project-image {
+  width: 100%;
+  height: 100%;
+
+  transition:
+    transform 0.7s
+    cubic-bezier(
+      0.22,
+      1,
+      0.36,
+      1
+    );
+}
+
+.project-card:hover
+.project-image {
+  transform: scale(1.07);
+}
+
+.project-image-overlay {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(13, 59, 92, 0.02)
+        35%,
+      rgba(13, 59, 92, 0.55)
+        100%
+    );
+
+  pointer-events: none;
+}
+
+.project-number {
+  position: absolute;
+
+  top: 14px;
+  right: 14px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 40px;
+  height: 40px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.92
+    );
+
+  color: #0d3b5c;
+
+  font-size: 0.72rem;
+  font-weight: 800;
+
+  box-shadow:
+    0 6px 16px
+      rgba(
+        0,
+        0,
+        0,
+        0.12
+      );
+
+  backdrop-filter: blur(8px);
+}
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
 .project-content {
   display: flex;
-  flex: 1;
+
   flex-direction: column;
-  padding: 0.65rem 0.8rem 0.8rem;
-  min-height: 0;
+
+  min-height: 205px;
+
+  padding: 1.25rem;
+}
+
+.project-meta {
+  margin-bottom: 0.55rem;
+}
+
+.project-category {
+  color: #1a7b3c;
+
+  font-size: 0.65rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.12em;
+
+  text-transform: uppercase;
 }
 
 .project-title {
-  font-size: 0.9rem;
-  font-weight: 700;
+  margin: 0 0 0.55rem;
+
   color: #0d3b5c;
-  margin-bottom: 0.35rem;
-  line-height: 1.25;
+
+  font-size: 1rem;
+
+  font-weight: 750;
+
+  line-height: 1.3;
 }
 
 .project-description {
-  color: #4b5563;
-  line-height: 1.35;
-  margin-bottom: 0.35rem;
   flex: 1;
-  font-size: 0.75rem;
-}
 
-.project-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-  margin-bottom: 0.5rem;
-}
-
-.project-tag {
   margin: 0;
+
+  color: #667085;
+
+  font-size: 0.78rem;
+
+  line-height: 1.6;
 }
 
 .project-link {
-  margin-top: auto;
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 0.4rem;
+
   width: fit-content;
+
+  margin-top: 1rem;
+
   color: #1a7b3c;
-  font-size: 0.75rem;
-  font-weight: 700;
+
+  font-size: 0.7rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.08em;
+
   text-decoration: none;
-  letter-spacing: 0.03rem;
-  transition: opacity 0.2s ease;
+
+  transition:
+    gap 0.3s ease,
+    color 0.3s ease;
 }
 
 .project-link:hover {
-  opacity: 0.8;
+  gap: 0.7rem;
+
+  color: #0d5c2b;
 }
+
+/* =========================================================
+   ARROWS
+========================================================= */
+
+.project-carousel-btn {
+  position: absolute;
+
+  top: 50%;
+
+  z-index: 10;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 46px;
+  height: 46px;
+
+  transform:
+    translateY(-50%);
+
+  border: 1px solid
+    rgba(
+      26,
+      123,
+      60,
+      0.15
+    );
+
+  border-radius: 50%;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.95
+    );
+
+  color: #1a7b3c;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 10px 25px
+      rgba(
+        13,
+        59,
+        92,
+        0.12
+      );
+
+  backdrop-filter:
+    blur(10px);
+
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.project-carousel-btn:hover {
+  transform:
+    translateY(-50%)
+    scale(1.08);
+
+  background: #1a7b3c;
+
+  color: #ffffff;
+
+  box-shadow:
+    0 14px 30px
+      rgba(
+        26,
+        123,
+        60,
+        0.25
+      );
+}
+
+.project-carousel-prev {
+  left: -24px;
+}
+
+.project-carousel-next {
+  right: -24px;
+}
+
+/* =========================================================
+   FOOTER / PROGRESS
+========================================================= */
+
+.carousel-footer {
+  display: flex;
+
+  align-items: center;
+
+  gap: 1rem;
+
+  max-width: 600px;
+
+  margin: 1rem auto 0;
+}
+
+.carousel-progress {
+  position: relative;
+
+  flex: 1;
+
+  height: 3px;
+
+  overflow: hidden;
+
+  border-radius: 999px;
+
+  background:
+    rgba(
+      13,
+      59,
+      92,
+      0.1
+    );
+}
+
+.carousel-progress-active {
+  display: block;
+
+  height: 100%;
+
+  border-radius: inherit;
+
+  background:
+    linear-gradient(
+      90deg,
+      #1a7b3c,
+      #2b9b55
+    );
+
+  transition:
+    width 0.6s
+    cubic-bezier(
+      0.22,
+      1,
+      0.36,
+      1
+    );
+}
+
+.carousel-counter {
+  display: flex;
+
+  align-items: center;
+
+  gap: 0.35rem;
+
+  min-width: 65px;
+
+  color: #98a2b3;
+
+  font-size: 0.7rem;
+
+  font-weight: 700;
+}
+
+.carousel-counter strong {
+  color: #0d3b5c;
+
+  font-size: 0.8rem;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
 
 @media (max-width: 960px) {
   .project-card {
-    height: 100%;
+    flex-basis:
+      calc(
+        50% - 20px
+      );
   }
 
-  .projects-carousel {
-    height: auto;
+  .project-image-wrap {
+    height: 180px;
   }
 
-  .project-carousel-btn {
-    display: none;
+  .project-carousel-prev {
+    left: -15px;
   }
 
-  .projects-grid {
-    padding: 0.75rem;
+  .project-carousel-next {
+    right: -15px;
   }
 }
 
+/* =========================================================
+   MOBILE
+========================================================= */
+
 @media (max-width: 600px) {
-  .projects-carousel :deep(.v-carousel__controls) {
-    margin-top: 12px;
+  .projects-section {
+    padding-top: 4rem !important;
+    padding-bottom: 4rem !important;
   }
 
-  .project-title {
-    font-size: 0.85rem;
+  .section-heading {
+    margin-bottom: 2rem;
   }
 
-  .project-description {
-    font-size: 0.72rem;
+  .section-header {
+    font-size: 1.8rem;
+  }
+
+  .section-subtitle {
+    font-size: 0.82rem;
+  }
+
+  .project-card {
+    flex-basis:
+      calc(
+        100% - 20px
+      );
+  }
+
+  .project-image-wrap {
+    height: 210px;
+  }
+
+  .project-content {
+    min-height: 190px;
+  }
+
+  .project-carousel-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .project-carousel-prev {
+    left: 5px;
+  }
+
+  .project-carousel-next {
+    right: 5px;
+  }
+
+  .carousel-footer {
+    max-width: 90%;
+  }
+}
+
+/* =========================================================
+   REDUZIR MOVIMENTO
+========================================================= */
+
+@media (
+  prefers-reduced-motion: reduce
+) {
+  .projects-carousel-track,
+  .project-card,
+  .project-image,
+  .project-carousel-btn,
+  .project-link {
+    transition: none !important;
   }
 }
 </style>

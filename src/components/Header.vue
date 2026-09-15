@@ -125,12 +125,9 @@
           NOTÍCIAS
         </a>
 
-        <a
-          href="#contact"
-          class="nav-link"
-        >
+        <router-link to="/contactos" class="nav-link">
           CONTACTOS
-        </a>
+        </router-link>
       </div>
 
       <!-- CTA Button & Mobile Menu -->
@@ -208,7 +205,7 @@
                 rounded
                 block
                 size="large"
-                href="#contact"
+                to="/contactos"
                 @click="closeMobileMenu"
               >
                 SOLICITAR PROPOSTA
@@ -255,7 +252,7 @@
     { title: 'PROJECTOS', href: '#projects', icon: 'mdi-folder-multiple-outline' },
     { title: 'ACADEMIA', href: '#academy', icon: 'mdi-school-outline' },
     { title: 'NOTÍCIAS', href: '#news', icon: 'mdi-newspaper-variant-outline' },
-    { title: 'CONTACTOS', href: '#contact', icon: 'mdi-phone' },
+    { title: 'CONTACTOS', to: '/contactos', icon: 'mdi-phone' },
   ]
 
   const openMobileMenu = () => {
