@@ -1,79 +1,68 @@
 <template>
   <section id="waste" class="waste-section py-16">
     <v-container>
-      <v-row align="center">
-        <!-- Left - Green Box with Content -->
-        <v-col cols="12" md="6" class="mb-6 mb-md-0">
-          <div class="waste-box">
-            <h2 class="waste-title mb-4">DO RESÍDUO AO RECURSO.</h2>
-            <p class="waste-text mb-6">
-              Promovemos a redução, reclassificação, reciclagem ambiental e oportunidades sustentáveis ao transformar resíduos em recursos valiosos.
-            </p>
+      <v-row align="center" class="waste-row">
+        <v-col cols="12" md="6" class="content-column">
+          <div class="section-kicker-wrap">
+            <p class="section-kicker">GESTÃO DE RESÍDUOS</p>
+            <span class="section-kicker-line" />
+          </div>
 
-            <!-- Process Flow -->
-            <div class="process-flow">
-              <div class="flow-item">
-                <div class="flow-icon">
-                  <v-icon size="32">mdi-recycle</v-icon>
-                </div>
-                <div class="flow-text">
-                  <div class="flow-label">Recolha</div>
-                </div>
+          <h2 class="waste-title">DO RESÍDUO AO RECURSO.</h2>
+
+          <p class="waste-text">
+            Promovemos a redução, reclassificação, reciclagem ambiental e oportunidades sustentáveis ao transformar resíduos em recursos valiosos.
+          </p>
+
+          <div class="process-flow">
+            <div class="flow-item">
+              <div class="flow-icon">
+                <v-icon size="28">mdi-recycle</v-icon>
               </div>
-
-              <div class="flow-arrow">→</div>
-
-              <div class="flow-item">
-                <div class="flow-icon">
-                  <v-icon size="32">mdi-sort-ascending</v-icon>
-                </div>
-                <div class="flow-text">
-                  <div class="flow-label">Triagem</div>
-                </div>
-              </div>
-
-              <div class="flow-arrow">→</div>
-
-              <div class="flow-item">
-                <div class="flow-icon">
-                  <v-icon size="32">mdi-leaf</v-icon>
-                </div>
-                <div class="flow-text">
-                  <div class="flow-label">Valorização</div>
-                </div>
-              </div>
-
-              <div class="flow-arrow">→</div>
-
-              <div class="flow-item">
-                <div class="flow-icon">
-                  <v-icon size="32">mdi-earth</v-icon>
-                </div>
-                <div class="flow-text">
-                  <div class="flow-label">Destino Final<br/>Adequado</div>
-                </div>
-              </div>
+              <div class="flow-label">Recolha</div>
             </div>
 
-            <v-btn
-              color="white"
-              text-color="green-accent-4"
-              class="font-weight-bold mt-8"
-              size="large"
-            >
-              SAIBA MAIS SOBRE GESTÃO DE RESÍDUOS
-            </v-btn>
+            <div class="flow-item">
+              <div class="flow-icon">
+                <v-icon size="28">mdi-sort-ascending</v-icon>
+              </div>
+              <div class="flow-label">Triagem</div>
+            </div>
+
+            <div class="flow-item">
+              <div class="flow-icon">
+                <v-icon size="28">mdi-leaf</v-icon>
+              </div>
+              <div class="flow-label">Valorização</div>
+            </div>
+
+            <div class="flow-item">
+              <div class="flow-icon">
+                <v-icon size="28">mdi-earth</v-icon>
+              </div>
+              <div class="flow-label">Destino Final Adequado</div>
+            </div>
           </div>
+
+          <v-btn
+            class="section-cta"
+            color="green-accent-4"
+            variant="outlined"
+            size="large"
+          >
+            SAIBA MAIS SOBRE GESTÃO DE RESÍDUOS
+          </v-btn>
         </v-col>
 
-        <!-- Right - Image -->
         <v-col cols="12" md="6">
-          <v-img
-            src="https://images.unsplash.com/photo-1532996122724-8f3c2cd83c5d?w=500&h=400&fit=crop"
-            height="400"
-            cover
-            class="rounded-lg"
-          />
+          <div class="image-shell">
+            <v-img
+              src="https://images.unsplash.com/photo-1532996122724-8f3c2cd83c5d?w=500&h=400&fit=crop"
+              height="420"
+              cover
+              class="waste-image"
+            />
+          </div>
         </v-col>
       </v-row>
     </v-container>
@@ -82,165 +71,140 @@
 
 <style scoped>
 .waste-section {
-  background: white;
+  position: relative;
+  background: linear-gradient(180deg, #f8faf8 0%, #eef4ef 100%);
+  padding-block: 3.5rem;
 }
 
-.waste-box {
-  background: #1a7b3c;
-  color: white;
-  padding: 3rem;
-  border-radius: 12px;
+.waste-row {
+  gap: 1rem;
+}
+
+.content-column {
+  padding-right: clamp(1rem, 3vw, 3rem);
+}
+
+.section-kicker-wrap {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.section-kicker {
+  margin: 0;
+  color: #0d3b5c;
+  font-size: clamp(1.3rem, 2vw, 2.2rem);
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.section-kicker-line {
+  display: block;
+  width: 86px;
+  height: 4px;
+  background: linear-gradient(90deg, #66bb6a, rgba(102, 187, 106, 0.5));
+  border-radius: 999px;
 }
 
 .waste-title {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: white;
+  margin: 0 0 1rem;
+  font-size: clamp(2rem, 2.5vw, 3rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  color: #0f172a;
 }
 
 .waste-text {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  max-width: 34rem;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #4b5d67;
 }
 
 .process-flow {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-  margin: 2rem 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 2rem 0 1.5rem;
 }
 
 .flow-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
-  flex: 0 0 auto;
+  justify-content: center;
+  gap: 0.75rem;
+  min-height: 120px;
+  padding: 1rem 0.75rem;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(13, 59, 92, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 12px 24px rgba(13, 59, 92, 0.06);
 }
 
 .flow-icon {
-  width: 50px;
-  height: 50px;
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 8px;
+  width: 58px;
+  height: 58px;
+  background: linear-gradient(135deg, rgba(102, 187, 106, 0.18), rgba(102, 187, 106, 0.32));
+  border: 1px solid rgba(102, 187, 106, 0.28);
+  border-radius: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: #1a7b3c;
 }
 
 .flow-label {
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-size: 0.8rem;
+  font-weight: 700;
   text-align: center;
-  color: white;
-  min-width: 50px;
+  line-height: 1.3;
+  color: #0d3b5c;
 }
 
-.flow-arrow {
-  color: white;
-  font-size: 1.5rem;
-  margin: 1.5rem 0.25rem 0 0.25rem;
-  font-weight: bold;
+.section-cta {
+  min-width: 0;
+  border-radius: 999px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }
 
-@media (max-width: 768px) {
-  .waste-box {
-    padding: 2rem;
-  }
-
-  .waste-title {
-    font-size: 1.5rem;
-  }
-
-  .process-flow {
-    gap: 0.25rem;
-  }
-
-  .flow-label {
-    font-size: 0.7rem;
-    min-width: 45px;
-  }
-
-  .flow-arrow {
-    font-size: 1.2rem;
-  }
+.image-shell {
+  background: linear-gradient(180deg, rgba(102, 187, 106, 0.06), rgba(13, 59, 92, 0.02));
+  border: 1px solid rgba(13, 59, 92, 0.08);
+  border-radius: 22px;
+  padding: 0.75rem;
+  box-shadow: 0 18px 38px rgba(17, 24, 39, 0.08);
 }
 
-.waste-section {
-  background: #f5f5f5;
-}
-
-.section-header {
-  text-align: center;
-}
-
-.process-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.process-step {
-  text-align: center;
-  position: relative;
-  padding: 2rem 1rem;
-}
-
-.step-number {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 50px;
-  height: 50px;
-  background: #66bb6a;
-  color: white;
-  border-radius: 50%;
-  font-weight: bold;
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-}
-
-.step-icon {
-  margin-bottom: 1rem;
-}
-
-.step-title {
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 0.5rem;
-}
-
-.step-description {
-  color: #666;
-  font-size: 0.9rem;
-  margin: 0;
-}
-
-.arrow-container {
-  display: flex;
-  justify-content: center;
-  position: absolute;
-  right: -30px;
-  top: 50%;
-  transform: translateY(-50%);
+.waste-image {
+  border-radius: 18px;
+  overflow: hidden;
 }
 
 @media (max-width: 960px) {
-  .arrow-container {
-    display: none;
+  .waste-section {
+    padding-block: 2.5rem;
+  }
+
+  .content-column {
+    padding-right: 0;
+    margin-bottom: 1rem;
+  }
+
+  .process-flow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-.benefit-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 60px;
-  height: 60px;
-  background: rgba(102, 187, 106, 0.2);
-  border-radius: 50%;
+@media (max-width: 600px) {
+  .process-flow {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

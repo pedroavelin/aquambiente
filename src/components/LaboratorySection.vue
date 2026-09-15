@@ -23,22 +23,62 @@
         </v-col>
 
         <v-col cols="12" md="7">
-          <div class="devices-grid">
-            <div
-              v-for="device in devices"
-              :key="device.title"
-              class="device-card"
-            >
+          <div class="devices-layout">
+            <div class="device-stack device-stack-left">
+              <div
+                v-for="device in devices.slice(0, 2)"
+                :key="device.title"
+                class="device-card"
+              >
+                <div class="device-visual">
+                  <img
+                    :src="device.image"
+                    :alt="device.title"
+                    class="device-image"
+                  >
+                </div>
+                <div class="device-title-wrap">
+                  <p class="device-title">
+                    {{ device.title }}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="device-card device-card-center">
               <div class="device-visual">
                 <img
-                  :src="device.image"
-                  :alt="device.title"
+                  :src="devices[4].image"
+                  :alt="devices[4].title"
                   class="device-image"
                 >
               </div>
-              <p class="device-title">
-                {{ device.title }}
-              </p>
+              <div class="device-title-wrap">
+                <p class="device-title">
+                  {{ devices[4].title }}
+                </p>
+              </div>
+            </div>
+
+            <div class="device-stack device-stack-right">
+              <div
+                v-for="device in devices.slice(2, 4)"
+                :key="device.title"
+                class="device-card"
+              >
+                <div class="device-visual">
+                  <img
+                    :src="device.image"
+                    :alt="device.title"
+                    class="device-image"
+                  >
+                </div>
+                <div class="device-title-wrap">
+                  <p class="device-title">
+                    {{ device.title }}
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </v-col>
@@ -137,11 +177,21 @@ const devices = [
   transform: translateY(-1px);
 }
 
-.devices-grid {
+.devices-layout {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 0.85rem;
-  align-items: end;
+  grid-template-columns: minmax(120px, 1fr) minmax(170px, 1.3fr) minmax(120px, 1fr);
+  align-items: center;
+  justify-items: center;
+  gap: 0rem;
+}
+
+.device-stack {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0;
+  width: 100%;
+  align-items: center;
 }
 
 .device-card {
@@ -149,11 +199,15 @@ const devices = [
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  height: 270px;
-  background: transparent;
-  border: none;
-  border-radius: 0;
+  height: 240px;
+  width: 100%;
+  background: linear-gradient(135deg, rgba(132, 181, 214, 0.23), rgba(102, 187, 106, 0.12));
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 0px;
   padding: 0;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 10px 24px rgba(13, 59, 92, 0.08);
   transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
@@ -162,17 +216,29 @@ const devices = [
   opacity: 0.96;
 }
 
+.device-card-center {
+  height: 310px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(110, 186, 146, 0.28), rgba(131, 178, 216, 0.16));
+}
+
 .device-visual {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
   width: 100%;
-  height: 190px;
-  border-radius: 0;
+  height: 170px;
+  border-radius: 18px;
   background: transparent;
-  margin-bottom: 0.85rem;
   overflow: hidden;
   padding-inline: 0.25rem;
+}
+
+.device-card-center .device-visual {
+  height: 200px;
+  align-items: center;
 }
 
 .device-image {
@@ -182,26 +248,37 @@ const devices = [
   height: 100%;
   max-height: 190px;
   object-fit: contain;
-  object-position: center bottom;
+  object-position: center center;
+  filter: drop-shadow(0 8px 16px rgba(13, 59, 92, 0.12));
 }
 
-.device-card:nth-child(odd) .device-image {
-  transform: scale(0.98);
+.device-card-center .device-image {
+  max-height: 220px;
+}
+
+.device-title-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 2.8rem;
+  padding: 0.4rem 0.5rem 0;
+  text-align: center;
 }
 
 .device-title {
   margin: 0;
   color: #0d3b5c;
-  font-size: 0.82rem;
+  font-size: 0.7rem;
   font-weight: 700;
-  line-height: 1.3;
+  line-height: 1.25;
   text-align: center;
   white-space: pre-line;
 }
 
 @media (max-width: 1200px) {
-  .devices-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+  .devices-layout {
+    grid-template-columns: minmax(120px, 1fr) minmax(140px, 1.2fr) minmax(120px, 1fr);
   }
 }
 
@@ -216,8 +293,23 @@ const devices = [
     width: 100%;
   }
 
-  .devices-grid {
+  .devices-layout {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem 1rem;
+  }
+
+  .device-card-center {
+    order: -1;
+    grid-column: 1 / -1;
+    height: 300px;
+  }
+
+  .device-stack-left {
+    grid-column: 1;
+  }
+
+  .device-stack-right {
+    grid-column: 2;
   }
 }
 
@@ -226,12 +318,22 @@ const devices = [
     padding-block: 2.5rem;
   }
 
-  .devices-grid {
+  .devices-layout {
     grid-template-columns: 1fr;
+  }
+
+  .device-card,
+  .device-card-center {
+    height: 240px;
   }
 
   .device-visual {
     min-height: 140px;
+  }
+
+  .device-card-center {
+    order: 0;
+    grid-column: auto;
   }
 }
 </style>
