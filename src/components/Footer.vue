@@ -117,291 +117,599 @@
   </footer>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import GoogleAngolaMap from './GoogleAngolaMap.vue'
 import companyLogo from '../assets/logo/logo2.png'
 </script>
-
 <style scoped>
+/* =========================================================
+   FOOTER
+========================================================= */
+
 .footer-section {
-  background: linear-gradient(180deg, #0c2d4c 0%, #0d3b5c 48%, #0a2b46 100%);
+  background: linear-gradient(
+    180deg,
+    #0c2d4c 0%,
+    #0d3b5c 55%,
+    #0a2b46 100%
+  );
+
   color: #ffffff;
-  padding: 2.5rem 0 1rem;
+
+  padding: 1.5rem 0 0.65rem;
+
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .footer-container {
-  max-width: 1280px;
+  max-width: 1180px !important;
 }
 
+
+/* =========================================================
+   MAIN
+========================================================= */
+
 .footer-main {
-  padding-top: 0.25rem;
+  padding: 0;
 }
+
+
+/* =========================================================
+   GRID VUETIFY
+========================================================= */
+
+.footer-grid {
+  margin: 0 !important;
+}
+
+.footer-grid :deep(.v-col) {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+
+/* =========================================================
+   MARCA
+========================================================= */
 
 .brand-box {
   display: flex;
   align-items: center;
-  margin-bottom: 0.75rem;
+
+  margin-bottom: 0.45rem;
 }
 
 .brand-logo {
   display: block;
-  width: min(100%, 210px);
+
+  width: 155px;
+  max-width: 100%;
+
   height: auto;
 }
 
-.brand-mark {
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
-  background: linear-gradient(135deg, #7fd1ae 0%, #1aaa7b 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.2);
-}
-
-.brand-mark-text {
-  font-size: 2rem;
-  font-weight: 900;
-  line-height: 1;
-  color: #ffffff;
-  transform: translateY(-2px);
-}
-
-.brand-wordmark-top {
-  display: block;
-  font-size: 1.1rem;
-  font-weight: 900;
-  letter-spacing: 0.06rem;
-  color: #ffffff;
-}
-
 .brand-description {
+  max-width: 210px;
+
   margin: 0;
-  color: rgba(255, 255, 255, 0.78);
-  font-size: 0.85rem;
-  line-height: 1.5;
-  max-width: 240px;
+
+  color: rgba(255, 255, 255, 0.68);
+
+  font-size: 0.72rem;
+  line-height: 1.45;
 }
+
+
+/* =========================================================
+   REDES SOCIAIS
+========================================================= */
 
 .social-links {
   display: flex;
-  gap: 0.5rem;
-  margin-top: 1.25rem;
+  align-items: center;
+
+  gap: 0.25rem;
+
+  margin-top: 0.65rem;
 }
 
 .social-btn {
-  width: 34px !important;
-  height: 34px !important;
-  min-width: 34px !important;
+  width: 29px !important;
+  height: 29px !important;
+  min-width: 29px !important;
+
   border-radius: 50% !important;
-  background: rgba(255, 255, 255, 0.12) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  background: rgba(255, 255, 255, 0.09) !important;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
 }
 
-.footer-title {
-  margin: 0 0 1rem;
-  font-size: 0.85rem;
-  font-weight: 800;
-  letter-spacing: 0.06rem;
-  text-transform: uppercase;
-  color: #f5f7fb;
+.social-btn:hover {
+  background: rgba(255, 255, 255, 0.18) !important;
+
+  transform: translateY(-2px);
 }
+
+
+/* =========================================================
+   TÍTULOS
+========================================================= */
+
+.footer-title {
+  position: relative;
+
+  margin: 0 0 0.65rem;
+
+  color: #ffffff;
+
+  font-size: 0.72rem;
+  font-weight: 800;
+
+  letter-spacing: 0.05rem;
+
+  text-transform: uppercase;
+}
+
+
+/* pequena linha decorativa */
+
+.footer-title::after {
+  content: '';
+
+  display: block;
+
+  width: 22px;
+  height: 2px;
+
+  margin-top: 5px;
+
+  background: #35ad72;
+
+  border-radius: 10px;
+}
+
+
+/* =========================================================
+   NAVEGAÇÃO / SERVIÇOS
+========================================================= */
 
 .footer-list {
   list-style: none;
+
   padding: 0;
   margin: 0;
 }
 
 .footer-list li {
-  margin-bottom: 0.55rem;
+  margin-bottom: 0.3rem;
 }
 
-.footer-list a,
-.contact-info a,
-.footer-legal-links a {
-  color: rgba(255, 255, 255, 0.78);
+.footer-list a {
+  color: rgba(255, 255, 255, 0.67);
+
   text-decoration: none;
-  transition: color 0.2s ease, opacity 0.2s ease;
+
+  font-size: 0.72rem;
+
+  transition:
+    color 0.2s ease,
+    padding-left 0.2s ease;
 }
 
-.footer-list a:hover,
-.contact-info a:hover,
-.footer-legal-links a:hover {
+.footer-list a:hover {
   color: #9be3b7;
+
+  padding-left: 3px;
 }
+
+
+/* =========================================================
+   CONTACTOS
+========================================================= */
 
 .contact-list {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+
+  gap: 0.45rem;
 }
 
 .contact-info {
   display: flex;
   align-items: center;
-  gap: 0.55rem;
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.78);
+
+  gap: 0.4rem;
+
+  min-width: 0;
+
+  color: rgba(255, 255, 255, 0.68);
+
+  font-size: 0.72rem;
 }
 
 .contact-info .v-icon {
-  opacity: 0.9;
+  flex-shrink: 0;
+
+  font-size: 15px !important;
+
+  color: #76c99b;
+
+  opacity: 1;
 }
+
+.contact-info a {
+  overflow: hidden;
+
+  color: rgba(255, 255, 255, 0.68);
+
+  text-decoration: none;
+
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+
+  transition: color 0.2s ease;
+}
+
+.contact-info a:hover {
+  color: #9be3b7;
+}
+
+
+/* =========================================================
+   MAPA
+========================================================= */
+
+.footer-grid :deep(.google-map-card) {
+  width: 100%;
+  height: 115px;
+
+  overflow: hidden;
+
+  border-radius: 8px;
+}
+
+.footer-grid :deep(.google-map) {
+  width: 100%;
+  height: 115px;
+}
+
+
+/* =========================================================
+   MAPA ANTIGO / FALLBACK
+========================================================= */
 
 .location-card {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .location-map {
   position: relative;
+
   width: 100%;
-  max-width: 200px;
-  height: 140px;
-  border-radius: 18px;
+  max-width: 190px;
+
+  height: 115px;
+
+  border-radius: 9px;
+
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.06)),
-    linear-gradient(135deg, #103b63 0%, #0f4f7a 100%);
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.15),
+      rgba(255, 255, 255, 0.05)
+    ),
+    linear-gradient(
+      135deg,
+      #103b63 0%,
+      #0f4f7a 100%
+    );
+
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .location-map::before {
   content: '';
+
   position: absolute;
+
   inset: 0;
+
   background-image:
-    linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px),
-    linear-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.1) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      rgba(255, 255, 255, 0.1) 1px,
+      transparent 1px
+    );
+
   background-size: 18px 18px;
-  opacity: 0.5;
+
+  opacity: 0.45;
 }
 
 .angola-map {
   position: absolute;
+
   inset: 0;
+
   width: 100%;
   height: 100%;
-  padding: 0.4rem;
-  opacity: 0.95;
+
+  padding: 0.35rem;
+
+  opacity: 0.9;
 }
 
 .angola-map path {
   fill: rgba(127, 209, 174, 0.38);
+
   stroke: rgba(255, 255, 255, 0.85);
+
   stroke-width: 2;
+
   stroke-linejoin: round;
 }
 
 .province-marker {
   position: absolute;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   transform: translate(-50%, -50%);
 }
 
 .province-marker::before {
   content: '';
+
   display: block;
-  width: 10px;
-  height: 10px;
+
+  width: 8px;
+  height: 8px;
+
   border-radius: 50%;
+
   background: #f7b955;
+
   border: 2px solid rgba(255, 255, 255, 0.9);
-  box-shadow: 0 0 0 4px rgba(247, 185, 85, 0.24);
 }
 
 .province-marker span {
   position: absolute;
-  top: -12px;
-  left: 14px;
-  font-size: 0.54rem;
+
+  top: -11px;
+  left: 12px;
+
+  font-size: 0.48rem;
   font-weight: 700;
-  letter-spacing: 0.01rem;
+
   white-space: nowrap;
+
   color: #edf7ff;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
 }
 
-.marker-luanda { left: 49%; top: 54%; }
-.marker-bengo { left: 42%; top: 48%; }
-.marker-cuanza-norte { left: 60%; top: 48%; }
-.marker-cuanza-sul { left: 58%; top: 63%; }
-.marker-benguela { left: 64%; top: 76%; }
-.marker-huila { left: 52%; top: 84%; }
-.marker-cunene { left: 36%; top: 93%; }
-.marker-namibe { left: 26%; top: 83%; }
-.marker-malange { left: 70%; top: 42%; }
-.marker-moxico { left: 80%; top: 58%; }
-.marker-lunda-norte { left: 87%; top: 32%; }
-.marker-lunda-sul { left: 86%; top: 46%; }
-.marker-cuando-cubango { left: 74%; top: 88%; }
-.marker-bie { left: 67%; top: 66%; }
+
+/* =========================================================
+   POSIÇÕES DOS MARCADORES
+========================================================= */
+
+.marker-luanda {
+  left: 49%;
+  top: 54%;
+}
+
+.marker-bengo {
+  left: 42%;
+  top: 48%;
+}
+
+.marker-cuanza-norte {
+  left: 60%;
+  top: 48%;
+}
+
+.marker-cuanza-sul {
+  left: 58%;
+  top: 63%;
+}
+
+.marker-benguela {
+  left: 64%;
+  top: 76%;
+}
+
+.marker-huila {
+  left: 52%;
+  top: 84%;
+}
+
+.marker-cunene {
+  left: 36%;
+  top: 93%;
+}
+
+.marker-namibe {
+  left: 26%;
+  top: 83%;
+}
+
+.marker-malange {
+  left: 70%;
+  top: 42%;
+}
+
+.marker-moxico {
+  left: 80%;
+  top: 58%;
+}
+
+.marker-lunda-norte {
+  left: 87%;
+  top: 32%;
+}
+
+.marker-lunda-sul {
+  left: 86%;
+  top: 46%;
+}
+
+.marker-cuando-cubango {
+  left: 74%;
+  top: 88%;
+}
+
+.marker-bie {
+  left: 67%;
+  top: 66%;
+}
+
+
+/* =========================================================
+   FOOTER BOTTOM
+========================================================= */
 
 .footer-bottom {
   display: flex;
-  justify-content: space-between;
+
   align-items: center;
+  justify-content: space-between;
+
   gap: 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
-  margin-top: 2rem;
-  padding-top: 1.25rem;
+
+  margin-top: 1.15rem;
+
+  padding-top: 0.7rem;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .footer-bottom p {
   margin: 0;
-  color: rgba(255, 255, 255, 0.72);
-  font-size: 0.85rem;
+
+  color: rgba(255, 255, 255, 0.55);
+
+  font-size: 0.68rem;
 }
 
 .footer-legal-links {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
-  font-size: 0.85rem;
+
+  gap: 1rem;
+
+  font-size: 0.68rem;
 }
 
+.footer-legal-links a {
+  color: rgba(255, 255, 255, 0.55);
+
+  text-decoration: none;
+
+  transition: color 0.2s ease;
+}
+
+.footer-legal-links a:hover {
+  color: #9be3b7;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
 @media (max-width: 960px) {
+
+  .footer-section {
+    padding: 1.4rem 0 0.6rem;
+  }
+
+  .footer-grid :deep(.v-col) {
+    margin-bottom: 1.25rem;
+  }
+
+  .footer-bottom {
+    margin-top: 0.3rem;
+  }
+
   .brand-description {
-    max-width: none;
+    max-width: 250px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .footer-section {
+    padding: 1.25rem 0 0.5rem;
+  }
+
+  .footer-container {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .brand-logo {
+    width: 145px;
+  }
+
+  .brand-description {
+    max-width: 280px;
+
+    font-size: 0.7rem;
+  }
+
+  .footer-title {
+    margin-bottom: 0.55rem;
+  }
+
+  .footer-list li {
+    margin-bottom: 0.28rem;
+  }
+
+  .contact-list {
+    gap: 0.4rem;
+  }
+
+  .footer-grid :deep(.google-map-card),
+  .footer-grid :deep(.google-map) {
+    height: 150px;
   }
 
   .footer-bottom {
     flex-direction: column;
+
     align-items: flex-start;
+
+    gap: 0.45rem;
+
+    margin-top: 0;
+
+    padding-top: 0.65rem;
   }
 
   .footer-legal-links {
     flex-wrap: wrap;
-    gap: 0.75rem 1.25rem;
-  }
-}
 
-@media (max-width: 600px) {
-  .footer-section {
-    padding-top: 1.5rem;
-  }
-
-  .footer-main {
-    padding-top: 0;
-  }
-
-  .brand-box {
-    align-items: center;
-  }
-
-  .brand-wordmark-top {
-    font-size: 1rem;
-  }
-
-  .contact-info {
-    font-size: 0.85rem;
+    gap: 0.5rem 1rem;
   }
 }
 </style>

@@ -43,7 +43,7 @@
                 prepend-icon="mdi-send"
                 class="newsletter-btn"
               >
-                Inscrever
+                Insrever
               </v-btn>
             </div>
             <v-alert
@@ -129,7 +129,7 @@ onBeforeUnmount(() => {
 .newsletter-section {
   position: relative;
   background: transparent;
-  padding: 1rem 0;
+  padding: 0.35rem 0;
   border-top: 1px solid #e5e7eb;
   border-bottom: 1px solid #e5e7eb;
   overflow: hidden;
@@ -139,96 +139,162 @@ onBeforeUnmount(() => {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(90deg, rgba(12, 45, 76, 0.78), rgba(15, 68, 85, 0.68)),
+    linear-gradient(
+      90deg,
+      rgba(12, 45, 76, 0.78),
+      rgba(15, 68, 85, 0.68)
+    ),
     url('https://plus.unsplash.com/premium_photo-1789011763402-5decd28b09e9?q=80&w=1216&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+
   background-size: cover;
   background-position: center;
+
   z-index: 0;
 }
+
+/* =========================================================
+   VUETIFY — REMOVER ESPAÇAMENTOS PADRÃO
+========================================================= */
 
 .newsletter-section :deep(.v-container),
 .newsletter-section :deep(.v-row),
 .newsletter-section :deep(.v-col) {
   position: relative;
   z-index: 1;
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
+
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
-.newsletter-form-row {
+
+/* =========================================================
+   COLUNAS
+========================================================= */
+
+.newsletter-section :deep(.v-col) {
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  align-items: center;
 }
 
-@media (min-width: 600px) {
-  .newsletter-form-row {
-    flex-direction: row;
-    gap: 1.25rem;
-    align-items: flex-start;
-  }
+
+/* =========================================================
+   BLOCO ESQUERDO
+========================================================= */
+
+.newsletter-section :deep(.d-flex) {
+  margin-bottom: 0 !important;
+  gap: 0.65rem !important;
 }
 
-@media (max-width: 960px) {
-  .newsletter-section :deep(.v-col) {
-    padding-top: 0.5rem !important;
-    padding-bottom: 0.5rem !important;
-  }
-}
+/* =========================================================
+   ÍCONE
+========================================================= */
 
 .newsletter-icon-box {
-  width: 60px;
-  height: 60px;
-  min-width: 60px;
-  border-radius: 12px;
+  width: 42px;
+  height: 42px;
+
+  min-width: 42px;
+
+  border-radius: 8px;
+
   background: #1e3a8a;
+
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.newsletter-heading {
-  color: #ffffff;
-  font-size: 1.25rem;
-  font-weight: 600;
-  line-height: 1.3;
+.newsletter-icon-box :deep(.v-icon) {
+  font-size: 23px !important;
 }
+
+
+/* =========================================================
+   TÍTULO
+========================================================= */
+
+.newsletter-heading {
+  margin-bottom: 2px !important;
+
+  color: #ffffff;
+
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+
+/* =========================================================
+   TEXTO
+========================================================= */
 
 .newsletter-subtext {
+  margin: 0 !important;
+
   color: rgba(255, 255, 255, 0.86);
-  font-size: 0.9rem;
-  line-height: 1.5;
+
+  font-size: 0.72rem;
+  line-height: 1.35;
 }
 
-/* ==== INPUT ==== */
+
+/* =========================================================
+   FORMULÁRIO
+========================================================= */
+
+.newsletter-form-row {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+.newsletter-input {
+  margin: 0 !important;
+  flex: 1 1 560px;
+  width: 290px;
+  min-width: 0;
+  max-width: 620px;
+}
+
 .newsletter-input :deep(.v-field) {
+  min-height: 38px !important;
+
   background: #ffffff;
-  border-radius: 8px;
+
+  border-radius: 6px;
 }
 
 .newsletter-input :deep(.v-field__input) {
-  min-height: 44px;
-  padding-top: 14px !important;
+  min-height: 38px !important;
+
+  padding-top: 4px !important;
   padding-bottom: 4px !important;
+
   color: #1f2937 !important;
+
   opacity: 1 !important;
 }
 
 .newsletter-input :deep(input) {
-  color: #1f2937 !important;
+  color: #dfe5ef !important;
+
   padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 .newsletter-input :deep(.v-field__prepend-inner) {
-  color: #6b7280;
   padding-top: 0 !important;
-  align-items: center;
-}
 
-.newsletter-input :deep(.v-field--focused .v-field__prepend-inner) {
-  color: #1e3a8a;
+  align-items: center;
+
+  color: #6b7280;
 }
 
 .newsletter-input :deep(.v-label) {
@@ -238,7 +304,6 @@ onBeforeUnmount(() => {
 
 .newsletter-input :deep(.v-field--focused .v-label) {
   color: #1e3a8a !important;
-  opacity: 1 !important;
 }
 
 .newsletter-input :deep(.v-field__outline) {
@@ -246,30 +311,135 @@ onBeforeUnmount(() => {
 }
 
 .newsletter-input :deep(.v-field--focused .v-field__outline) {
-  color: #1e3a8a;
+  color: #f6f8fb;
 }
 
+
+/* =========================================================
+   BOTÃO
+========================================================= */
+
 .newsletter-btn {
-  height: 44px !important;
-  min-width: 150px;
-  border-radius: 8px !important;
+  height: 38px !important;
+  min-width: 125px;
+
+  border-radius: 6px !important;
+
+  font-size: 0.82rem;
+
   font-weight: 600;
+
   text-transform: none;
-  letter-spacing: 0.3px;
+
+  letter-spacing: 0.2px;
+
   flex-shrink: 0;
 }
 
+
+/* =========================================================
+   ALERTA
+========================================================= */
+
+.newsletter-section :deep(.v-alert) {
+  margin-top: 0.35rem !important;
+
+  padding: 4px 8px !important;
+
+  font-size: 0.75rem;
+}
+
+
+/* =========================================================
+   DESKTOP
+========================================================= */
+@media (min-width: 600px) {
+  .newsletter-form-row {
+    flex-direction: row;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .newsletter-input {
+    flex: 1 1 560px;
+    min-width: 0;
+    max-width: 620px;
+  }
+
+  .newsletter-btn {
+    flex: 0 0 150px;
+  }
+}
+
+
+/* =========================================================
+   TABLET / MOBILE
+========================================================= */
+
 @media (max-width: 960px) {
+
   .newsletter-section {
-    padding: 0.75rem 0;
+    padding: 0.5rem 0;
+  }
+
+  .newsletter-section :deep(.v-col) {
+    padding: 0 !important;
   }
 
   .newsletter-heading {
-    font-size: 1.1rem;
+    font-size: 0.95rem;
   }
 
   .newsletter-subtext {
-    font-size: 0.85rem;
+    font-size: 0.7rem;
   }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 599px) {
+
+  .newsletter-section {
+    padding: 0.6rem 12px;
+  }
+
+  .newsletter-section :deep(.v-col) {
+    margin-bottom: 0.5rem !important;
+  }
+
+  .newsletter-section :deep(.v-col:last-child) {
+    margin-bottom: 0 !important;
+  }
+
+  .newsletter-form-row {
+    flex-direction: row;
+  }
+
+  .newsletter-btn {
+    min-width: 105px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE PEQUENO
+========================================================= */
+
+@media (max-width: 430px) {
+
+  .newsletter-form-row {
+    flex-direction: column;
+  }
+
+  .newsletter-input,
+  .newsletter-btn {
+    width: 100%;
+  }
+
 }
 </style>

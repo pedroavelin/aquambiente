@@ -1,181 +1,643 @@
 <template>
-  <section id="academy" class="academy-section py-16">
-    <v-container>
-      <v-row align="stretch">
-        <!-- Left - Image -->
-        <v-col cols="12" md="4" class="mb-6 mb-md-0">
-          <v-img
-            src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=500&fit=crop"
-            height="500"
-            cover
-            class="rounded-lg"
-          />
-        </v-col>
+  <section id="academy" class="academy-section">
+    <v-container class="academy-container">
+      <div class="academy-banner">
 
-        <!-- Middle - Content -->
-        <v-col cols="12" md="4" class="mb-6 mb-md-0 px-md-4">
-          <h3 class="academy-label text-green-accent-4 font-weight-bold mb-3">
+        <!-- =====================================================
+             IMAGEM
+        ====================================================== -->
+        <div class="academy-image-wrapper">
+          <v-img
+            src="https://images.unsplash.com/photo-1552664730-d307ca884978"
+            cover
+            class="academy-image"
+          />
+        </div>
+
+        <!-- =====================================================
+             CONTEÚDO CENTRAL
+        ====================================================== -->
+        <div class="academy-content">
+
+          <h2 class="academy-title">
             ACADEMIA AQUAMBIENTE
-          </h3>
-          <h2 class="text-h4 font-weight-bold mb-4">
-            Formação Profissional para Desafios Ambientais
           </h2>
-          <p class="text-body2 text-grey-darken-1 mb-4 line-height-lg">
-            Formação profissional para especialistas em desafios ambientais e segurança.
+
+          <div class="academy-title-line"></div>
+
+          <p class="academy-description">
+            Formação profissional para capacitar pessoas e organizações
+            para os desafios ambientais e de segurança.
           </p>
 
-          <!-- Course Features -->
-          <div class="features-list">
-            <div class="feature-item mb-3">
-              <v-icon size="20" color="green-accent-4" class="mr-2">mdi-check-circle</v-icon>
-              <span class="text-body2">Cursos Certificados</span>
+          <!-- Características -->
+          <div class="academy-features">
+
+            <div class="feature-item">
+              <v-icon icon="mdi-check" />
+              <span>Cursos e Workshops</span>
             </div>
-            <div class="feature-item mb-3">
-              <v-icon size="20" color="green-accent-4" class="mr-2">mdi-check-circle</v-icon>
-              <span class="text-body2">Modalidades Online e Presencial</span>
+
+            <div class="feature-item">
+              <v-icon icon="mdi-check" />
+              <span>Certificação</span>
             </div>
-            <div class="feature-item mb-3">
-              <v-icon size="20" color="green-accent-4" class="mr-2">mdi-check-circle</v-icon>
-              <span class="text-body2">Certificação Profissional</span>
+
+            <div class="feature-item">
+              <v-icon icon="mdi-check" />
+              <span>Certificação</span>
             </div>
+
+            <div class="feature-item">
+              <v-icon icon="mdi-check" />
+              <span>Instrutores Qualificados</span>
+            </div>
+
           </div>
 
+          <!-- Botão -->
           <v-btn
-            color="green-accent-4"
-            class="text-white font-weight-bold mt-6"
-            size="large"
+            class="academy-button"
+            variant="outlined"
+            size="small"
           >
             SAIBA MAIS
           </v-btn>
-        </v-col>
 
-        <!-- Right - Courses Box -->
-        <v-col cols="12" md="4">
-          <div class="courses-box">
-            <h3 class="courses-title mb-6">PRÓXIMOS CURSOS</h3>
+        </div>
 
-            <div class="course-item mb-5" v-for="(course, index) in upcomingCourses" :key="index">
-              <div class="course-icon mb-2">
-                <v-icon size="24" color="green-accent-4">mdi-calendar-check</v-icon>
+        <!-- =====================================================
+             PRÓXIMOS CURSOS
+        ====================================================== -->
+        <div class="courses-panel">
+
+          <h3 class="courses-title">
+            PRÓXIMOS CURSOS
+          </h3>
+
+          <div class="courses-title-line"></div>
+
+          <div class="courses-list">
+
+            <div
+              v-for="(course, index) in upcomingCourses"
+              :key="index"
+              class="course-item"
+            >
+
+              <div class="course-left">
+                <div class="course-icon">
+                  <v-icon icon="mdi-calendar-outline" />
+                </div>
+
+                <span class="course-name">
+                  {{ course.name }}
+                </span>
               </div>
-              <h4 class="course-name mb-1">{{ course.name }}</h4>
-              <p class="course-date">{{ course.date }}</p>
+
+              <span class="course-date">
+                {{ course.date }}
+              </span>
+
             </div>
 
-            <v-btn
-              color="white"
-              text-color="green-accent-4"
-              class="font-weight-bold w-100"
-              size="large"
-            >
-              VER TODOS OS CURSOS →
-            </v-btn>
           </div>
-        </v-col>
-      </v-row>
+
+          <button class="all-courses">
+            VER TODOS OS CURSOS
+            <v-icon icon="mdi-arrow-right" />
+          </button>
+
+        </div>
+
+      </div>
     </v-container>
   </section>
 </template>
 
+
 <script lang="ts" setup>
+
 const upcomingCourses = [
   {
-    name: 'Gestão de Resíduos',
-    date: '24 - 26 de Ago'
+    name: 'Gestão de Resíduos Sólidos',
+    date: '24 – 26 JUN'
   },
   {
     name: 'Licenciamento Ambiental',
-    date: '09 - 09 de Set'
+    date: '01 – 03 JUL'
   },
   {
     name: 'Higiene e Segurança no Trabalho',
-    date: '18 - 17 de Out'
+    date: '15 – 17 JUL'
   }
 ]
+
 </script>
 
+
 <style scoped>
+
+/* =========================================================
+   SECTION
+========================================================= */
+
 .academy-section {
-  background: white;
+  width: 100%;
+  padding: 20px 0;
+  background: #ffffff;
 }
 
-.academy-label {
-  font-size: 0.85rem;
-  letter-spacing: 1px;
-  text-transform: uppercase;
+.academy-container {
+  max-width: 1180px !important;
+  padding: 0 12px;
 }
 
-.line-height-lg {
-  line-height: 1.6;
+
+/* =========================================================
+   BANNER PRINCIPAL
+========================================================= */
+
+.academy-banner {
+  width: 100%;
+  min-height: 265px;
+
+  display: grid;
+
+  grid-template-columns:
+    37%
+    36%
+    27%;
+
+  overflow: hidden;
+
+  border-radius: 9px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 7px 24px rgba(0, 0, 0, 0.08);
 }
 
-.features-list {
-  margin: 1.5rem 0;
+
+/* =========================================================
+   IMAGEM
+========================================================= */
+
+.academy-image-wrapper {
+  position: relative;
+
+  min-height: 265px;
+
+  overflow: hidden;
+}
+
+.academy-image {
+  width: 100%;
+  height: 100%;
+
+  min-height: 265px;
+
+  object-fit: cover;
+}
+
+
+/* =========================================================
+   CONTEÚDO CENTRAL
+========================================================= */
+
+.academy-content {
+  padding: 23px 27px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  background: #ffffff;
+}
+
+
+/* Título */
+
+.academy-title {
+  margin: 0;
+
+  color: #153b66;
+
+  font-size: 17px;
+  font-weight: 800;
+
+  line-height: 1.2;
+}
+
+
+/* Linha verde */
+
+.academy-title-line {
+  width: 30px;
+  height: 3px;
+
+  margin: 8px 0 12px;
+
+  background: #39a96b;
+
+  border-radius: 5px;
+}
+
+
+/* Descrição */
+
+.academy-description {
+  max-width: 330px;
+
+  margin: 0 0 14px;
+
+  color: #59636d;
+
+  font-size: 10.5px;
+  font-weight: 400;
+
+  line-height: 1.55;
+}
+
+
+/* =========================================================
+   FEATURES
+========================================================= */
+
+.academy-features {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  column-gap: 22px;
+  row-gap: 9px;
+
+  margin-bottom: 17px;
 }
 
 .feature-item {
   display: flex;
-  align-items: flex-start;
-  color: #333;
-  font-size: 0.9rem;
+  align-items: center;
+
+  gap: 7px;
+
+  color: #4a5055;
+
+  font-size: 10px;
+  font-weight: 500;
+
+  white-space: nowrap;
 }
 
-.courses-box {
-  background: linear-gradient(135deg, #0d3b5c 0%, #0f4a6b 100%);
-  color: white;
-  padding: 2rem;
-  border-radius: 12px;
-  height: 100%;
+.feature-item .v-icon {
+  color: #35a96a;
+
+  font-size: 17px;
+}
+
+
+/* =========================================================
+   BOTÃO
+========================================================= */
+
+.academy-button {
+  align-self: flex-start;
+
+  height: 31px !important;
+  min-height: 31px !important;
+
+  padding: 0 16px !important;
+
+  color: #398f69 !important;
+
+  border: 1px solid #8cc9ac;
+
+  border-radius: 5px;
+
+  font-size: 9px !important;
+  font-weight: 700;
+
+  letter-spacing: 0.02em;
+}
+
+
+/* =========================================================
+   PAINEL CURSOS
+========================================================= */
+
+.courses-panel {
+  min-height: 265px;
+
+  padding: 19px 17px;
+
   display: flex;
   flex-direction: column;
+
+  background: #073d70;
+
+  color: #ffffff;
 }
+
+
+/* =========================================================
+   TÍTULO CURSOS
+========================================================= */
 
 .courses-title {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: white;
-  text-transform: uppercase;
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 800;
+
+  line-height: 1.2;
 }
+
+.courses-title-line {
+  width: 30px;
+  height: 3px;
+
+  margin: 7px 0 11px;
+
+  background: #28a967;
+
+  border-radius: 5px;
+}
+
+
+/* =========================================================
+   LISTA
+========================================================= */
+
+.courses-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 6px;
+}
+
+
+/* =========================================================
+   CURSO
+========================================================= */
 
 .course-item {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding-bottom: 1.5rem;
+  min-height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 7px;
+
+  padding: 5px 7px;
+
+  border: 1px solid rgba(255, 255, 255, 0.28);
+
+  border-radius: 6px;
+
+  background: rgba(255, 255, 255, 0.025);
 }
 
-.course-item:last-child {
-  border-bottom: none;
-  padding-bottom: 1.5rem;
+
+/* lado esquerdo */
+
+.course-left {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
 }
+
+
+/* =========================================================
+   ÍCONE
+========================================================= */
 
 .course-icon {
-  width: 40px;
-  height: 40px;
-  background: rgba(102, 187, 106, 0.2);
-  border-radius: 6px;
+  width: 22px;
+  height: 22px;
+
+  flex-shrink: 0;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
+  border: 1px solid #37b574;
+
+  border-radius: 5px;
+
+  color: #43c47d;
 }
+
+.course-icon .v-icon {
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   NOME
+========================================================= */
 
 .course-name {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: white;
+  overflow: hidden;
+
+  color: #ffffff;
+
+  font-size: 8.5px;
+  font-weight: 500;
+
+  line-height: 1.25;
+
+  text-overflow: ellipsis;
 }
+
+
+/* =========================================================
+   DATA
+========================================================= */
 
 .course-date {
-  font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.7);
-  margin: 0;
+  flex-shrink: 0;
+
+  color: #ffffff;
+
+  font-size: 8px;
+  font-weight: 700;
+
+  white-space: nowrap;
 }
+
+
+/* =========================================================
+   TODOS OS CURSOS
+========================================================= */
+
+.all-courses {
+  display: flex;
+  align-items: center;
+
+  gap: 4px;
+
+  margin-top: auto;
+  padding: 8px 0 0;
+
+  border: none;
+
+  background: transparent;
+
+  color: #22a968;
+
+  font-family: inherit;
+
+  font-size: 10px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  text-align: left;
+}
+
+.all-courses .v-icon {
+  font-size: 15px;
+}
+
+
+/* =========================================================
+   HOVER
+========================================================= */
+
+.course-item {
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.course-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+
+  border-color: rgba(255, 255, 255, 0.45);
+}
+
+.academy-button {
+  transition: all 0.2s ease;
+}
+
+.academy-button:hover {
+  background: #eaf7f0 !important;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+
+  .academy-banner {
+    grid-template-columns:
+      34%
+      38%
+      28%;
+  }
+
+  .academy-content {
+    padding: 20px;
+  }
+
+  .academy-features {
+    column-gap: 10px;
+  }
+
+  .feature-item {
+    font-size: 9px;
+  }
+
+  .course-name {
+    font-size: 8px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
 
 @media (max-width: 768px) {
-  .courses-box {
-    padding: 1.5rem;
+
+  .academy-section {
+    padding: 15px;
   }
 
-  .course-item {
-    padding-bottom: 1rem;
+  .academy-banner {
+    display: flex;
+    flex-direction: column;
+
+    min-height: auto;
   }
+
+  .academy-image-wrapper {
+    width: 100%;
+    height: 230px;
+
+    min-height: 230px;
+  }
+
+  .academy-image {
+    min-height: 230px;
+  }
+
+  .academy-content {
+    padding: 25px;
+  }
+
+  .academy-title {
+    font-size: 18px;
+  }
+
+  .academy-description {
+    max-width: none;
+
+    font-size: 11px;
+  }
+
+  .feature-item {
+    font-size: 10px;
+  }
+
+  .courses-panel {
+    min-height: 265px;
+
+    padding: 22px;
+  }
+
 }
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+  .academy-features {
+    grid-template-columns: 1fr;
+  }
+
+  .course-name {
+    font-size: 9px;
+  }
+
+  .course-date {
+    font-size: 8px;
+  }
+
+}
+
 </style>

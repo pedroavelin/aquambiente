@@ -1,210 +1,462 @@
 <template>
-  <section id="waste" class="waste-section py-16">
-    <v-container>
-      <v-row align="center" class="waste-row">
-        <v-col cols="12" md="6" class="content-column">
-          <div class="section-kicker-wrap">
-            <p class="section-kicker">GESTÃO DE RESÍDUOS</p>
-            <span class="section-kicker-line" />
-          </div>
+  <section id="waste" class="waste-section">
+    <v-container class="waste-container" fluid>
+      <div class="waste-banner">
 
-          <h2 class="waste-title">DO RESÍDUO AO RECURSO.</h2>
+        <!-- CONTEÚDO -->
+        <div class="waste-content">
+          <h2 class="waste-title">
+            DO RESÍDUO AO RECURSO.
+          </h2>
 
           <p class="waste-text">
-            Promovemos a redução, reclassificação, reciclagem ambiental e oportunidades sustentáveis ao transformar resíduos em recursos valiosos.
+            Promovemos a redução, reutilização, reciclagem e valorização
+            de resíduos, transformando desafios ambientais em oportunidades
+            sustentáveis.
           </p>
 
-          <div class="process-flow">
-            <div class="flow-item">
-              <div class="flow-icon">
-                <v-icon size="28">mdi-recycle</v-icon>
-              </div>
-              <div class="flow-label">Recolha</div>
-            </div>
-
-            <div class="flow-item">
-              <div class="flow-icon">
-                <v-icon size="28">mdi-sort-ascending</v-icon>
-              </div>
-              <div class="flow-label">Triagem</div>
-            </div>
-
-            <div class="flow-item">
-              <div class="flow-icon">
-                <v-icon size="28">mdi-leaf</v-icon>
-              </div>
-              <div class="flow-label">Valorização</div>
-            </div>
-
-            <div class="flow-item">
-              <div class="flow-icon">
-                <v-icon size="28">mdi-earth</v-icon>
-              </div>
-              <div class="flow-label">Destino Final Adequado</div>
-            </div>
-          </div>
-
           <v-btn
-            class="section-cta"
-            color="green-accent-4"
-            variant="outlined"
-            size="large"
+            class="waste-button"
+            variant="flat"
+            size="small"
           >
             SAIBA MAIS SOBRE GESTÃO DE RESÍDUOS
           </v-btn>
-        </v-col>
+        </div>
 
-        <v-col cols="12" md="6">
-          <div class="image-shell">
-            <v-img
-              src="https://images.unsplash.com/photo-1532996122724-8f3c2cd83c5d?w=500&h=400&fit=crop"
-              height="420"
-              cover
-              class="waste-image"
-            />
+        <!-- PROCESSO -->
+        <div class="process-flow">
+
+          <!-- RECOLHA -->
+          <div class="process-step">
+            <div class="process-circle">
+              <v-icon icon="mdi-truck-outline" />
+            </div>
+
+            <span>Recolha</span>
           </div>
-        </v-col>
-      </v-row>
+
+          <div class="process-arrow">
+            <v-icon icon="mdi-arrow-right" />
+          </div>
+
+          <!-- TRIAGEM -->
+          <div class="process-step">
+            <div class="process-circle">
+              <v-icon icon="mdi-trash-can-outline" />
+            </div>
+
+            <span>Triagem</span>
+          </div>
+
+          <div class="process-arrow">
+            <v-icon icon="mdi-arrow-right" />
+          </div>
+
+          <!-- VALORIZAÇÃO -->
+          <div class="process-step">
+            <div class="process-circle">
+              <v-icon icon="mdi-leaf" />
+            </div>
+
+            <span>Valorização</span>
+          </div>
+
+          <div class="process-arrow">
+            <v-icon icon="mdi-arrow-right" />
+          </div>
+
+          <!-- DESTINO FINAL -->
+          <div class="process-step final-step">
+            <div class="process-circle">
+              <v-icon icon="mdi-earth" />
+            </div>
+
+            <span>
+              Destino Final<br />
+              Adequado
+            </span>
+          </div>
+        </div>
+
+        <!-- IMAGEM -->
+        <div class="waste-image-wrapper">
+          <img
+            :src="wasteImageUrl"
+            alt="Gestão de resíduos"
+            class="waste-image"
+          >
+        </div>
+
+      </div>
     </v-container>
   </section>
 </template>
 
+<script setup>
+const wasteImageUrl = 'https://images.pexels.com/photos/2219024/pexels-photo-2219024.jpeg?auto=compress&cs=tinysrgb&w=1200'
+</script>
+
 <style scoped>
+/* =========================================================
+   SECTION
+========================================================= */
+
 .waste-section {
+  width: 100%;
+  background: #fff;
+}
+
+/* =========================================================
+   BANNER
+========================================================= */
+
+.waste-banner {
   position: relative;
-  background: linear-gradient(180deg, #f8faf8 0%, #eef4ef 100%);
-  padding-block: 3.5rem;
+  width: 100%;
+  min-height: 210px;
+
+  display: grid;
+  grid-template-columns:
+    minmax(300px, 1.35fr)
+    minmax(480px, 2fr)
+    230px;
+
+  align-items: center;
+
+  overflow: hidden;
+
+  background: #005b2b;
+
+  border-radius: 8px;
+
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.10);
 }
 
-.waste-row {
-  gap: 1rem;
-}
+/* =========================================================
+   CONTENT
+========================================================= */
 
-.content-column {
-  padding-right: clamp(1rem, 3vw, 3rem);
-}
+.waste-content {
+  height: 100%;
+  padding: 28px 24px 24px 34px;
 
-.section-kicker-wrap {
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  margin-bottom: 1.25rem;
-}
+  justify-content: center;
 
-.section-kicker {
-  margin: 0;
-  color: #0d3b5c;
-  font-size: clamp(1.3rem, 2vw, 2.2rem);
-  font-weight: 800;
-  letter-spacing: -0.05em;
-  text-transform: uppercase;
-  line-height: 1;
-}
-
-.section-kicker-line {
-  display: block;
-  width: 86px;
-  height: 4px;
-  background: linear-gradient(90deg, #66bb6a, rgba(102, 187, 106, 0.5));
-  border-radius: 999px;
+  z-index: 2;
 }
 
 .waste-title {
-  margin: 0 0 1rem;
-  font-size: clamp(2rem, 2.5vw, 3rem);
+  margin: 0 0 12px;
+
+  color: #ffffff;
+
+  font-size: 20px;
   font-weight: 800;
-  line-height: 1.05;
-  letter-spacing: -0.04em;
-  color: #0f172a;
+  line-height: 1.1;
+
+  letter-spacing: -0.02em;
 }
 
 .waste-text {
-  margin: 0;
-  max-width: 34rem;
-  font-size: 1.05rem;
+  max-width: 315px;
+
+  margin: 0 0 17px;
+
+  color: rgba(255, 255, 255, 0.78);
+
+  font-size: 10.5px;
+  font-weight: 400;
   line-height: 1.7;
-  color: #4b5d67;
 }
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.waste-button {
+  align-self: flex-start;
+
+  height: 32px !important;
+  min-height: 32px !important;
+
+  padding: 0 16px !important;
+
+  color: #ffffff !important;
+  background: #16a34a !important;
+
+  border-radius: 5px;
+
+  font-size: 9px !important;
+  font-weight: 700;
+
+  letter-spacing: 0.01em;
+
+  box-shadow: none !important;
+}
+
+.waste-button:hover {
+  background: #22b455 !important;
+}
+
+/* =========================================================
+   PROCESS FLOW
+========================================================= */
 
 .process-flow {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.75rem;
-  margin: 2rem 0 1.5rem;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
-.flow-item {
+/* =========================================================
+   STEP
+========================================================= */
+
+.process-step {
+  min-width: 80px;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem;
-  min-height: 120px;
-  padding: 1rem 0.75rem;
-  background: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(13, 59, 92, 0.08);
-  border-radius: 16px;
-  box-shadow: 0 12px 24px rgba(13, 59, 92, 0.06);
+
+  gap: 7px;
+
+  color: #ffffff;
+
+  text-align: center;
 }
 
-.flow-icon {
-  width: 58px;
-  height: 58px;
-  background: linear-gradient(135deg, rgba(102, 187, 106, 0.18), rgba(102, 187, 106, 0.32));
-  border: 1px solid rgba(102, 187, 106, 0.28);
-  border-radius: 16px;
+.process-step span {
+  min-height: 27px;
+
+  color: rgba(255, 255, 255, 0.92);
+
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+/* =========================================================
+   CIRCLE
+========================================================= */
+
+.process-circle {
+  width: 70px;
+  height: 70px;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #1a7b3c;
+
+  border: 1px solid rgba(255, 255, 255, 0.28);
+
+  border-radius: 50%;
+
+  color: #ffffff;
+
+  background: rgba(0, 80, 38, 0.25);
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.03);
 }
 
-.flow-label {
-  font-size: 0.8rem;
-  font-weight: 700;
-  text-align: center;
-  line-height: 1.3;
-  color: #0d3b5c;
+.process-circle .v-icon {
+  font-size: 30px;
 }
 
-.section-cta {
-  min-width: 0;
-  border-radius: 999px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
+/* =========================================================
+   ARROWS
+========================================================= */
+
+.process-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: rgba(255, 255, 255, 0.8);
+
+  flex-shrink: 0;
 }
 
-.image-shell {
-  background: linear-gradient(180deg, rgba(102, 187, 106, 0.06), rgba(13, 59, 92, 0.02));
-  border: 1px solid rgba(13, 59, 92, 0.08);
-  border-radius: 22px;
-  padding: 0.75rem;
-  box-shadow: 0 18px 38px rgba(17, 24, 39, 0.08);
+.process-arrow .v-icon {
+  font-size: 19px;
+}
+
+/* =========================================================
+   IMAGE
+========================================================= */
+
+.waste-image-wrapper {
+  position: relative;
+  height: 100%;
+  min-height: 210px;
+  overflow: hidden;
+  border-radius: 0 8px 8px 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
 }
 
 .waste-image {
-  border-radius: 18px;
-  overflow: hidden;
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 210px;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(0.92) contrast(1.04);
 }
 
-@media (max-width: 960px) {
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1050px) {
+  .waste-banner {
+    grid-template-columns:
+      1.1fr
+      1.8fr
+      190px;
+  }
+
+  .waste-content {
+    padding-left: 24px;
+  }
+
+  .process-circle {
+    width: 60px;
+    height: 60px;
+  }
+
+  .process-circle .v-icon {
+    font-size: 26px;
+  }
+
+  .process-step {
+    min-width: 65px;
+  }
+
+  .process-arrow {
+    margin: 0 -3px;
+  }
+
+  .waste-image-wrapper,
+  .waste-image {
+    min-height: 210px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 800px) {
   .waste-section {
-    padding-block: 2.5rem;
+    padding: 15px;
   }
 
-  .content-column {
-    padding-right: 0;
-    margin-bottom: 1rem;
+  .waste-banner {
+    display: flex;
+    flex-direction: column;
+
+    min-height: auto;
+
+    border-radius: 8px;
+  }
+
+  .waste-content {
+    width: 100%;
+    padding: 28px 25px 20px;
+  }
+
+  .waste-title {
+    font-size: 21px;
+  }
+
+  .waste-text {
+    max-width: 100%;
+    font-size: 11px;
   }
 
   .process-flow {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+
+    min-height: 130px;
+
+    padding: 10px 15px 25px;
+
+    gap: 4px;
+  }
+
+  .process-circle {
+    width: 55px;
+    height: 55px;
+  }
+
+  .process-circle .v-icon {
+    font-size: 24px;
+  }
+
+  .process-step {
+    min-width: 60px;
+  }
+
+  .process-step span {
+    font-size: 9px;
+  }
+
+  .process-arrow .v-icon {
+    font-size: 16px;
+  }
+
+  .waste-image-wrapper {
+    width: 100%;
+    height: 220px;
+
+    min-height: 220px;
+
+    border-radius: 0 0 8px 8px;
+  }
+
+  .waste-image {
+    min-height: 220px;
   }
 }
 
-@media (max-width: 600px) {
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
   .process-flow {
-    grid-template-columns: 1fr;
+    gap: 1px;
+  }
+
+  .process-circle {
+    width: 48px;
+    height: 48px;
+  }
+
+  .process-circle .v-icon {
+    font-size: 21px;
+  }
+
+  .process-step {
+    min-width: 52px;
+  }
+
+  .process-step span {
+    font-size: 8px;
+  }
+
+  .process-arrow .v-icon {
+    font-size: 13px;
   }
 }
 </style>
