@@ -370,7 +370,6 @@ import companyLogo from '../assets/logo/logo2.png'
 
 .footer-grid :deep(.google-map-card) {
   width: 100%;
-  height: 115px;
 
   overflow: hidden;
 

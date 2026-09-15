@@ -1,6 +1,6 @@
 <template>
   <div class="google-map-card">
-    <div ref="mapContainer" class="google-map" />
+    <div ref="mapContainer" class="google-map"></div>
   </div>
 </template>
 
@@ -8,169 +8,322 @@
 import { onMounted, ref } from 'vue'
 
 const mapContainer = ref<HTMLElement | null>(null)
-const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY as string | undefined
 
-const angolaOutline = [
-  { lat: -4.5, lng: 12.2 },
-  { lat: -5.8, lng: 12.4 },
-  { lat: -7.3, lng: 12.8 },
-  { lat: -8.8, lng: 13.0 },
-  { lat: -9.9, lng: 13.1 },
-  { lat: -10.9, lng: 13.7 },
-  { lat: -11.3, lng: 14.6 },
-  { lat: -12.0, lng: 15.1 },
-  { lat: -12.8, lng: 15.9 },
-  { lat: -13.6, lng: 16.7 },
-  { lat: -14.2, lng: 17.1 },
-  { lat: -15.0, lng: 17.6 },
-  { lat: -15.9, lng: 17.9 },
-  { lat: -16.8, lng: 18.6 },
-  { lat: -17.5, lng: 19.4 },
-  { lat: -17.8, lng: 20.2 },
-  { lat: -17.1, lng: 20.8 },
-  { lat: -16.4, lng: 21.4 },
-  { lat: -15.3, lng: 21.9 },
-  { lat: -14.5, lng: 21.7 },
-  { lat: -13.6, lng: 21.1 },
-  { lat: -12.5, lng: 20.2 },
-  { lat: -11.5, lng: 19.5 },
-  { lat: -10.5, lng: 18.6 },
-  { lat: -9.6, lng: 17.8 },
-  { lat: -8.8, lng: 17.1 },
-  { lat: -8.0, lng: 16.2 },
-  { lat: -7.2, lng: 15.4 },
-  { lat: -6.3, lng: 14.5 },
-  { lat: -5.5, lng: 13.5 },
-  { lat: -4.9, lng: 12.8 },
-  { lat: -4.5, lng: 12.2 }
-]
+const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY as
+  | string
+  | undefined
 
-const provinceMarkers = [
-  { lat: -8.836, lng: 13.234 },
-  { lat: -8.083, lng: 13.114 },
-  { lat: -8.609, lng: 14.941 },
-  { lat: -10.96, lng: 14.851 },
-  { lat: -12.583, lng: 13.417 },
-  { lat: -12.194, lng: 15.337 },
-  { lat: -17.12, lng: 15.05 },
-  { lat: -15.208, lng: 12.154 },
-  { lat: -9.553, lng: 16.341 },
-  { lat: -11.863, lng: 19.567 },
-  { lat: -9.71, lng: 20.99 },
-  { lat: -10.787, lng: 21.994 },
-  { lat: -14.842, lng: 21.29 },
-  { lat: -12.388, lng: 17.0 }
-]
 
 const initializeMap = () => {
-  if (!mapContainer.value || !(window as any).google?.maps || !apiKey) {
+  if (
+    !mapContainer.value ||
+    !(window as any).google?.maps ||
+    !apiKey
+  ) {
     return
   }
 
   const googleMaps = (window as any).google.maps
 
+  /*
+   * =========================================================
+   * GOOGLE MAPS
+   * =========================================================
+   */
+
   const map = new googleMaps.Map(mapContainer.value, {
-center: { lat: -12.5, lng: 18.5 },
-zoom: 5,
+    center: {
+      lat: -11.8,
+      lng: 17.4
+    },
+
+    zoom: 4,
+
     disableDefaultUI: true,
+
     zoomControl: false,
-    draggable: false,
-    fullscreenControl: false,
     mapTypeControl: false,
     streetViewControl: false,
+    fullscreenControl: false,
+
+    draggable: false,
     scrollwheel: false,
+    disableDoubleClickZoom: true,
+
     gestureHandling: 'none',
-    styles: [
-      {
-        featureType: 'all',
-        elementType: 'geometry',
-        stylers: [{ color: '#cfe3f4' }]
-      },
-      {
-        featureType: 'administrative',
-        elementType: 'geometry',
-        stylers: [{ visibility: 'off' }]
-      },
-      {
-        featureType: 'road',
-        elementType: 'geometry',
-        stylers: [{ color: '#d8e8f5' }]
-      },
-      {
-        featureType: 'water',
-        elementType: 'geometry',
-        stylers: [{ color: '#b4d9f3' }]
-      },
-      {
-        featureType: 'landscape',
-        elementType: 'geometry',
-        stylers: [{ color: '#e5eef8' }]
-      },
-      {
-        featureType: 'poi',
-        elementType: 'labels',
-        stylers: [{ visibility: 'off' }]
-      },
-      {
-        featureType: 'transit',
-        elementType: 'labels',
-        stylers: [{ visibility: 'off' }]
-      }
-    ]
+
+    backgroundColor: 'transparent'
   })
 
-  new googleMaps.Polygon({
+  /*
+   * =========================================================
+   * DIVISÕES DAS PROVÍNCIAS
+   * =========================================================
+   *
+   * O Google Maps Data Layer permite carregar GeoJSON
+   * diretamente sobre o mapa.
+   */
+
+  const provincesUrl =
+    'https://raw.githubusercontent.com/sam190890/AGL-_DPA2025_SM/main/Angola_Provincias.geojson'
+
+  map.data.loadGeoJson(
+    provincesUrl,
+    null,
+    (features: any[]) => {
+      console.log(
+        `Mapa carregado: ${features.length} províncias`
+      )
+    }
+  )
+
+  /*
+   * =========================================================
+   * ESTILO DAS PROVÍNCIAS
+   * =========================================================
+   */
+
+  map.data.setStyle({
+    fillColor: '#466f82',
+    fillOpacity: 0.48,
+
+    strokeColor: '#8faebb',
+    strokeOpacity: 0.85,
+    strokeWeight: 1
+  })
+
+  /*
+   * =========================================================
+   * MARCADORES
+   * =========================================================
+   *
+   * Coordenadas aproximadas das principais zonas provinciais.
+   */
+
+  const provinceMarkers = [
+    {
+      name: 'Luanda',
+      lat: -8.8383,
+      lng: 13.2344
+    },
+
+    {
+      name: 'Bengo',
+      lat: -8.0833,
+      lng: 13.1167
+    },
+
+    {
+      name: 'Cuanza Norte',
+      lat: -9.0833,
+      lng: 14.9167
+    },
+
+    {
+      name: 'Cuanza Sul',
+      lat: -10.9667,
+      lng: 14.9167
+    },
+
+    {
+      name: 'Benguela',
+      lat: -12.5763,
+      lng: 13.4055
+    },
+
+    {
+      name: 'Huambo',
+      lat: -12.7761,
+      lng: 15.7392
+    },
+
+    {
+      name: 'Huíla',
+      lat: -14.9167,
+      lng: 13.5
+    },
+
+    {
+      name: 'Namibe',
+      lat: -15.1961,
+      lng: 12.1522
+    },
+
+    {
+      name: 'Cunene',
+      lat: -17.0667,
+      lng: 15.7333
+    },
+
+    {
+      name: 'Bié',
+      lat: -12.3833,
+      lng: 16.9333
+    },
+
+    {
+      name: 'Malanje',
+      lat: -9.5402,
+      lng: 16.341
+    },
+
+    {
+      name: 'Lunda Norte',
+      lat: -8.6,
+      lng: 20.4
+    },
+
+    {
+      name: 'Lunda Sul',
+      lat: -11.7833,
+      lng: 20.9167
+    },
+
+    {
+      name: 'Moxico',
+      lat: -11.7833,
+      lng: 19.9167
+    },
+
+    {
+      name: 'Cuando Cubango',
+      lat: -15.7833,
+      lng: 19.1167
+    },
+
+    {
+      name: 'Zaire',
+      lat: -6.2667,
+      lng: 14.2333
+    }
+  ]
+
+  /*
+   * =========================================================
+   * PIN VERDE
+   * =========================================================
+   */
+
+  const greenPin = {
+    path:
+      'M12 2C7.03 2 3 5.95 3 10.8C3 17.2 12 23 12 23C12 23 21 17.2 21 10.8C21 5.95 16.97 2 12 2Z',
+
+    fillColor: '#7ed957',
+    fillOpacity: 1,
+
+    strokeColor: '#ffffff',
+    strokeWeight: 2,
+
+    scale: 1,
+
+    anchor: new googleMaps.Point(12, 23)
+  }
+
+  /*
+   * =========================================================
+   * CRIAÇÃO DOS MARCADORES
+   * =========================================================
+   */
+
+  provinceMarkers.forEach(
+    ({ name, lat, lng }) => {
+      new googleMaps.Marker({
+        map,
+
+        position: {
+          lat,
+          lng
+        },
+
+        title: name,
+
+        icon: greenPin,
+
+        optimized: true
+      })
+    }
+  )
+
+  /*
+   * =========================================================
+   * DESTACAR LUANDA
+   * =========================================================
+   */
+
+  new googleMaps.Marker({
     map,
-    paths: angolaOutline,
-    strokeColor: '#7aa8d6',
-    strokeOpacity: 1,
-    strokeWeight: 2.5,
-    fillColor: '#a9c9e6',
-    fillOpacity: 0.45
-  })
 
-  provinceMarkers.forEach(({ lat, lng }) => {
-    new googleMaps.Marker({
-      position: { lat, lng },
-      map,
-      icon: {
-        path: googleMaps.SymbolPath.CIRCLE,
-        scale: 6,
-        fillColor: 'red',
-        fillOpacity: 1,
-        strokeColor: '#ffffff',
-        strokeWeight: 2
-      },
-      title: 'Província'
-    })
+    position: {
+      lat: -8.8383,
+      lng: 13.2344
+    },
+
+    title: 'Aquambiente - Luanda',
+
+    icon: {
+      path: googleMaps.SymbolPath.CIRCLE,
+
+      scale: 4,
+
+      fillColor: '#ffffff',
+      fillOpacity: 1,
+
+      strokeColor: '#62d68b',
+      strokeWeight: 3
+    }
   })
 }
 
+/*
+ * =========================================================
+ * CARREGAR GOOGLE MAPS
+ * =========================================================
+ */
+
 const loadGoogleMaps = () => {
   if (!apiKey) {
+    console.error(
+      'VITE_GOOGLE_MAPS_API_KEY não está configurada.'
+    )
+
     return
   }
 
   if ((window as any).google?.maps) {
     initializeMap()
+
     return
   }
 
   const scriptId = 'google-maps-script'
-  const existingScript = document.getElementById(scriptId)
+
+  const existingScript =
+    document.getElementById(scriptId)
 
   if (existingScript) {
-    existingScript.addEventListener('load', initializeMap, { once: true })
+    existingScript.addEventListener(
+      'load',
+      initializeMap,
+      { once: true }
+    )
+
     return
   }
 
-  const script = document.createElement('script')
+  const script =
+    document.createElement('script')
+
   script.id = scriptId
-  script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=googleMapsInitCallback`
+
+  script.src =
+    `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=googleMapsInitCallback`
+
   script.async = true
   script.defer = true
 
-  ;(window as any).googleMapsInitCallback = initializeMap
+  ;(window as any).googleMapsInitCallback =
+    initializeMap
+
   document.head.appendChild(script)
 }
 
@@ -180,40 +333,73 @@ onMounted(() => {
 </script>
 
 <style scoped>
+
 .google-map-card {
+  width: 100%;
+  height: 400px;
+
   display: flex;
   align-items: stretch;
   justify-content: stretch;
-  width: 100%;
-  height: clamp(160px, 18vw, 220px);
-  min-height: 160px;
+
+  overflow: hidden;
+  border-radius: 8px;
+
+  background: transparent;
 }
 
 .google-map {
   width: 100%;
   height: 100%;
-  min-height: 160px;
-  border-radius: 5px;
+
   overflow: hidden;
-  border: none;
-  box-shadow: none;
+  border-radius: 8px;
+
   background: transparent;
 }
+/* =========================================================
+   DESKTOP
+========================================================= */
 
-@media (max-width: 960px) {
-  .google-map-card,
-  .google-map {
-    min-height: 180px;
-    height: clamp(180px, 30vw, 220px);
+@media (min-width: 961px) {
+
+  .google-map-card {
+    height: 150px;
   }
+
 }
 
-@media (max-width: 600px) {
-  .google-map-card,
-  .google-map {
-    min-height: 150px;
-    height: clamp(150px, 42vw, 190px);
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 960px) {
+
+  .google-map-card {
+    height: 180px;
   }
+
+  .google-map {
+    min-height: 180px;
+  }
+
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .google-map-card {
+    height: 170px;
+  }
+
+  .google-map {
+    min-height: 170px;
+  }
+
 }
 
 </style>
