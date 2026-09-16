@@ -926,6 +926,10 @@
   .cta-btn { display: none !important; }
 }
 
+@media (max-width: 959px) {
+  .cta-btn { display: none !important; }
+}
+
 @media (max-width: 420px) {
   .contact-text { display: none; }
   .contact-link { justify-content: center; }
@@ -945,5 +949,22 @@
     transform: none !important;
   }
 }
+/* Esconder menu desktop em ecrãs < 960px */
+@media (max-width: 959px) {
+  .nav-menu {
+    display: none !important;
+  }
+}
 
+/* Garantir visibilidade do menu desktop em ecrãs ≥ 960px */
+@media (min-width: 960px) {
+  .nav-menu {
+    display: flex !important;
+  }
+}
+@media (min-width: 960px) {
+  .hamburger-btn {
+    display: none !important;
+  }
+}
 </style>
