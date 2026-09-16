@@ -1,4 +1,7 @@
 <template>
+  <!-- Scroll Progress Bar -->
+  <div class="scroll-progress" :style="{ transform: `scaleX(${scrollProgress})` }" />
+
   <!-- Top Info Bar -->
   <div class="top-bar">
     <v-container class="top-bar-container d-flex align-center justify-space-between">
@@ -9,53 +12,39 @@
           class="contact-link"
           href="tel:+244925668789"
         >
-          <v-icon icon="mdi-phone" size="x-small" />
+          <span class="icon-ring">
+            <v-icon icon="mdi-phone" size="x-small" />
+          </span>
           <span class="contact-text">+244 925 668 789</span>
         </a>
 
-        <span aria-hidden="true" class="divider">|</span>
+        <span aria-hidden="true" class="divider" />
 
         <a
           aria-label="Enviar email para Aquambiente"
           class="contact-link"
           href="mailto:geral@aquambiente.ao"
         >
-          <v-icon icon="mdi-email" size="x-small" />
+          <span class="icon-ring">
+            <v-icon icon="mdi-email" size="x-small" />
+          </span>
           <span class="contact-text">geral@aquambiente.ao</span>
         </a>
       </div>
 
       <!-- Social Media -->
       <div aria-label="Redes sociais" class="social-links d-flex align-center gap-2">
-        <span>Siga-nos</span>
+        <span class="follow-label">Siga-nos</span>
         <a
-          aria-label="Facebook"
+          v-for="s in topSocials"
+          :key="s.icon"
+          :aria-label="s.label"
           class="social-link"
-          href="https://facebook.com"
+          :href="s.href"
           rel="noopener noreferrer"
           target="_blank"
         >
-          <v-icon icon="mdi-facebook" size="x-small" />
-        </a>
-
-        <a
-          aria-label="LinkedIn"
-          class="social-link"
-          href="https://linkedin.com"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          <v-icon icon="mdi-linkedin" size="x-small" />
-        </a>
-
-        <a
-          aria-label="Instagram"
-          class="social-link"
-          href="https://instagram.com"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          <v-icon icon="mdi-instagram" size="x-small" />
+          <v-icon :icon="s.icon" size="x-small" />
         </a>
       </div>
     </v-container>
@@ -64,8 +53,9 @@
   <!-- Main Navigation Bar -->
   <v-app-bar
     class="main-navbar"
+    :class="{ 'is-scrolled': isScrolled }"
     color="white"
-    elevation="2"
+    :elevation="isScrolled ? 4 : 1"
     height="70"
   >
     <v-container class="navbar-container d-flex align-center justify-space-between">
@@ -79,79 +69,69 @@
       </router-link>
 
       <!-- Navigation Menu (Desktop) -->
-      <div class="d-none d-md-flex gap-1 nav-menu">
-        <router-link to="/" class="nav-link">
-          INÍCIO
+      <nav class="d-none d-md-flex gap-1 nav-menu" aria-label="Menu principal">
+        <router-link
+          v-for="item in navItems"
+          :key="item.label"
+          :to="item.to"
+          :href="item.href"
+          class="nav-link"
+          :class="{ 'has-children': item.children, 'is-active': isActive(item) }"
+        >
+          <span class="nav-link-label">{{ item.label }}</span>
+
+          <v-icon
+            v-if="item.children"
+            icon="mdi-chevron-down"
+            size="small"
+            class="chevron"
+          />
+
+          <!-- Dropdown -->
+          <transition name="dropdown-fade">
+            <div v-if="item.children" class="dropdown">
+              <a
+                v-for="child in item.children"
+                :key="child.label"
+                :href="child.href"
+                class="dropdown-item"
+              >
+                <v-icon :icon="child.icon" size="small" class="dropdown-icon" />
+                <span>{{ child.label }}</span>
+              </a>
+            </div>
+          </transition>
         </router-link>
+      </nav>
 
-        <div class="nav-link-group">
-          <a
-            href="#about"
-            class="nav-link"
-          >
-            EMPRESA
-            <v-icon icon="mdi-chevron-down" size="small" class="ml-1" />
-          </a>
-        </div>
-
-        <div class="nav-link-group">
-          <a
-            href="#services"
-            class="nav-link"
-          >
-            SERVIÇOS
-            <v-icon icon="mdi-chevron-down" size="small" class="ml-1" />
-          </a>
-        </div>
-
-        <a
-          href="#projects"
-          class="nav-link"
-        >
-          PROJECTOS
-        </a>
-
-        <a
-          href="#academy"
-          class="nav-link"
-        >
-          ACADEMIA
-        </a>
-
-        <a
-          href="#news"
-          class="nav-link"
-        >
-          NOTÍCIAS
-        </a>
-
-        <router-link to="/contactos" class="nav-link">
-          CONTACTOS
-        </router-link>
-      </div>
-
-      <!-- CTA Button & Mobile Menu -->
+      <!-- CTA + Mobile -->
       <div class="d-flex align-center gap-2">
         <v-btn
           rounded
           class="text-white font-weight-bold d-none d-sm-flex cta-btn"
           color="green-accent-4"
           size="small"
-          height="30"
-          elevation="10"
+          height="34"
+          elevation="4"
           variant="flat"
+          to="/contactos"
         >
-          SOLICITAR PROPOSTA
+          <span class="cta-shine" />
+          <span class="cta-text">SOLICITAR PROPOSTA</span>
         </v-btn>
 
-        <!-- Mobile Menu Button -->
         <v-btn
-          class="d-md-none"
-          icon="mdi-menu"
+          class="d-md-none hamburger-btn"
+          :class="{ 'is-open': mobileMenu }"
+          icon
           variant="text"
           aria-label="Abrir menu"
           @click="openMobileMenu"
-        />
+        >
+          <span class="hamburger">
+            <span /><span /><span />
+          </span>
+        </v-btn>
 
         <transition name="mobile-offcanvas-transition">
           <div
@@ -170,7 +150,7 @@
             <div class="drawer-header">
               <router-link to="/" class="drawer-brand" @click="closeMobileMenu">
                 <img
-                  alt="Aquambiente - Consultoria Ambiental"
+                  alt="Aquambiente"
                   class="drawer-logo"
                   src="@/assets/logo/logo2.png"
                 >
@@ -180,6 +160,7 @@
                 aria-label="Fechar menu"
                 icon="mdi-close"
                 variant="text"
+                class="drawer-close"
                 @click="closeMobileMenu"
               />
             </div>
@@ -188,12 +169,14 @@
 
             <v-list nav density="comfortable" class="mobile-nav-list">
               <v-list-item
-                v-for="item in mobileNavItems"
+                v-for="(item, i) in mobileNavItems"
                 :key="item.title"
                 :title="item.title"
                 :to="item.to"
                 :href="item.href"
                 :prepend-icon="item.icon"
+                :active="isActive(item)"
+                :style="{ '--i': i }"
                 @click="closeMobileMenu"
               />
             </v-list>
@@ -212,22 +195,14 @@
               </v-btn>
 
               <div class="drawer-info">
-                <p class="drawer-info-title">
-                  AQUAMBIENTE
-                </p>
+                <p class="drawer-info-title">AQUAMBIENTE</p>
 
-                <a
-                  class="drawer-info-link"
-                  href="tel:+244925668789"
-                >
+                <a class="drawer-info-link" href="tel:+244925668789">
                   <v-icon icon="mdi-phone" size="x-small" />
                   <span>+244 925 668 789</span>
                 </a>
 
-                <a
-                  class="drawer-info-link"
-                  href="mailto:geral@aquambiente.ao"
-                >
+                <a class="drawer-info-link" href="mailto:geral@aquambiente.ao">
                   <v-icon icon="mdi-email" size="x-small" />
                   <span>geral@aquambiente.ao</span>
                 </a>
@@ -241,52 +216,134 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref } from 'vue'
+  import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+  import { useRoute } from 'vue-router'
 
+  const route = useRoute()
   const mobileMenu = ref(false)
+  const isScrolled = ref(false)
+  const scrollProgress = ref(0)
 
-  const mobileNavItems = [
-    { title: 'INÍCIO', to: '/', icon: 'mdi-home' },
-    { title: 'EMPRESA', href: '#about', icon: 'mdi-domain' },
-    { title: 'SERVIÇOS', href: '#services', icon: 'mdi-tools' },
-    { title: 'PROJECTOS', href: '#projects', icon: 'mdi-folder-multiple-outline' },
-    { title: 'ACADEMIA', href: '#academy', icon: 'mdi-school-outline' },
-    { title: 'NOTÍCIAS', href: '#news', icon: 'mdi-newspaper-variant-outline' },
-    { title: 'CONTACTOS', to: '/contactos', icon: 'mdi-phone' },
+  const topSocials = [
+    { icon: 'mdi-facebook',  href: 'https://facebook.com',  label: 'Facebook'  },
+    { icon: 'mdi-linkedin',  href: 'https://linkedin.com',  label: 'LinkedIn'  },
+    { icon: 'mdi-instagram', href: 'https://instagram.com', label: 'Instagram' },
   ]
 
-  const openMobileMenu = () => {
-    mobileMenu.value = true
+  const navItems = [
+    { label: 'INÍCIO', to: '/' },
+    {
+      label: 'EMPRESA',
+      href: '#about',
+      children: [
+        { label: 'Quem Somos',    href: '#about',    icon: 'mdi-account-group-outline' },
+        { label: 'Missão & Visão', href: '#mission', icon: 'mdi-target' },
+        { label: 'Equipa',         href: '#team',    icon: 'mdi-account-tie-outline' },
+      ],
+    },
+    {
+      label: 'SERVIÇOS',
+      href: '#services',
+      children: [
+        { label: 'Consultoria Ambiental', href: '#services', icon: 'mdi-leaf' },
+        { label: 'Gestão de Resíduos',    href: '#services', icon: 'mdi-recycle' },
+        { label: 'Monitorização',         href: '#services', icon: 'mdi-chart-line' },
+        { label: 'Licenciamento',         href: '#services', icon: 'mdi-file-document-check-outline' },
+      ],
+    },
+    { label: 'PROJECTOS', href: '#projects' },
+    { label: 'ACADEMIA',  href: '#academy' },
+    { label: 'NOTÍCIAS',  href: '#news' },
+    { label: 'CONTACTOS', to: '/contactos' },
+  ]
+
+  const mobileNavItems = [
+    { title: 'INÍCIO',     to: '/',          icon: 'mdi-home' },
+    { title: 'EMPRESA',    href: '#about',   icon: 'mdi-domain' },
+    { title: 'SERVIÇOS',   href: '#services',icon: 'mdi-tools' },
+    { title: 'PROJECTOS',  href: '#projects',icon: 'mdi-folder-multiple-outline' },
+    { title: 'ACADEMIA',   href: '#academy', icon: 'mdi-school-outline' },
+    { title: 'NOTÍCIAS',   href: '#news',    icon: 'mdi-newspaper-variant-outline' },
+    { title: 'CONTACTOS',  to: '/contactos', icon: 'mdi-phone' },
+  ]
+
+  const isActive = (item: any) => {
+    if (item.to) {
+      return route.path === item.to
+    }
+
+    if (route.path !== '/') {
+      return false
+    }
+
+    const hrefs = [
+      item.href,
+      ...(item.children?.map((child: { href?: string }) => child.href) ?? [])
+    ].filter(Boolean)
+
+    return hrefs.includes(route.hash)
   }
 
-  const closeMobileMenu = () => {
-    mobileMenu.value = false
+  const onScroll = () => {
+    const y = window.scrollY
+    isScrolled.value = y > 30
+    const h = document.documentElement.scrollHeight - window.innerHeight
+    scrollProgress.value = h > 0 ? Math.min(y / h, 1) : 0
   }
+
+  const openMobileMenu = () => (mobileMenu.value = true)
+  const closeMobileMenu = () => (mobileMenu.value = false)
+
+  onMounted(() => {
+    window.addEventListener('scroll', onScroll, { passive: true })
+    onScroll()
+  })
+  onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
 </script>
 
 <style scoped>
+/* =========================================================
+   SCROLL PROGRESS
+========================================================= */
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 2px;
+  background: linear-gradient(90deg, #35ad72, #2ec4b6, #1f7ac2);
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  z-index: 2000;
+  transition: transform 0.15s linear;
+  box-shadow: 0 0 10px rgba(53, 173, 114, 0.6);
+}
+
+/* =========================================================
+   TOP BAR
+========================================================= */
 .top-bar {
-  background: linear-gradient(90deg, #003d7a 0%, #0d3b5c 100%);
-  color: white;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1001;
+  color: #fff;
   font-size: 0.75rem;
   line-height: 1;
-  border-bottom: 1px solid rgba(102, 187, 106, 0.3);
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1001;
+  border-bottom: 1px solid rgba(102, 187, 106, 0.35);
+  background: linear-gradient(90deg, #003d7a 0%, #0d3b5c 50%, #003d7a 100%);
+  background-size: 200% 100%;
+  animation: topbarShift 12s ease-in-out infinite alternate;
+}
+@keyframes topbarShift {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
 }
 
 .top-bar-container {
-  min-height: 25px;
+  min-height: 26px;
   padding-top: 0 !important;
   padding-bottom: 0 !important;
 }
 
-.contact-list {
-  min-width: 0;
-}
+.contact-list { min-width: 0; }
 
 .contact-link {
   display: inline-flex;
@@ -295,65 +352,102 @@
   color: inherit;
   text-decoration: none;
   white-space: nowrap;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+.contact-link:hover { color: #a5d6a7; transform: translateY(-1px); }
+
+.icon-ring {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: rgba(165, 214, 167, 0.12);
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+.contact-link:hover .icon-ring {
+  background: rgba(165, 214, 167, 0.28);
+  transform: scale(1.1);
+  animation: ringPulse 1.2s ease-in-out infinite;
+}
+@keyframes ringPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(165, 214, 167, 0.55); }
+  50%      { box-shadow: 0 0 0 6px rgba(165, 214, 167, 0); }
 }
 
-.contact-link:hover {
-  color: #a5d6a7;
-}
-
-.contact-text {
-  font-weight: 500;
-  letter-spacing: 0.3px;
-}
+.contact-text { font-weight: 500; letter-spacing: 0.3px; }
 
 .divider {
-  opacity: 0.5;
+  display: inline-block;
+  width: 1px; height: 12px;
+  background: linear-gradient(180deg, transparent, rgba(165, 214, 167, 0.7), transparent);
+  opacity: 0.8;
 }
+
+.follow-label {
+  font-size: 0.68rem;
+  opacity: 0.7;
+  letter-spacing: 0.4px;
+  margin-right: 0.15rem;
+}
+
+.social-links { gap: 0.35rem !important; }
 
 .social-link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  color: #fff;
   text-decoration: none;
-  transition: all 0.3s ease;
-  width: 12px;
-  height: 12px;
-  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 }
-
 .social-link:hover {
-  background: rgba(102, 187, 106, 0.2);
-  color: #66bb6a;
+  background: linear-gradient(135deg, #35ad72, #2ec4b6);
+  color: #fff;
+  transform: translateY(-2px) scale(1.12) rotate(-6deg);
+  box-shadow: 0 4px 12px rgba(53, 173, 114, 0.5);
 }
 
+/* =========================================================
+   MAIN NAVBAR
+========================================================= */
 .main-navbar {
   padding: 0 !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   position: fixed !important;
-  top: 25px !important;
-  left: 0;
-  right: 0;
+  top: 26px !important;
+  left: 0; right: 0;
   z-index: 1000;
+  transition: background 0.35s ease, box-shadow 0.35s ease, backdrop-filter 0.35s ease;
+}
+.main-navbar.is-scrolled {
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: saturate(180%) blur(14px);
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
+  box-shadow: 0 8px 24px rgba(0, 61, 122, 0.12) !important;
 }
 
 .navbar-container {
+  position: relative;
   height: 100%;
   padding: 0 2rem !important;
 }
 
+/* =========================================================
+   LOGO
+========================================================= */
 .logo-link {
-  text-decoration: none;
   display: flex;
   align-items: center;
-  transition: opacity 0.3s ease;
+  text-decoration: none;
   flex-shrink: 0;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-
-.logo-link:hover {
-  opacity: 0.8;
-}
+.logo-link:hover { transform: scale(1.04); }
 
 .brand-logo {
   display: block;
@@ -361,213 +455,346 @@
   height: 60px;
   object-fit: contain;
   object-position: left center;
+  transition: filter 0.4s ease;
+}
+.logo-link:hover .brand-logo {
+  filter: drop-shadow(0 4px 10px rgba(53, 173, 114, 0.35));
 }
 
+/* =========================================================
+   NAV MENU
+========================================================= */
 .nav-menu {
-  margin-left: 2rem;
+  position: absolute;
+  left: 50%;
   align-items: center;
-}
-
-.nav-link-group {
-  display: inline-flex;
-  align-items: center;
+  gap: 0.15rem !important;
+  margin-left: 0;
+  transform: translateX(-50%);
 }
 
 .nav-link {
-  text-decoration: none;
-  color: #333;
-  font-weight: 500;
-  font-size: 0.8rem;
-  transition: all 0.3s ease;
-  padding: 0.5rem 0.8rem;
-  border-radius: 4px;
+  position: relative;
   display: inline-flex;
   align-items: center;
-  letter-spacing: 0.3px;
-  position: relative;
+  padding: 0.55rem 0.85rem;
+  border-radius: 8px;
+  color: #2a3a48;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  transition: color 0.3s ease, background 0.3s ease, transform 0.3s ease;
 }
-
 .nav-link:hover {
   color: #1a7b3c;
-  background: rgba(102, 187, 106, 0.08);
+  background: rgba(102, 187, 106, 0.1);
+  transform: translateY(-1px);
 }
+
+.nav-link-label { position: relative; z-index: 1; }
 
 .nav-link::after {
   content: '';
   position: absolute;
-  bottom: -2px;
+  bottom: 4px;
   left: 50%;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #66bb6a, transparent);
+  width: 0; height: 2px;
+  background: linear-gradient(90deg, #35ad72, #2ec4b6);
+  border-radius: 2px;
   transform: translateX(-50%);
-  transition: width 0.3s ease;
+  transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.nav-link:hover::after,
+.nav-link.is-active::after { width: 55%; }
+
+.nav-link.is-active {
+  color: #1a7b3c;
+  background: rgba(102, 187, 106, 0.1);
 }
 
-.nav-link:hover::after {
-  width: 80%;
+/* Chevron */
+.chevron {
+  margin-left: 0.2rem;
+  transition: transform 0.35s ease;
+}
+.nav-link.has-children:hover .chevron { transform: rotate(180deg); }
+
+/* =========================================================
+   DROPDOWN
+========================================================= */
+.dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 220px;
+  padding: 0.4rem;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: saturate(180%) blur(14px);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 61, 122, 0.08);
+  box-shadow: 0 14px 40px rgba(0, 61, 122, 0.18);
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  z-index: 20;
 }
 
-.ml-1 {
-  margin-left: 0.25rem;
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: 8px;
+  color: #2a3a48;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  text-decoration: none;
+  transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+.dropdown-item:hover {
+  background: linear-gradient(90deg, rgba(53, 173, 114, 0.12), rgba(46, 196, 182, 0.08));
+  color: #1a7b3c;
+  transform: translateX(3px);
+}
+.dropdown-icon { color: #35ad72; }
+
+.dropdown-fade-enter-active,
+.dropdown-fade-leave-active {
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.dropdown-fade-enter-from,
+.dropdown-fade-leave-to {
+  opacity: 0;
+  transform: translateX(-50%) translateY(-8px);
 }
 
+/* =========================================================
+   CTA BUTTON
+========================================================= */
 .cta-btn {
-  font-size: 0.70rem;
-  letter-spacing: 0.5px;
-  transition: all 0.3s ease;
-  padding: 0 0.9rem !important;
+  position: relative;
+  overflow: hidden;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  padding: 0 1rem !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 6px 18px rgba(53, 173, 114, 0.35) !important;
 }
-
 .cta-btn:hover {
-  box-shadow: 0 4px 12px rgba(102, 187, 106, 0.3) !important;
   transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(53, 173, 114, 0.5) !important;
+}
+.cta-text { position: relative; z-index: 1; }
+
+/* "shine" que percorre o botão */
+.cta-shine {
+  position: absolute;
+  top: 0; left: -60%;
+  width: 40%; height: 100%;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.55) 50%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  animation: ctaShine 3.5s ease-in-out infinite;
+}
+@keyframes ctaShine {
+  0%, 55% { left: -60%; }
+  100%    { left: 130%; }
 }
 
+/* =========================================================
+   HAMBURGER (animado)
+========================================================= */
+.hamburger-btn {
+  width: 42px !important; height: 42px !important;
+  border-radius: 50% !important;
+  transition: background 0.3s ease;
+}
+.hamburger-btn:hover { background: rgba(102, 187, 106, 0.1) !important; }
+
+.hamburger {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  width: 20px; height: 16px;
+}
+.hamburger span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: #0d3b5c;
+  border-radius: 2px;
+  transition: transform 0.35s ease, opacity 0.25s ease, width 0.35s ease;
+  transform-origin: center;
+}
+.hamburger span:nth-child(2) { width: 75%; }
+
+.hamburger-btn.is-open .hamburger span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+.hamburger-btn.is-open .hamburger span:nth-child(2) {
+  opacity: 0;
+  transform: translateX(-6px);
+}
+.hamburger-btn.is-open .hamburger span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* =========================================================
+   MOBILE OFF-CANVAS
+========================================================= */
 .mobile-offcanvas-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(255, 255, 255, 0.45);
-  backdrop-filter: blur(2px);
+  background: rgba(13, 59, 92, 0.35);
+  backdrop-filter: blur(4px);
   z-index: 1300;
 }
 
 .mobile-offcanvas-panel {
   position: fixed;
-  top: 0;
-  right: 0;
-  width: min(280px, 82vw);
+  top: 0; right: 0;
+  width: min(300px, 84vw);
   height: 100vh;
   background: #ffffff;
   border-left: 1px solid rgba(0, 61, 122, 0.12);
-  box-shadow: -16px 0 28px rgba(0, 61, 122, 0.14);
+  box-shadow: -20px 0 40px rgba(0, 61, 122, 0.2);
   z-index: 1400;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .mobile-offcanvas-transition-enter-active,
 .mobile-offcanvas-transition-leave-active {
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
-
 .mobile-offcanvas-transition-enter-from,
-.mobile-offcanvas-transition-leave-to {
-  opacity: 0;
-}
-
+.mobile-offcanvas-transition-leave-to { opacity: 0; }
 .mobile-offcanvas-transition-enter-from .mobile-offcanvas-panel,
-.mobile-offcanvas-transition-leave-to .mobile-offcanvas-panel {
+.mobile-offcanvas-transition-leave-to   .mobile-offcanvas-panel {
   transform: translateX(110%);
 }
 
-.mobile-offcanvas-transition-enter-to .mobile-offcanvas-panel,
-.mobile-offcanvas-transition-leave-from .mobile-offcanvas-panel {
-  transform: translateX(0);
-}
-
+/* Header */
 .drawer-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0.85rem 1rem;
-  background: linear-gradient(90deg, rgba(0, 61, 122, 0.06), rgba(102, 187, 106, 0.08));
+  background: linear-gradient(90deg, rgba(0, 61, 122, 0.06), rgba(102, 187, 106, 0.1));
   border-bottom: 1px solid rgba(0, 61, 122, 0.08);
 }
-
-.drawer-brand {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-}
-
+.drawer-brand { display: flex; align-items: center; text-decoration: none; }
 .drawer-logo {
-  width: 150px;
-  height: 48px;
+  width: 150px; height: 48px;
   object-fit: contain;
   object-position: left center;
   filter: drop-shadow(0 4px 4px rgba(0, 61, 122, 0.08));
 }
+.drawer-close {
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+.drawer-close:hover {
+  background: rgba(102, 187, 106, 0.12) !important;
+  transform: rotate(90deg);
+}
 
+/* Lista */
 .mobile-nav-list {
   background: #ffffff;
   padding: 0.75rem 0.25rem 0.5rem;
+  flex: 1;
 }
-
 .mobile-nav-list :deep(.v-list-item) {
   margin: 0.2rem 0.5rem;
   border-radius: 14px;
-  padding: 0.12rem 0.5rem;
+  padding: 0.15rem 0.6rem;
   gap: 0.75rem;
-  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  opacity: 0;
+  transform: translateX(20px);
+  animation: itemSlideIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: calc(var(--i) * 60ms + 0.15s);
+  transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
 }
-
+@keyframes itemSlideIn {
+  to { opacity: 1; transform: translateX(0); }
+}
 .mobile-nav-list :deep(.v-list-item:hover) {
-  background: linear-gradient(90deg, rgba(102, 187, 106, 0.12), rgba(0, 61, 122, 0.04));
-  transform: translateX(-2px);
-  box-shadow: inset 0 0 0 1px rgba(102, 187, 106, 0.18);
+  background: linear-gradient(90deg, rgba(102, 187, 106, 0.14), rgba(0, 61, 122, 0.04));
+  transform: translateX(-3px);
+  box-shadow: inset 0 0 0 1px rgba(102, 187, 106, 0.2);
 }
-
 .mobile-nav-list :deep(.v-list-item__prepend) {
   display: grid;
   place-items: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  color: #1b7d44;
-  background: linear-gradient(135deg, rgba(0, 61, 122, 0.06), rgba(102, 187, 106, 0.18));
-  border-radius: 999px;
+  width: 2.5rem; height: 2.5rem;
   min-width: 2.5rem;
+  color: #1b7d44;
+  background: linear-gradient(135deg, rgba(0, 61, 122, 0.06), rgba(102, 187, 106, 0.2));
+  border-radius: 999px;
   flex-shrink: 0;
+  transition: transform 0.3s ease;
 }
-
-.mobile-nav-list :deep(.v-list-item__prepend .v-icon),
-.mobile-nav-list :deep(.v-list-item__prepend > *) {
+.mobile-nav-list :deep(.v-list-item:hover .v-list-item__prepend) {
+  transform: scale(1.08) rotate(-4deg);
+}
+.mobile-nav-list :deep(.v-list-item__prepend .v-icon) {
   display: flex !important;
   align-items: center;
   justify-content: center;
   margin: 0 auto -20px;
   font-size: 0.95rem;
-  line-height: 1;
 }
-
 .mobile-nav-list :deep(.v-list-item-title) {
   color: #0d3b5c;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.4px;
   font-weight: 700;
 }
 
+/* Footer do drawer */
 .drawer-footer {
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
-  padding: 0.5rem 1rem 1rem;
+  padding: 1rem;
   border-top: 1px solid rgba(0, 61, 122, 0.08);
-  background: rgba(255, 255, 255, 0.15);
+  background: linear-gradient(180deg, rgba(102, 187, 106, 0.04), rgba(0, 61, 122, 0.05));
 }
-
 .drawer-cta {
   font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.4px;
-  box-shadow: 0 8px 18px rgba(102, 187, 106, 0.24);
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  box-shadow: 0 10px 22px rgba(102, 187, 106, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
+.drawer-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(102, 187, 106, 0.42);
+}
 .drawer-info {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.4rem;
   padding-top: 0.75rem;
   border-top: 1px solid rgba(0, 61, 122, 0.08);
 }
-
 .drawer-info-title {
   margin: 0;
   color: #0d3b5c;
   font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
+  font-weight: 800;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
-
 .drawer-info-link {
   display: inline-flex;
   align-items: center;
@@ -578,63 +805,43 @@
   text-decoration: none;
   transition: color 0.2s ease, transform 0.2s ease;
 }
+.drawer-info-link:hover { color: #1b7d44; transform: translateX(3px); }
 
-.drawer-info-link:hover {
-  color: #1b7d44;
-  transform: translateX(2px);
-}
-
+/* =========================================================
+   RESPONSIVO
+========================================================= */
 @media (max-width: 768px) {
-  .navbar-container {
-    padding: 0 1rem !important;
-  }
-
+  .navbar-container { padding: 0 1rem !important; }
   .top-bar-container {
     padding-left: 1rem !important;
     padding-right: 1rem !important;
   }
-
-  .brand-logo {
-    width: 155px;
-    height: 52px;
-  }
-
-  .nav-menu {
-    margin-left: 0;
-  }
-
-  .top-bar {
-    font-size: 0.7rem;
-    padding: 0 !important;
-  }
-
-  .contact-list {
-    gap: 0.6rem !important;
-  }
-
-  .contact-list .contact-link:last-child {
-    display: none;
-  }
-
-  .contact-list .divider {
-    display: none;
-  }
-
-  .social-link {
-    width: 12px;
-    height: 12px;
-  }
+  .brand-logo { width: 155px; height: 52px; }
+  .nav-menu { margin-left: 0; }
+  .top-bar { font-size: 0.7rem; }
+  .contact-list { gap: 0.6rem !important; }
+  .contact-list .contact-link:last-child,
+  .contact-list .divider { display: none; }
+  .follow-label { display: none; }
 }
 
 @media (max-width: 420px) {
-  .contact-text {
-    display: none;
-  }
+  .contact-text { display: none; }
+  .contact-link { justify-content: center; }
+}
 
-  .contact-link {
-    width: 22px;
-    height: 22px;
-    justify-content: center;
+/* =========================================================
+   ACESSIBILIDADE
+========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  .top-bar,
+  .cta-shine,
+  .icon-ring,
+  .mobile-nav-list :deep(.v-list-item) {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
 </style>
