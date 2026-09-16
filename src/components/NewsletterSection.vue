@@ -1,27 +1,51 @@
+```vue
 <template>
-  <section class="newsletter-section py-0">
+  <section class="newsletter-section">
     <div class="newsletter-background" aria-hidden="true" />
-    <v-container fluid class="pa-0">
-      <v-row align="center" justify="center" class="ma-0">
-        <!-- Left - Icon and Text -->
-        <v-col cols="12" md="5" class="text-left">
-          <div class="d-flex align-center gap-4 mb-4">
-            <div class="newsletter-icon-box">
-              <v-icon size="32" color="white">mdi-email</v-icon>
-            </div>
-            <div>
-              <h3 class="newsletter-heading mb-1">Receba as nossas novidades</h3>
-              <p class="newsletter-subtext mb-0">
-                Inscreva-se à nossa Newsletter e fica dentro das nossas notícias, projectos e cursos
-              </p>
-            </div>
-          </div>
-        </v-col>
 
-        <!-- Right - Newsletter Form -->
-        <v-col cols="12" md="5">
-          <v-form ref="formRef" @submit.prevent="subscribe">
+    <v-container class="newsletter-container">
+      <div class="newsletter-layout">
+
+        <!-- =====================================================
+             BLOCO INFORMATIVO
+        ====================================================== -->
+        <div class="newsletter-info">
+
+          <div class="newsletter-icon-box">
+            <v-icon
+              icon="mdi-email"
+              size="26"
+              color="white"
+            />
+          </div>
+
+          <div class="newsletter-copy">
+            <h3 class="newsletter-heading">
+              Receba as nossas novidades
+            </h3>
+
+            <p class="newsletter-subtext">
+              Inscreva-se à nossa Newsletter e fique por dentro
+              das nossas notícias, projectos e cursos.
+            </p>
+          </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             FORMULÁRIO
+        ====================================================== -->
+        <div class="newsletter-form-wrapper">
+
+          <v-form
+            ref="formRef"
+            class="newsletter-form"
+            @submit.prevent="subscribe"
+          >
+
             <div class="newsletter-form-row">
+
               <v-text-field
                 v-model="email"
                 type="email"
@@ -32,8 +56,9 @@
                 :rules="[emailRule]"
                 required
                 prepend-inner-icon="mdi-email-outline"
-                class="newsletter-input flex-grow-1"
+                class="newsletter-input"
               />
+
               <v-btn
                 type="submit"
                 color="primary"
@@ -43,46 +68,71 @@
                 prepend-icon="mdi-send"
                 class="newsletter-btn"
               >
-                Insrever
+                Inscrever
               </v-btn>
+
             </div>
+
             <v-alert
               v-if="message"
               :type="messageType"
               density="compact"
-              class="mt-3"
               variant="tonal"
+              class="newsletter-alert"
             >
               {{ message }}
             </v-alert>
+
           </v-form>
-        </v-col>
-      </v-row>
+
+        </div>
+
+      </div>
     </v-container>
   </section>
 </template>
+
 
 <script setup>
 import { ref, computed, onBeforeUnmount } from 'vue'
 
 const formRef = ref(null)
+
 const email = ref('')
 const loading = ref(false)
+
 const message = ref('')
 const messageType = ref('success')
+
 const dismissTimer = ref(null)
 
-const emailRule = (v) => {
-  if (!v) return 'O email é obrigatório'
-  const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  return pattern.test(v) || 'Introduza um email válido'
+
+/* =========================================================
+   VALIDAÇÃO
+========================================================= */
+
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+const emailRule = (value) => {
+  if (!value) {
+    return 'O email é obrigatório'
+  }
+
+  return (
+    emailPattern.test(value) ||
+    'Introduza um email válido'
+  )
 }
 
-// Verifica se o email é válido em tempo real
+
 const isEmailValid = computed(() => {
-  const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  return pattern.test(email.value)
+  return emailPattern.test(email.value)
 })
+
+
+/* =========================================================
+   TIMER
+========================================================= */
 
 const clearDismissTimer = () => {
   if (dismissTimer.value) {
@@ -91,137 +141,204 @@ const clearDismissTimer = () => {
   }
 }
 
+
+/* =========================================================
+   SUBSCRIÇÃO
+========================================================= */
+
 const subscribe = async () => {
-  // Valida o formulário antes de continuar
+
   const { valid } = await formRef.value.validate()
-  if (!valid) return
+
+  if (!valid) {
+    return
+  }
 
   loading.value = true
   message.value = ''
+
   clearDismissTimer()
 
   try {
-    await new Promise(resolve => setTimeout(resolve, 1000))
 
-    message.value = 'Inscrição realizada com sucesso! Obrigado.'
+    await new Promise(resolve => {
+      setTimeout(resolve, 1000)
+    })
+
+    message.value =
+      'Inscrição realizada com sucesso! Obrigado.'
+
     messageType.value = 'success'
+
     email.value = ''
+
     formRef.value.resetValidation()
 
     dismissTimer.value = setTimeout(() => {
+
       message.value = ''
       messageType.value = 'success'
+
     }, 3000)
+
   } catch (error) {
-    message.value = 'Ocorreu um erro. Tente novamente mais tarde.'
+
+    message.value =
+      'Ocorreu um erro. Tente novamente mais tarde.'
+
     messageType.value = 'error'
+
   } finally {
+
     loading.value = false
+
   }
 }
+
+
+/* =========================================================
+   CLEANUP
+========================================================= */
 
 onBeforeUnmount(() => {
   clearDismissTimer()
 })
 </script>
 
+
 <style scoped>
+
+/* =========================================================
+   SECTION
+========================================================= */
+
 .newsletter-section {
   position: relative;
-  background: transparent;
-  padding: 0.35rem 0;
+
+  width: 100%;
+
+  min-height: 82px;
+
+  display: flex;
+  align-items: center;
+
+  overflow: hidden;
+
   border-top: 1px solid #e5e7eb;
   border-bottom: 1px solid #e5e7eb;
-  overflow: hidden;
 }
+
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
 
 .newsletter-background {
   position: absolute;
+
   inset: 0;
+
+  z-index: 0;
+
   background-image:
     linear-gradient(
       90deg,
-      rgba(12, 45, 76, 0.78),
-      rgba(15, 68, 85, 0.68)
+      rgba(12, 45, 76, 0.82),
+      rgba(15, 68, 85, 0.72)
     ),
     url('https://plus.unsplash.com/premium_photo-1789011763402-5decd28b09e9?q=80&w=1216&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
 
   background-size: cover;
-  background-position: center;
 
-  z-index: 0;
+  background-position:
+    center center;
+
+  background-repeat: no-repeat;
 }
 
+
 /* =========================================================
-   VUETIFY — REMOVER ESPAÇAMENTOS PADRÃO
+   CONTAINER
 ========================================================= */
 
-.newsletter-section :deep(.v-container),
-.newsletter-section :deep(.v-row),
-.newsletter-section :deep(.v-col) {
+.newsletter-container {
   position: relative;
+
   z-index: 1;
 
-  padding: 0 !important;
-  margin: 0 !important;
+  width: 100%;
+
+  max-width: 1400px !important;
+
+  margin: 0 auto;
+
+  padding-top: clamp(0.7rem, 1.5vw, 1.15rem) !important;
+  padding-bottom: clamp(0.7rem, 1.5vw, 1.15rem) !important;
+
+  padding-left: clamp(1rem, 4vw, 3.5rem) !important;
+  padding-right: clamp(1rem, 4vw, 3.5rem) !important;
 }
 
 
 /* =========================================================
-   COLUNAS
+   LAYOUT PRINCIPAL
 ========================================================= */
 
-.newsletter-section :deep(.v-col) {
-  display: flex;
+.newsletter-layout {
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(360px, 0.9fr);
+
   align-items: center;
+
+  gap: clamp(1.5rem, 4vw, 5rem);
 }
 
 
 /* =========================================================
-   BLOCO ESQUERDO
+   INFORMAÇÃO
 ========================================================= */
 
-.newsletter-section :deep(.d-flex) {
-  margin-bottom: 0 !important;
-  gap: 0.65rem !important;
+.newsletter-info {
+  min-width: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: clamp(0.65rem, 1.2vw, 1rem);
 }
+
 
 /* =========================================================
    ÍCONE
 ========================================================= */
 
 .newsletter-icon-box {
-  width: 42px;
-  height: 42px;
+  width: clamp(40px, 4vw, 46px);
+  height: clamp(40px, 4vw, 46px);
 
-  min-width: 42px;
-
-  border-radius: 8px;
-
-  background: #1e3a8a;
+  min-width: clamp(40px, 4vw, 46px);
 
   display: flex;
   align-items: center;
   justify-content: center;
-}
 
-.newsletter-icon-box :deep(.v-icon) {
-  font-size: 23px !important;
-}
+  border-radius: 9px;
 
+  background:
+    linear-gradient(
+      135deg,
+      #1e3a8a,
+      #2563a8
+    );
 
-/* =========================================================
-   TÍTULO
-========================================================= */
-
-.newsletter-heading {
-  margin-bottom: 2px !important;
-
-  color: #ffffff;
-
-  font-size: 1rem;
-  font-weight: 600;
-  line-height: 1.2;
+  box-shadow:
+    0 5px 16px rgba(0, 0, 0, 0.15);
 }
 
 
@@ -229,24 +346,76 @@ onBeforeUnmount(() => {
    TEXTO
 ========================================================= */
 
+.newsletter-copy {
+  min-width: 0;
+}
+
+.newsletter-heading {
+  margin: 0 0 3px !important;
+
+  color: #ffffff;
+
+  font-size:
+    clamp(0.9rem, 1.2vw, 1.08rem);
+
+  font-weight: 650;
+
+  line-height: 1.2;
+
+  letter-spacing: -0.01em;
+}
+
+
 .newsletter-subtext {
+  max-width: 620px;
+
   margin: 0 !important;
 
-  color: rgba(255, 255, 255, 0.86);
+  color:
+    rgba(255, 255, 255, 0.86);
 
-  font-size: 0.72rem;
-  line-height: 1.35;
+  font-size:
+    clamp(0.65rem, 0.75vw, 0.76rem);
+
+  line-height: 1.4;
 }
 
 
 /* =========================================================
-   FORMULÁRIO
+   FORM WRAPPER
+========================================================= */
+
+.newsletter-form-wrapper {
+  width: 100%;
+
+  min-width: 0;
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.newsletter-form {
+  width: 100%;
+}
+
+
+/* =========================================================
+   FORM ROW
 ========================================================= */
 
 .newsletter-form-row {
   width: 100%;
-  display: flex;
-  flex-direction: column;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    auto;
+
+  align-items: start;
+
   gap: 0.5rem;
 }
 
@@ -256,12 +425,13 @@ onBeforeUnmount(() => {
 ========================================================= */
 
 .newsletter-input {
-  margin: 0 !important;
-  flex: 1 1 560px;
-  width: 290px;
+  width: 100%;
+
   min-width: 0;
-  max-width: 620px;
+
+  margin: 0 !important;
 }
+
 
 .newsletter-input :deep(.v-field) {
   min-height: 38px !important;
@@ -270,6 +440,7 @@ onBeforeUnmount(() => {
 
   border-radius: 6px;
 }
+
 
 .newsletter-input :deep(.v-field__input) {
   min-height: 38px !important;
@@ -282,12 +453,14 @@ onBeforeUnmount(() => {
   opacity: 1 !important;
 }
 
+
 .newsletter-input :deep(input) {
-  color: #dfe5ef !important;
+  color: #1f2937 !important;
 
   padding-top: 0 !important;
   padding-bottom: 0 !important;
 }
+
 
 .newsletter-input :deep(.v-field__prepend-inner) {
   padding-top: 0 !important;
@@ -297,149 +470,345 @@ onBeforeUnmount(() => {
   color: #6b7280;
 }
 
+
 .newsletter-input :deep(.v-label) {
   color: #6b7280 !important;
+
   opacity: 1 !important;
 }
+
 
 .newsletter-input :deep(.v-field--focused .v-label) {
   color: #1e3a8a !important;
 }
 
+
 .newsletter-input :deep(.v-field__outline) {
   color: #d1d5db;
 }
 
+
 .newsletter-input :deep(.v-field--focused .v-field__outline) {
-  color: #f6f8fb;
+  color: #1e3a8a;
 }
-
-
 /* =========================================================
    BOTÃO
 ========================================================= */
 
 .newsletter-btn {
+  width: auto;
+
+  min-width: 132px;
+
   height: 38px !important;
-  min-width: 125px;
 
   border-radius: 6px !important;
 
-  font-size: 0.82rem;
+  font-size: 0.78rem;
 
-  font-weight: 600;
+  font-weight: 650;
 
   text-transform: none;
 
-  letter-spacing: 0.2px;
+  letter-spacing: 0.15px;
 
   flex-shrink: 0;
 }
 
 
 /* =========================================================
-   ALERTA
+   ALERT
 ========================================================= */
 
-.newsletter-section :deep(.v-alert) {
-  margin-top: 0.35rem !important;
+.newsletter-alert {
+  margin-top: 0.4rem !important;
 
-  padding: 4px 8px !important;
+  padding:
+    4px 8px !important;
 
-  font-size: 0.75rem;
+  font-size: 0.72rem;
+
+  border-radius: 6px;
 }
 
 
 /* =========================================================
-   DESKTOP
+   DESKTOP LARGO
+   ≥ 1280px
 ========================================================= */
-@media (min-width: 600px) {
-  .newsletter-form-row {
-    flex-direction: row;
-    gap: 0.5rem;
-    align-items: center;
+
+@media (min-width: 1280px) {
+
+  .newsletter-layout {
+    grid-template-columns:
+      minmax(0, 1.05fr)
+      minmax(420px, 0.95fr);
+
+    gap: 5rem;
   }
 
-  .newsletter-input {
-    flex: 1 1 560px;
-    min-width: 0;
-    max-width: 620px;
-  }
-
-  .newsletter-btn {
-    flex: 0 0 150px;
-  }
 }
 
 
 /* =========================================================
-   TABLET / MOBILE
+   LAPTOP
+   1024px — 1279px
 ========================================================= */
 
-@media (max-width: 960px) {
+@media (min-width: 1024px) and (max-width: 1279px) {
 
-  .newsletter-section {
-    padding: 0.5rem 0;
+  .newsletter-container {
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
   }
 
-  .newsletter-section :deep(.v-col) {
-    padding: 0 !important;
+  .newsletter-layout {
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(360px, 0.95fr);
+
+    gap: 2rem;
   }
 
   .newsletter-heading {
-    font-size: 0.95rem;
+    font-size: 0.92rem;
   }
 
   .newsletter-subtext {
-    font-size: 0.7rem;
+    font-size: 0.68rem;
+  }
+
+  .newsletter-btn {
+    min-width: 125px;
   }
 
 }
 
 
 /* =========================================================
+   TABLET HORIZONTAL
+   768px — 1023px
+========================================================= */
+
+@media (min-width: 768px) and (max-width: 1023px) {
+
+  .newsletter-container {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+  }
+
+  .newsletter-layout {
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(300px, 0.9fr);
+
+    gap: 1.5rem;
+  }
+
+  .newsletter-info {
+    gap: 0.65rem;
+  }
+
+  .newsletter-heading {
+    font-size: 0.85rem;
+  }
+
+  .newsletter-subtext {
+    font-size: 0.65rem;
+  }
+
+  .newsletter-icon-box {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+  }
+
+  .newsletter-form-row {
+    grid-template-columns:
+      minmax(0, 1fr)
+      auto;
+  }
+
+  .newsletter-btn {
+    min-width: 112px;
+
+    padding-left: 0.7rem !important;
+    padding-right: 0.7rem !important;
+  }
+
+}
+/* =========================================================
+   TABLET VERTICAL
+   600px — 767px
+========================================================= */
+
+@media (min-width: 600px) and (max-width: 767px) {
+
+  .newsletter-container {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+
+  .newsletter-layout {
+    grid-template-columns: 1fr;
+
+    gap: 0.85rem;
+  }
+
+  .newsletter-info {
+    justify-content: center;
+
+    text-align: center;
+  }
+
+  .newsletter-copy {
+    max-width: 600px;
+  }
+
+  .newsletter-subtext {
+    max-width: none;
+  }
+
+  .newsletter-form-row {
+    grid-template-columns:
+      minmax(0, 1fr)
+      auto;
+  }
+
+}
+/* =========================================================
    MOBILE
+   < 600px
 ========================================================= */
 
 @media (max-width: 599px) {
 
-  .newsletter-section {
-    padding: 0.6rem 12px;
+  .newsletter-container {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
   }
 
-  .newsletter-section :deep(.v-col) {
-    margin-bottom: 0.5rem !important;
+  .newsletter-layout {
+    grid-template-columns: 1fr;
+
+    gap: 0.85rem;
   }
 
-  .newsletter-section :deep(.v-col:last-child) {
-    margin-bottom: 0 !important;
+  .newsletter-info {
+    align-items: flex-start;
+
+    gap: 0.65rem;
+  }
+
+  .newsletter-icon-box {
+    width: 40px;
+    height: 40px;
+
+    min-width: 40px;
+  }
+
+  .newsletter-heading {
+    font-size: 0.9rem;
+  }
+
+  .newsletter-subtext {
+    font-size: 0.68rem;
+
+    line-height: 1.45;
   }
 
   .newsletter-form-row {
-    flex-direction: row;
+    grid-template-columns: 1fr;
+
+    gap: 0.45rem;
   }
 
-  .newsletter-btn {
-    min-width: 105px;
-  }
-
-}
-
-
-/* =========================================================
-   MOBILE PEQUENO
-========================================================= */
-
-@media (max-width: 430px) {
-
-  .newsletter-form-row {
-    flex-direction: column;
-  }
-
-  .newsletter-input,
-  .newsletter-btn {
+  .newsletter-input {
     width: 100%;
   }
 
+  .newsletter-btn {
+    width: 100%;
+
+    min-width: 0;
+
+    height: 40px !important;
+  }
+
 }
+
+/* =========================================================
+   MOBILE PEQUENO
+   ≤ 400px
+========================================================= */
+
+@media (max-width: 400px) {
+
+  .newsletter-container {
+    padding-left: 0.8rem !important;
+    padding-right: 0.8rem !important;
+  }
+
+  .newsletter-info {
+    gap: 0.55rem;
+  }
+
+  .newsletter-icon-box {
+    width: 36px;
+    height: 36px;
+
+    min-width: 36px;
+  }
+
+  .newsletter-icon-box :deep(.v-icon) {
+    font-size: 20px !important;
+  }
+
+  .newsletter-heading {
+    font-size: 0.84rem;
+  }
+
+  .newsletter-subtext {
+    font-size: 0.64rem;
+  }
+
+}
+/* =========================================================
+   MOBILE MUITO PEQUENO
+   ≤ 340px
+========================================================= */
+
+@media (max-width: 340px) {
+
+  .newsletter-info {
+    align-items: flex-start;
+  }
+
+  .newsletter-heading {
+    font-size: 0.8rem;
+  }
+
+  .newsletter-subtext {
+    font-size: 0.61rem;
+  }
+
+}
+/* =========================================================
+   REDUÇÃO DE MOVIMENTO
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .newsletter-section *,
+  .newsletter-section *::before,
+  .newsletter-section *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+
+}
+
 </style>
