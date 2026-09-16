@@ -227,7 +227,7 @@
     { label: 'INÍCIO', to: '/' },
     {
       label: 'EMPRESA',
-      href: '#about',
+      to: '/about',
       children: [
         { label: 'Quem Somos',    href: '#about',    icon: 'mdi-account-group-outline' },
         { label: 'Missão & Visão', href: '#mission', icon: 'mdi-target' },

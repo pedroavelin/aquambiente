@@ -460,17 +460,17 @@ onBeforeUnmount(() => observer && observer.disconnect())
 ========================================================= */
 .map-frame {
   position: relative;
-  border-radius: 10px;
+  border-radius: 0px;
   padding: 2px;
-  background: linear-gradient(135deg, rgba(53, 173, 114, 0.6), rgba(46, 196, 182, 0.35));
+  /* background: linear-gradient(135deg, rgba(53, 173, 114, 0.6), rgba(46, 196, 182, 0.35)); */
   transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 .map-frame::before {
   content: '';
   position: absolute;
   inset: -3px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #35ad72, #2ec4b6, #1f7ac2);
+  border-radius: 0px;
+  /* background: linear-gradient(135deg, #35ad72, #2ec4b6, #1f7ac2); */
   opacity: 0;
   filter: blur(10px);
   z-index: -1;
@@ -482,7 +482,7 @@ onBeforeUnmount(() => observer && observer.disconnect())
 .footer-grid :deep(.google-map-card) {
   width: 100%;
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: 0px;
 }
 .footer-grid :deep(.google-map) {
   width: 100%;

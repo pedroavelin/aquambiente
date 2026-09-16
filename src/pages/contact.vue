@@ -1,7 +1,5 @@
-```vue
 <template>
   <section class="contact-page">
-
     <!-- =========================================================
          HERO / BANNER
     ========================================================== -->
@@ -1202,22 +1200,10 @@ import GoogleAngolaMap from '@/components/GoogleAngolaMap.vue'
 
 
 .map-panel {
-  height: 420px;
-
   overflow: hidden;
-
-  padding: 8px;
-
-  background: white;
-
-  border: 1px solid rgba(13, 59, 92, 0.08);
-
-  border-radius: 25px;
-
-  box-shadow:
-    0 20px 60px rgba(13, 59, 92, 0.08);
+  background: transparent;
+  border-radius: 0px;
 }
-
 
 /* =========================================================
    TABLET

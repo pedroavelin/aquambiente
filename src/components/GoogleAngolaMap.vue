@@ -84,10 +84,10 @@ const initializeMap = () => {
    */
 
   map.data.setStyle({
-    fillColor: '#466f82',
+    fillColor: 'transparent',
     fillOpacity: 0.48,
 
-    strokeColor: '#8faebb',
+    strokeColor: 'transparent',
     strokeOpacity: 0.85,
     strokeWeight: 1
   })
@@ -343,7 +343,7 @@ onMounted(() => {
   justify-content: stretch;
 
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: 0px;
 
   background: transparent;
 }
@@ -353,7 +353,7 @@ onMounted(() => {
   height: 100%;
 
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: 0px;
 
   background: transparent;
 }
