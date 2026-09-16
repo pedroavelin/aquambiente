@@ -58,7 +58,7 @@
     :elevation="isScrolled ? 4 : 1"
     height="70"
   >
-    <v-container class="navbar-container d-flex align-center justify-space-between">
+    <v-container class="navbar-container">
       <!-- Logo -->
       <router-link to="/" class="logo-link">
         <img
@@ -69,43 +69,36 @@
       </router-link>
 
       <!-- Navigation Menu (Desktop) -->
-      <nav class="d-none d-md-flex gap-1 nav-menu" aria-label="Menu principal">
-        <router-link
-          v-for="item in navItems"
-          :key="item.label"
-          :to="item.to"
-          :href="item.href"
-          class="nav-link"
-          :class="{ 'has-children': item.children, 'is-active': isActive(item) }"
-        >
-          <span class="nav-link-label">{{ item.label }}</span>
+      <nav
+  class="nav-menu d-none d-md-flex"
+  aria-label="Menu principal"
+>
+  <router-link
+    v-for="item in navItems"
+    :key="item.label"
+    :to="item.to"
+    :href="item.href"
+    class="nav-link"
+    :class="{
+      'has-children': item.children,
+      'is-active': isActive(item)
+    }"
+  >
+    <span class="nav-link-label">
+      {{ item.label }}
+    </span>
 
-          <v-icon
-            v-if="item.children"
-            icon="mdi-chevron-down"
-            size="small"
-            class="chevron"
-          />
-
-          <!-- Dropdown -->
-          <transition name="dropdown-fade">
-            <div v-if="item.children" class="dropdown">
-              <a
-                v-for="child in item.children"
-                :key="child.label"
-                :href="child.href"
-                class="dropdown-item"
-              >
-                <v-icon :icon="child.icon" size="small" class="dropdown-icon" />
-                <span>{{ child.label }}</span>
-              </a>
-            </div>
-          </transition>
-        </router-link>
-      </nav>
+    <v-icon
+      v-if="item.children"
+      icon="mdi-chevron-down"
+      size="small"
+      class="chevron"
+    />
+  </router-link>
+</nav>
 
       <!-- CTA + Mobile -->
-      <div class="d-flex align-center gap-2">
+      <div class="navbar-actions">
         <v-btn
           rounded
           class="text-white font-weight-bold d-none d-sm-flex cta-btn"
@@ -133,7 +126,7 @@
           </span>
         </v-btn>
 
-        <transition name="mobile-offcanvas-transition">
+        <transition name="mobile-overlay-transition">
           <div
             v-if="mobileMenu"
             class="mobile-offcanvas-overlay"
@@ -141,7 +134,7 @@
           />
         </transition>
 
-        <transition name="mobile-offcanvas-transition">
+        <transition name="mobile-panel-transition">
           <aside
             v-if="mobileMenu"
             class="mobile-offcanvas-panel"
@@ -420,20 +413,35 @@
   padding: 0 !important;
   position: fixed !important;
   top: 26px !important;
-  left: 0; right: 0;
+  left: 0;
+  right: 0;
   z-index: 1000;
-  transition: background 0.35s ease, box-shadow 0.35s ease, backdrop-filter 0.35s ease;
+
+  transition:
+    background 0.35s ease,
+    box-shadow 0.35s ease,
+    backdrop-filter 0.35s ease;
 }
+
 .main-navbar.is-scrolled {
   background: rgba(255, 255, 255, 0.85) !important;
   backdrop-filter: saturate(180%) blur(14px);
   -webkit-backdrop-filter: saturate(180%) blur(14px);
-  box-shadow: 0 8px 24px rgba(0, 61, 122, 0.12) !important;
+
+  box-shadow:
+    0 8px 24px rgba(0, 61, 122, 0.12) !important;
 }
 
 .navbar-container {
-  position: relative;
+  width: 100%;
   height: 100%;
+
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+
+  column-gap: clamp(0.75rem, 1.8vw, 2rem);
+
   padding: 0 2rem !important;
 }
 
@@ -443,82 +451,161 @@
 .logo-link {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
+
   text-decoration: none;
   flex-shrink: 0;
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  transition:
+    transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-.logo-link:hover { transform: scale(1.04); }
+
+.logo-link:hover {
+  transform: scale(1.04);
+}
 
 .brand-logo {
   display: block;
+
   width: 190px;
   height: 60px;
+
   object-fit: contain;
   object-position: left center;
+
   transition: filter 0.4s ease;
 }
+
 .logo-link:hover .brand-logo {
-  filter: drop-shadow(0 4px 10px rgba(53, 173, 114, 0.35));
+  filter:
+    drop-shadow(
+      0 4px 10px rgba(53, 173, 114, 0.35)
+    );
 }
 
 /* =========================================================
    NAV MENU
 ========================================================= */
 .nav-menu {
-  position: absolute;
-  left: 50%;
+  min-width: 0;
+
+  display: flex;
   align-items: center;
-  gap: 0.15rem !important;
-  margin-left: 0;
-  transform: translateX(-50%);
+  justify-content: center;
+
+  gap: clamp(0.05rem, 0.25vw, 0.25rem);
+
+  overflow: hidden;
 }
 
 .nav-link {
   position: relative;
+
   display: inline-flex;
   align-items: center;
-  padding: 0.55rem 0.85rem;
+  justify-content: center;
+
+  flex: 0 1 auto;
+  min-width: 0;
+
+  padding:
+    0.55rem
+    clamp(0.38rem, 0.65vw, 0.85rem);
+
   border-radius: 8px;
+
   color: #2a3a48;
-  font-size: 0.78rem;
+
+  font-size: clamp(0.66rem, 0.7vw, 0.78rem);
   font-weight: 600;
-  letter-spacing: 0.5px;
+
+  letter-spacing: clamp(0.15px, 0.04vw, 0.5px);
+
   text-decoration: none;
-  transition: color 0.3s ease, background 0.3s ease, transform 0.3s ease;
+
+  white-space: nowrap;
+
+  transition:
+    color 0.3s ease,
+    background 0.3s ease,
+    transform 0.3s ease;
 }
+
 .nav-link:hover {
   color: #1a7b3c;
-  background: rgba(102, 187, 106, 0.1);
+
+  background:
+    rgba(102, 187, 106, 0.1);
+
   transform: translateY(-1px);
 }
 
-.nav-link-label { position: relative; z-index: 1; }
+.nav-link-label {
+  position: relative;
+  z-index: 1;
+}
 
 .nav-link::after {
   content: '';
+
   position: absolute;
+
   bottom: 4px;
   left: 50%;
-  width: 0; height: 2px;
-  background: linear-gradient(90deg, #35ad72, #2ec4b6);
+
+  width: 0;
+  height: 2px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #35ad72,
+      #2ec4b6
+    );
+
   border-radius: 2px;
+
   transform: translateX(-50%);
-  transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+
+  transition:
+    width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
+
 .nav-link:hover::after,
-.nav-link.is-active::after { width: 55%; }
+.nav-link.is-active::after {
+  width: 55%;
+}
 
 .nav-link.is-active {
   color: #1a7b3c;
-  background: rgba(102, 187, 106, 0.1);
+
+  background:
+    rgba(102, 187, 106, 0.1);
 }
 
-/* Chevron */
+
 .chevron {
-  margin-left: 0.2rem;
-  transition: transform 0.35s ease;
+  flex-shrink: 0;
+
+  margin-left: 0.15rem;
+
+  transition:
+    transform 0.35s ease;
 }
-.nav-link.has-children:hover .chevron { transform: rotate(180deg); }
+
+.nav-link.has-children:hover .chevron {
+  transform: rotate(180deg);
+}
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 0.5rem;
+
+  flex-shrink: 0;
+}
+
 
 /* =========================================================
    DROPDOWN
@@ -576,39 +663,41 @@
 ========================================================= */
 .cta-btn {
   position: relative;
+
+  flex-shrink: 0;
+
   overflow: hidden;
+
+  min-width: max-content;
+
   font-size: 0.7rem;
   font-weight: 800;
+
   letter-spacing: 0.6px;
+
   padding: 0 1rem !important;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 6px 18px rgba(53, 173, 114, 0.35) !important;
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+
+  box-shadow:
+    0 6px 18px rgba(53, 173, 114, 0.35) !important;
 }
+
 .cta-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(53, 173, 114, 0.5) !important;
-}
-.cta-text { position: relative; z-index: 1; }
 
-/* "shine" que percorre o botão */
-.cta-shine {
-  position: absolute;
-  top: 0; left: -60%;
-  width: 40%; height: 100%;
-  background: linear-gradient(
-    115deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.55) 50%,
-    transparent 100%
-  );
-  transform: skewX(-20deg);
-  animation: ctaShine 3.5s ease-in-out infinite;
-}
-@keyframes ctaShine {
-  0%, 55% { left: -60%; }
-  100%    { left: 130%; }
+  box-shadow:
+    0 10px 24px rgba(53, 173, 114, 0.5) !important;
 }
 
+.cta-text {
+  position: relative;
+  z-index: 1;
+
+  white-space: nowrap;
+}
 /* =========================================================
    HAMBURGER (animado)
 ========================================================= */
@@ -673,14 +762,22 @@
   flex-direction: column;
 }
 
-.mobile-offcanvas-transition-enter-active,
-.mobile-offcanvas-transition-leave-active {
+.mobile-overlay-transition-enter-active,
+.mobile-overlay-transition-leave-active {
+  transition: opacity 0.3s ease;
+}
+.mobile-overlay-transition-enter-from,
+.mobile-overlay-transition-leave-to {
+  opacity: 0;
+}
+
+.mobile-panel-transition-enter-active,
+.mobile-panel-transition-leave-active {
   transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.mobile-offcanvas-transition-enter-from,
-.mobile-offcanvas-transition-leave-to { opacity: 0; }
-.mobile-offcanvas-transition-enter-from .mobile-offcanvas-panel,
-.mobile-offcanvas-transition-leave-to   .mobile-offcanvas-panel {
+.mobile-panel-transition-enter-from,
+.mobile-panel-transition-leave-to {
+  opacity: 0;
   transform: translateX(110%);
 }
 
@@ -825,6 +922,10 @@
   .follow-label { display: none; }
 }
 
+@media (min-width: 960px) and (max-width: 1279px) {
+  .cta-btn { display: none !important; }
+}
+
 @media (max-width: 420px) {
   .contact-text { display: none; }
   .contact-link { justify-content: center; }
@@ -844,4 +945,5 @@
     transform: none !important;
   }
 }
+
 </style>
