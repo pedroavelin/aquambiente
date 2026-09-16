@@ -808,8 +808,10 @@
 /* Lista */
 .mobile-nav-list {
   background: #ffffff;
+  min-height: 0;
   padding: 0.75rem 0.25rem 0.5rem;
-  flex: 1;
+  flex: 1 1 auto;
+  overflow-y: auto;
 }
 .mobile-nav-list :deep(.v-list-item) {
   margin: 0.2rem 0.5rem;
@@ -861,8 +863,9 @@
 .drawer-footer {
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
   gap: 0.85rem;
-  padding: 1rem;
+  padding: 1rem 1rem 3rem;
   border-top: 1px solid rgba(0, 61, 122, 0.08);
   background: linear-gradient(180deg, rgba(102, 187, 106, 0.04), rgba(0, 61, 122, 0.05));
 }
