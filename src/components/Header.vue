@@ -229,7 +229,7 @@
       label: 'EMPRESA',
       to: '/about',
       children: [
-        { label: 'Quem Somos',    href: '#about',    icon: 'mdi-account-group-outline' },
+        { label: 'Quem Somos',    href: '/about',    icon: 'mdi-account-group-outline' },
         { label: 'Missão & Visão', href: '#mission', icon: 'mdi-target' },
         { label: 'Equipa',         href: '#team',    icon: 'mdi-account-tie-outline' },
       ],
@@ -252,7 +252,7 @@
 
   const mobileNavItems = [
     { title: 'INÍCIO',     to: '/',          icon: 'mdi-home' },
-    { title: 'EMPRESA',    href: '#about',   icon: 'mdi-domain' },
+    { title: 'EMPRESA',    href: 'about',   icon: 'mdi-domain' },
     { title: 'SERVIÇOS',   href: '#services',icon: 'mdi-tools' },
     { title: 'PROJECTOS',  href: '#projects',icon: 'mdi-folder-multiple-outline' },
     { title: 'ACADEMIA',   href: '#academy', icon: 'mdi-school-outline' },
@@ -506,6 +506,7 @@
   justify-content: center;
 
   flex: 0 1 auto;
+  cursor: pointer;
   min-width: 0;
 
   padding:
