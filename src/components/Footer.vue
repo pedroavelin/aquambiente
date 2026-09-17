@@ -121,13 +121,13 @@ const socials = [
 ]
 
 const navLinks = [
-  { label: 'Início',     href: '/' },
-  { label: 'Empresa',    href: '#about' },
-  { label: 'Serviços',   href: '#services' },
-  { label: 'Projectos',  href: '#projects' },
-  { label: 'Academia',   href: '#academy' },
-  { label: 'Notícias',   href: '#news' },
-  { label: 'Contactos',  to: '/contactos' },
+  { label: 'Início',     to: '/' },
+  { label: 'Empresa',    to: '/about' },
+  { label: 'Serviços',   to: { path: '/', hash: '#services' } },
+  { label: 'Projectos',  to: { path: '/', hash: '#projects' } },
+  { label: 'Academia',   to: { path: '/', hash: '#academy' } },
+  { label: 'Notícias',   to: { path: '/', hash: '#news' } },
+  { label: 'Contactos', to: '/contactos' },
 ]
 
 const services = [

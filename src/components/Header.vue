@@ -77,7 +77,6 @@
     v-for="item in navItems"
     :key="item.label"
     :to="item.to"
-    :href="item.href"
     class="nav-link"
     :class="{
       'has-children': item.children,
@@ -166,7 +165,6 @@
                 :key="item.title"
                 :title="item.title"
                 :to="item.to"
-                :href="item.href"
                 :prepend-icon="item.icon"
                 :active="isActive(item)"
                 :style="{ '--i': i }"
@@ -229,40 +227,48 @@
       label: 'EMPRESA',
       to: '/about',
       children: [
-        { label: 'Quem Somos',    href: '/about',    icon: 'mdi-account-group-outline' },
-        { label: 'Missão & Visão', href: '#mission', icon: 'mdi-target' },
-        { label: 'Equipa',         href: '#team',    icon: 'mdi-account-tie-outline' },
+        { label: 'Quem Somos',    to: '/about',    icon: 'mdi-account-group-outline' },
+        { label: 'Missão & Visão', to: { path: '/', hash: '#mission' }, icon: 'mdi-target' },
+        { label: 'Equipa',         to: { path: '/', hash: '#team' },    icon: 'mdi-account-tie-outline' },
       ],
     },
     {
       label: 'SERVIÇOS',
-      href: '#services',
+      to: { path: '/', hash: '#services' },
       children: [
-        { label: 'Consultoria Ambiental', href: '#services', icon: 'mdi-leaf' },
-        { label: 'Gestão de Resíduos',    href: '#services', icon: 'mdi-recycle' },
-        { label: 'Monitorização',         href: '#services', icon: 'mdi-chart-line' },
-        { label: 'Licenciamento',         href: '#services', icon: 'mdi-file-document-check-outline' },
+        { label: 'Consultoria Ambiental', to: { path: '/', hash: '#services' }, icon: 'mdi-leaf' },
+        { label: 'Gestão de Resíduos',    to: { path: '/', hash: '#services' }, icon: 'mdi-recycle' },
+        { label: 'Monitorização',         to: { path: '/', hash: '#services' }, icon: 'mdi-chart-line' },
+        { label: 'Licenciamento',         to: { path: '/', hash: '#services' }, icon: 'mdi-file-document-check-outline' },
       ],
     },
-    { label: 'PROJECTOS', href: '#projects' },
-    { label: 'ACADEMIA',  href: '#academy' },
-    { label: 'NOTÍCIAS',  href: '#news' },
+    { label: 'PROJECTOS', to: { path: '/', hash: '#projects' } },
+    { label: 'ACADEMIA',  to: { path: '/', hash: '#academy' } },
+    { label: 'NOTÍCIAS',  to: { path: '/', hash: '#news' } },
     { label: 'CONTACTOS', to: '/contactos' },
   ]
 
   const mobileNavItems = [
     { title: 'INÍCIO',     to: '/',          icon: 'mdi-home' },
     { title: 'EMPRESA',    to: '/about',     icon: 'mdi-domain' },
-    { title: 'SERVIÇOS',   href: '#services',icon: 'mdi-tools' },
-    { title: 'PROJECTOS',  href: '#projects',icon: 'mdi-folder-multiple-outline' },
-    { title: 'ACADEMIA',   href: '#academy', icon: 'mdi-school-outline' },
-    { title: 'NOTÍCIAS',   href: '#news',    icon: 'mdi-newspaper-variant-outline' },
+    { title: 'SERVIÇOS',   to: { path: '/', hash: '#services' }, icon: 'mdi-tools' },
+    { title: 'PROJECTOS',  to: { path: '/', hash: '#projects' }, icon: 'mdi-folder-multiple-outline' },
+    { title: 'ACADEMIA',   to: { path: '/', hash: '#academy' }, icon: 'mdi-school-outline' },
+    { title: 'NOTÍCIAS',   to: { path: '/', hash: '#news' }, icon: 'mdi-newspaper-variant-outline' },
     { title: 'CONTACTOS',  to: '/contactos', icon: 'mdi-phone' },
   ]
 
   const isActive = (item: any) => {
-    if (item.to) {
-      return route.path === item.to
+    const target = item.to
+
+    if (typeof target === 'string') {
+      return route.path === target
+    }
+
+    if (target && typeof target === 'object') {
+      const pathMatches = route.path === target.path
+      const hashMatches = target.hash ? route.hash === target.hash : true
+      return pathMatches && hashMatches
     }
 
     if (route.path !== '/') {
@@ -271,7 +277,7 @@
 
     const hrefs = [
       item.href,
-      ...(item.children?.map((child: { href?: string }) => child.href) ?? [])
+      ...(item.children?.map((child: { href?: string; to?: string | { path?: string; hash?: string } }) => child.href ?? (typeof child.to === 'object' ? child.to.hash : child.to)) ?? [])
     ].filter(Boolean)
 
     return hrefs.includes(route.hash)
@@ -953,6 +959,61 @@
     transform: none !important;
   }
 }
+
+/* ============================================================
+   PARTNERS STRIP — MOBILE (rotação contínua garantida)
+============================================================ */
+
+/* Impede que o "toque" pause a animação em ecrãs táteis.
+   Em mobile não há hover real, mas o :active pode disparar
+   acidentalmente durante o scroll da página. */
+@media (hover: none) {
+  .partners-strip:hover .partners-strip__track,
+  .partners-strip:active .partners-strip__track {
+    animation-play-state: running !important;
+  }
+}
+
+/* Ajustes visuais em mobile, mantendo a animação ativa */
+@media (max-width: 780px) {
+  .partners-strip {
+    padding: 20px 0;
+    /* mantém o fade lateral, mas mais suave */
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+
+  .partners-strip__group {
+    gap: 36px;
+    padding-right: 36px;
+  }
+
+  .partner {
+    gap: 8px;
+    font-size: .78rem;
+  }
+
+  .partner :deep(.v-icon) {
+    font-size: 22px;
+  }
+
+  /* Rotação um pouco mais rápida em ecrãs pequenos
+     (o percurso é menor, por isso compensa) */
+  .partners-strip__track {
+    animation-duration: 26s;
+    animation-play-state: running !important;
+  }
+}
+
+/* Garante também que "reduzir movimento" NÃO desativa
+   a rotação, caso queiras forçar sempre.
+   (Remove este bloco se preferires respeitar a acessibilidade) */
+@media (prefers-reduced-motion: reduce) {
+  .partners-strip__track {
+    animation: partners-scroll 26s linear infinite !important;
+  }
+}
+
 /* Esconder menu desktop em ecrãs < 960px */
 @media (max-width: 959px) {
   .nav-menu {
