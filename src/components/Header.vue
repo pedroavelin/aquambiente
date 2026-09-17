@@ -252,7 +252,7 @@
 
   const mobileNavItems = [
     { title: 'INÍCIO',     to: '/',          icon: 'mdi-home' },
-    { title: 'EMPRESA',    href: 'about',   icon: 'mdi-domain' },
+    { title: 'EMPRESA',    href: '/about',   icon: 'mdi-domain' },
     { title: 'SERVIÇOS',   href: '#services',icon: 'mdi-tools' },
     { title: 'PROJECTOS',  href: '#projects',icon: 'mdi-folder-multiple-outline' },
     { title: 'ACADEMIA',   href: '#academy', icon: 'mdi-school-outline' },
