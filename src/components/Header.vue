@@ -1,7 +1,6 @@
 <template>
   <!-- Scroll Progress Bar -->
   <div class="scroll-progress" :style="{ transform: `scaleX(${scrollProgress})` }" />
-
   <!-- Top Info Bar -->
   <div class="top-bar">
     <v-container class="top-bar-container d-flex align-center justify-space-between">
@@ -17,9 +16,7 @@
           </span>
           <span class="contact-text">+244 925 668 789</span>
         </a>
-
         <span aria-hidden="true" class="divider" />
-
         <a
           aria-label="Enviar email para Aquambiente"
           class="contact-link"
@@ -31,7 +28,6 @@
           <span class="contact-text">geral@aquambiente.ao</span>
         </a>
       </div>
-
       <!-- Social Media -->
       <div aria-label="Redes sociais" class="social-links d-flex align-center gap-2">
         <span class="follow-label">Siga-nos</span>
@@ -49,7 +45,6 @@
       </div>
     </v-container>
   </div>
-
   <!-- Main Navigation Bar -->
   <v-app-bar
     class="main-navbar"
@@ -67,7 +62,6 @@
           src="@/assets/logo/logo2.png"
         >
       </router-link>
-
       <!-- Navigation Menu (Desktop) -->
       <nav
   class="nav-menu d-none d-md-flex"
@@ -89,13 +83,11 @@
 
     <v-icon
       v-if="item.children"
-      icon="mdi-chevron-down"
       size="small"
       class="chevron"
     />
   </router-link>
 </nav>
-
       <!-- CTA + Mobile -->
       <div class="navbar-actions">
         <v-btn
@@ -207,7 +199,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+  import { ref, onMounted, onBeforeUnmount } from 'vue'
   import { useRoute } from 'vue-router'
 
   const route = useRoute()
@@ -216,9 +208,9 @@
   const scrollProgress = ref(0)
 
   const topSocials = [
-    { icon: 'mdi-facebook',  href: 'https://facebook.com',  label: 'Facebook'  },
-    { icon: 'mdi-linkedin',  href: 'https://linkedin.com',  label: 'LinkedIn'  },
-    { icon: 'mdi-instagram', href: 'https://instagram.com', label: 'Instagram' },
+    { icon: 'mdi-facebook',  href: '#',  label: 'Facebook'  },
+    { icon: 'mdi-linkedin',  href: '#',  label: 'LinkedIn'  },
+    { icon: 'mdi-instagram', href: '#', label: 'Instagram' },
   ]
 
   const navItems = [
@@ -299,7 +291,6 @@
   })
   onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
 </script>
-
 <style scoped>
 /* =========================================================
    SCROLL PROGRESS

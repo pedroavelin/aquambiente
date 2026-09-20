@@ -1,4 +1,3 @@
-```vue
 <template>
   <section id="projects" class="projects-section py-16">
     <v-container>

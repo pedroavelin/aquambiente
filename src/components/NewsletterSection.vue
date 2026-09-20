@@ -1,4 +1,3 @@
-```vue
 <template>
   <section class="newsletter-section">
     <div class="newsletter-background" aria-hidden="true" />
