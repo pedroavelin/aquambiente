@@ -33,26 +33,7 @@
       </div>
     </section>
 
-    <!-- ================= PARTNERS STRIP ================= -->
-    <section class="partners-strip" aria-label="Parceiros">
-      <div class="partners-strip__track">
-        <div
-          v-for="(group, g) in [0, 1]"
-          :key="g"
-          class="partners-strip__group"
-          :aria-hidden="g === 1 ? 'true' : 'false'"
-        >
-          <div
-            v-for="p in partners"
-            :key="`${g}-${p.label}`"
-            class="partner"
-          >
-            <v-icon size="26">{{ p.icon }}</v-icon>
-            <span>{{ p.label }}</span>
-          </div>
-        </div>
-      </div>
-    </section>
+    <PartnersStrip />
 
     <AboutSection />
 
@@ -243,6 +224,7 @@
 
 <script lang="ts" setup>
   import AboutSection from '@/components/AboutSection.vue'
+  import PartnersStrip from '@/components/PartnersStrip.vue'
 
   const services = [
     { title: 'Consultoria Ambiental', icon: 'mdi-leaf-circle-outline', description: 'Apoio técnico especializado para empresas e organizações na gestão das suas responsabilidades ambientais.', items: ['Estudo de Impacto Ambiental', 'Auditoria Ambiental', 'Plano de Gestão de Resíduos'] },
@@ -260,18 +242,6 @@
     { title: 'Missão', icon: 'mdi-target', description: 'Prestar serviços ambientais de qualidade, contribuindo para a proteção do ambiente e um desenvolvimento sustentável.' },
     { title: 'Visão', icon: 'mdi-eye-outline', description: 'Ser uma referência na prestação de serviços ambientais, reconhecida pelo profissionalismo e responsabilidade.' },
     { title: 'Valores', icon: 'mdi-hand-heart-outline', description: 'Responsabilidade, ética, qualidade, inovação e respeito pelas pessoas e pelo meio ambiente.' },
-  ]
-  const partners = [
-    { label: 'Ministério do Ambiente', icon: 'mdi-bank-outline' },
-    { label: 'INEMA', icon: 'mdi-shield-leaf-outline' },
-    { label: 'Angola Cables', icon: 'mdi-server-network' },
-    { label: 'Sonangol', icon: 'mdi-oil' },
-    { label: 'Unitel', icon: 'mdi-signal-cellular-outline' },
-    { label: 'Banco BAI', icon: 'mdi-bank' },
-    { label: 'Refriango', icon: 'mdi-bottle-soda-outline' },
-    { label: 'Cuca', icon: 'mdi-beer-outline' },
-    { label: 'TAAG', icon: 'mdi-airplane' },
-    { label: 'Porto de Luanda', icon: 'mdi-anchor' },
   ]
 </script>
 
@@ -312,7 +282,7 @@
   display: flex;
   align-items: center;
   overflow: hidden;
-  background-image: url("https://images.unsplash.com/photo-1538300342682-cf57afb97285?auto=format&fit=crop&w=2000&q=85");
+  background-image: url("src/assets/empresa/banner-emp.jpeg");
   background-size: cover;
   background-position: center 55%;
   animation: riseIn 0.8s ease-out both;
@@ -366,68 +336,6 @@ em {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-}
-
-/* ============================================================
-   PARTNERS STRIP
-============================================================ */
-.partners-strip {
-  position: relative;
-  overflow: hidden;
-  background: #ffffff;
-  border-bottom: 1px solid var(--line);
-  padding: 28px 0;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
-}
-
-.partners-strip__track {
-  display: flex;
-  width: max-content;
-  animation: partners-scroll 38s linear infinite;
-}
-
-.partners-strip:hover .partners-strip__track {
-  animation-play-state: paused;
-}
-
-.partners-strip__group {
-  display: flex;
-  align-items: center;
-  gap: 56px;
-  padding-right: 56px;
-}
-
-.partner {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  color: var(--muted-2);
-  font-size: .86rem;
-  font-weight: 600;
-  letter-spacing: .02em;
-  white-space: nowrap;
-  opacity: .7;
-  transition: color .35s ease, opacity .35s ease, transform .35s ease;
-}
-
-.partner:hover {
-  color: var(--brand);
-  opacity: 1;
-  transform: translateY(-2px);
-}
-
-.partner :deep(.v-icon) {
-  color: inherit;
-}
-
-@keyframes partners-scroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .partners-strip__track { animation: none; }
 }
 
 /* ============================================================

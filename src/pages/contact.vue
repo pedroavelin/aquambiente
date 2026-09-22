@@ -490,11 +490,10 @@ import GoogleAngolaMap from '@/components/GoogleAngolaMap.vue'
 
   overflow: hidden;
 
-  background-image:
-    url("https://images.unsplash.com/photo-1538300342682-cf57afb97285?auto=format&fit=crop&w=2000&q=85");
+  background-image: url("/src/assets/contact/ct1.jpg");
 
-  background-size: cover;
-  background-position: center 55%;
+  background-size: contain;
+  background-position: center;
   animation: fadeUp 0.8s ease-out both;
 }
 

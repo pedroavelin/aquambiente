@@ -87,7 +87,7 @@
       </div>
     </v-container>
 
-    <PartnersStrip :partners="partners" />
+    <PartnersStrip />
   </section>
 </template>
 
@@ -139,17 +139,6 @@
     },
   ]
 
-  const partners = [
-    { label: 'Ministério do Ambiente', icon: 'mdi-bank-outline' },
-    { label: 'INEMA', icon: 'mdi-shield-leaf-outline' },
-    { label: 'Angola Cables', icon: 'mdi-server-network' },
-    { label: 'Sonangol', icon: 'mdi-oil' },
-    { label: 'Unitel', icon: 'mdi-signal-cellular-outline' },
-    { label: 'Banco BAI', icon: 'mdi-bank' },
-    { label: 'Refriango', icon: 'mdi-bottle-soda-outline' },
-    { label: 'TAAG', icon: 'mdi-airplane' },
-    { label: 'Porto de Luanda', icon: 'mdi-anchor' },
-  ]
 </script>
 
 <style scoped>
