@@ -160,7 +160,7 @@
                 :prepend-icon="item.icon"
                 :active="isActive(item)"
                 :style="{ '--i': i }"
-                @click="closeMobileMenu"
+                @click="handleMobileNav(item)"
               />
             </v-list>
 
@@ -200,9 +200,10 @@
 
 <script lang="ts" setup>
   import { ref, onMounted, onBeforeUnmount } from 'vue'
-  import { useRoute } from 'vue-router'
+  import { useRoute, useRouter } from 'vue-router'
 
   const route = useRoute()
+  const router = useRouter()
   const mobileMenu = ref(false)
   const isScrolled = ref(false)
   const scrollProgress = ref(0)
@@ -250,6 +251,22 @@
     { title: 'CONTACTOS',  to: '/contactos', icon: 'mdi-phone' },
   ]
 
+  const navigateToRoute = (target: string | { path?: string; hash?: string }) => {
+    if (typeof target === 'string') {
+      router.push(target)
+      return
+    }
+
+    if (target?.path && target.path !== route.path) {
+      router.push(target)
+      return
+    }
+
+    if (target?.hash) {
+      router.push({ path: route.path, hash: target.hash })
+    }
+  }
+
   const isActive = (item: any) => {
     const target = item.to
 
@@ -280,6 +297,13 @@
     isScrolled.value = y > 30
     const h = document.documentElement.scrollHeight - window.innerHeight
     scrollProgress.value = h > 0 ? Math.min(y / h, 1) : 0
+  }
+
+  const handleMobileNav = (item: any) => {
+    closeMobileMenu()
+
+    if (!item?.to) return
+    navigateToRoute(item.to)
   }
 
   const openMobileMenu = () => (mobileMenu.value = true)
