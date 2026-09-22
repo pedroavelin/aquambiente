@@ -124,8 +124,8 @@ const navLinks = [
   { label: 'Início',     to: '/' },
   { label: 'Empresa',    to: '/about' },
   { label: 'Serviços',   to: { path: '/', hash: '#services' } },
-  { label: 'Projectos',  to: { path: '/', hash: '#projects' } },
-  { label: 'Academia',   to: { path: '/', hash: '#academy' } },
+  { label: 'Projectos',  to: '/projects' },
+  { label: 'Academia',   to: '/academia' },
   { label: 'Notícias',   to: { path: '/', hash: '#news' } },
   { label: 'Contactos', to: '/contactos' },
 ]

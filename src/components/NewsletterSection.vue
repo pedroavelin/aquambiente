@@ -1,5 +1,5 @@
 <template>
-  <section class="newsletter-section">
+  <section id="news" class="newsletter-section">
     <div class="newsletter-background" aria-hidden="true" />
 
     <v-container class="newsletter-container">

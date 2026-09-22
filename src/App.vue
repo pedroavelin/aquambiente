@@ -17,4 +17,8 @@
 .main-content {
   padding-top: 95px !important;
 }
+
+:deep(section[id]) {
+  scroll-margin-top: 110px;
+}
 </style>

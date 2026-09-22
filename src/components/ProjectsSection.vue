@@ -1,349 +1,291 @@
 <template>
-  <section id="projects" class="projects-section py-16">
-    <v-container>
-      <!-- Cabeçalho -->
-      <div class="section-heading">
-        <span class="section-eyebrow">PROJECTOS</span>
+  <section id="projects" class="projects-section">
+    <!-- ================= HERO ================= -->
+    <section class="projects-hero">
+      <div class="hero-overlay" />
+      <div class="hero-grain" />
 
-        <h2 class="section-header">
-          PROJECTOS EM DESTAQUE
-        </h2>
+      <div class="hero-content">
+        <div class="hero-inner">
+          <div class="hero-breadcrumb">
+            <span>Início</span>
+            <v-icon icon="mdi-chevron-right" size="14" />
+            <span class="is-active">Projectos</span>
+          </div>
 
-        <p class="section-subtitle">
-          Conheça alguns dos projectos desenvolvidos nas áreas de
-          monitorização, ambiente e sustentabilidade.
-        </p>
+          <div class="hero-kicker-row">
+            <span class="hero-line" />
+            <p class="hero-kicker">Projectos</p>
+          </div>
+
+          <h1 class="hero-title">
+            Ideias que geram
+            <span>impacto real.</span>
+          </h1>
+
+          <p class="hero-description">
+            Conheça os projectos que apoiamos em monitorização ambiental,
+            gestão de resíduos e soluções sustentáveis.
+          </p>
+        </div>
       </div>
 
-      <!-- CARROSSEL -->
-      <div
-        class="projects-carousel-shell"
-        @mouseenter="pauseAutoPlay"
-        @mouseleave="resumeAutoPlay"
-      >
-        <!-- Seta esquerda -->
-        <button
-          type="button"
-          class="project-carousel-btn project-carousel-prev"
-          aria-label="Projectos anteriores"
-          @click="goToProjectSlide(-1)"
-        >
-          <v-icon icon="mdi-chevron-left" />
-        </button>
+      <div class="hero-scroll">
+        <span>Explorar</span>
+        <span class="hero-scroll-line" />
+      </div>
+    </section>
 
-        <!-- Viewport -->
-        <div class="projects-carousel-viewport">
-          <div
-            class="projects-carousel-track"
-            :style="trackStyle"
-          >
-            <article
-              v-for="(project, index) in projects"
-              :key="project.id"
-              class="project-card"
-              :class="{
-                'is-active': index === activeProjectSlide
-              }"
-            >
-              <!-- Imagem -->
-              <div class="project-image-wrap">
-                <v-img
-                  :src="project.image"
-                  :alt="project.title"
-                  cover
-                  class="project-image"
-                  eager
-                />
+    <!-- ================= CONTEÚDO ================= -->
+    <v-container class="projects-shell">
+      <!-- Header -->
+      <header class="section-heading">
+        <div class="heading-row">
+          <div class="heading-left">
+            <span class="section-eyebrow">Portefólio</span>
+            <h2 class="section-header">
+              Projectos em
+              <em>destaque.</em>
+            </h2>
+          </div>
 
-                <div class="project-image-overlay"></div>
+          <p class="section-subtitle">
+            Uma selecção de iniciativas desenvolvidas nas áreas de
+            monitorização, ambiente e sustentabilidade — do diagnóstico
+            à implementação.
+          </p>
+        </div>
 
-                <span class="project-number">
-                  {{ String(project.id).padStart(2, '0') }}
-                </span>
-              </div>
-
-              <!-- Conteúdo -->
-              <div class="project-content">
-                <div class="project-meta">
-                  <span
-                    v-for="tag in project.tags.slice(0, 1)"
-                    :key="tag"
-                    class="project-category"
-                  >
-                    {{ tag }}
-                  </span>
-                </div>
-
-                <h3 class="project-title">
-                  {{ project.title }}
-                </h3>
-
-                <p class="project-description">
-                  {{ project.description }}
-                </p>
-
-                <a
-                  href="#"
-                  class="project-link"
-                  @click.prevent
-                >
-                  <span>VER PROJECTO</span>
-
-                  <v-icon
-                    icon="mdi-arrow-right"
-                    size="16"
-                  />
-                </a>
-              </div>
-            </article>
+        <div class="section-stats">
+          <div class="stat">
+            <strong>{{ String(projects.length).padStart(2, '0') }}</strong>
+            <span>Projectos</span>
+          </div>
+          <div class="stat-divider" />
+          <div class="stat">
+            <strong>08</strong>
+            <span>Áreas técnicas</span>
+          </div>
+          <div class="stat-divider" />
+          <div class="stat">
+            <strong>100%</strong>
+            <span>Impacto local</span>
           </div>
         </div>
+      </header>
 
-        <!-- Seta direita -->
-        <button
-          type="button"
-          class="project-carousel-btn project-carousel-next"
-          aria-label="Próximos projectos"
-          @click="goToProjectSlide(1)"
-        >
-          <v-icon icon="mdi-chevron-right" />
-        </button>
-      </div>
+      <!-- ================= FEATURED + LISTA ================= -->
+      <div class="showcase">
+        <!-- Projecto em destaque -->
+        <article class="featured">
+          <div class="featured-media">
+            <transition name="fade-slide" mode="out-in">
+              <v-img
+                :key="activeProject.id"
+                :src="activeProject.image"
+                :alt="activeProject.title"
+                cover
+                class="featured-image"
+                eager
+              />
+            </transition>
 
-      <!-- Indicadores -->
-      <div class="carousel-footer">
-        <div class="carousel-progress">
-          <span
-            class="carousel-progress-active"
-            :style="progressStyle"
-          ></span>
-        </div>
+            <div class="featured-gradient" />
 
-        <div class="carousel-counter">
-          <strong>
-            {{ String(activeProjectSlide + 1).padStart(2, '0') }}
-          </strong>
+            <span class="featured-number">
+              {{ String(activeProject.id).padStart(2, '0') }}
+              <em>/ {{ String(projects.length).padStart(2, '0') }}</em>
+            </span>
 
-          <span>/</span>
+            <div class="featured-tags">
+              <span
+                v-for="tag in activeProject.tags"
+                :key="tag"
+                class="featured-tag"
+              >
+                {{ tag }}
+              </span>
+            </div>
+          </div>
 
-          <span>
-            {{ String(projects.length).padStart(2, '0') }}
-          </span>
-        </div>
+          <div class="featured-body">
+            <transition name="fade-slide" mode="out-in">
+              <div :key="activeProject.id" class="featured-copy">
+                <span class="featured-kicker">Projecto em destaque</span>
+
+                <h3 class="featured-title">
+                  {{ activeProject.title }}
+                </h3>
+
+                <p class="featured-description">
+                  {{ activeProject.description }}
+                </p>
+              </div>
+            </transition>
+
+            <a href="#" class="featured-cta" @click.prevent>
+              <span>Ver projecto completo</span>
+              <v-icon icon="mdi-arrow-right" size="16" />
+            </a>
+
+            <div class="featured-progress">
+              <span
+                class="featured-progress-bar"
+                :style="{ width: `${((activeIndex + 1) / projects.length) * 100}%` }"
+              />
+            </div>
+          </div>
+        </article>
+
+        <!-- Lista interactiva de projectos (com scroll) -->
+        <aside class="project-list" role="tablist" aria-label="Lista de projectos">
+          <div class="project-list-header">
+            <span>Todos os projectos</span>
+            <span class="project-list-count">
+              {{ String(activeIndex + 1).padStart(2, '0') }} —
+              {{ String(projects.length).padStart(2, '0') }}
+            </span>
+          </div>
+
+          <div class="project-list-scroll">
+            <ul class="project-list-items">
+              <li
+                v-for="(project, index) in projects"
+                :key="project.id"
+                class="project-list-item"
+                :class="{ 'is-active': index === activeIndex }"
+                :style="{ '--delay': `${index * 40}ms` }"
+              >
+                <button
+                  type="button"
+                  role="tab"
+                  :aria-selected="index === activeIndex"
+                  :aria-controls="`project-${project.id}`"
+                  class="project-list-btn"
+                  @click="setActiveProject(index)"
+                  @keydown.enter.prevent="setActiveProject(index)"
+                  @keydown.space.prevent="setActiveProject(index)"
+                >
+                  <span class="item-index">
+                    {{ String(project.id).padStart(2, '0') }}
+                  </span>
+
+                  <span class="item-thumb">
+                    <v-img
+                      :src="project.image"
+                      :alt="project.title"
+                      cover
+                      class="item-thumb-img"
+                    />
+                  </span>
+
+                  <span class="item-copy">
+                    <strong>{{ project.title }}</strong>
+                    <em>{{ project.description }}</em>
+                  </span>
+
+                  <span class="item-arrow">
+                    <v-icon icon="mdi-arrow-right" size="16" />
+                  </span>
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          <div class="project-list-hint">
+            <v-icon icon="mdi-mouse-scroll-wheel" size="14" />
+            <span>Deslize para ver mais</span>
+          </div>
+        </aside>
       </div>
     </v-container>
   </section>
 </template>
 
 <script setup>
-import {
-  computed,
-  onBeforeUnmount,
-  onMounted,
-  ref
-} from 'vue'
-
-const activeProjectSlide = ref(0)
-
-const isPaused = ref(false)
-
-let autoplayTimer = null
-
-/*
-|--------------------------------------------------------------------------
-| Projectos
-|--------------------------------------------------------------------------
-*/
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 
 const projects = [
   {
     id: 1,
     title: 'Monitorização Ambiental',
     description: 'Porto do Soyo.',
-    image:
-      'https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=900&h=650&fit=crop',
-    tags: ['Auditoria', 'Conformidade', 'Relatório']
+    image: 'src/assets/projectos/1.jpeg',
+    tags: ['Auditoria', 'Conformidade', 'Relatório'],
   },
-
   {
     id: 2,
     title: 'Estudo de Impacte Ambiental',
     description: 'Projecto mineiro.',
-    image:
-      'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=900&h=650&fit=crop',
-    tags: ['Reciclagem', 'Resíduos', 'Sustentabilidade']
+    image: 'src/assets/projectos/2.jpeg',
+    tags: ['Reciclagem', 'Resíduos', 'Sustentabilidade'],
   },
-
   {
     id: 3,
     title: 'Monitorização Ambiental Contínua',
     description: 'Município de Viana.',
-    image:
-      'https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=900&h=650&fit=crop',
-    tags: ['Monitorização', 'Qualidade', 'Relatórios']
+    image: 'src/assets/projectos/3.jpeg',
+    tags: ['Monitorização', 'Qualidade', 'Relatórios'],
   },
-
   {
     id: 4,
     title: 'Laboratório Ambiental',
     description: 'Análise físico-química.',
-    image:
-      'https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=900&h=650&fit=crop',
-    tags: ['Conformidade', 'Regulamentação', 'Consultoria']
+    image: 'src/assets/projectos/4.jpeg',
+    tags: ['Conformidade', 'Regulamentação', 'Consultoria'],
   },
-
   {
     id: 5,
     title: 'Gestão de Resíduos Urbanos',
-    description:
-      'Plano de recolha e valorização em cidade.',
-    image:
-      'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=900&h=650&fit=crop',
-    tags: ['Resíduos', 'Logística', 'Sustentabilidade']
+    description: 'Plano de recolha e valorização em cidade.',
+    image: 'src/assets/projectos/5.jpeg',
+    tags: ['Resíduos', 'Logística', 'Sustentabilidade'],
   },
-
   {
     id: 6,
     title: 'Avaliação de Impacte Ambiental',
-    description:
-      'Estudo para implementação de nova infraestrutura.',
-    image:
-      'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=900&h=650&fit=crop',
-    tags: ['Impacte', 'Planeamento', 'Consultoria']
+    description: 'Estudo para implementação de nova infraestrutura.',
+    image: 'src/assets/projectos/6.jpeg',
+    tags: ['Impacte', 'Planeamento', 'Consultoria'],
   },
-
   {
     id: 7,
     title: 'Monitorização de Qualidade do Ar',
-    description:
-      'Análise contínua para zonas industriais.',
-    image:
-      'https://images.unsplash.com/photo-1518770660439-4636190af475?w=900&h=650&fit=crop',
-    tags: ['Ar', 'Monitorização', 'Tecnologia']
+    description: 'Análise contínua para zonas industriais.',
+    image: 'src/assets/projectos/7.jpeg',
+    tags: ['Ar', 'Monitorização', 'Tecnologia'],
   },
-
   {
     id: 8,
     title: 'Formação Ambiental',
-    description:
-      'Programas para equipas e comunidades locais.',
-    image:
-      'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=900&h=650&fit=crop',
-    tags: ['Formação', 'Comunidades', 'Educação']
-  }
+    description: 'Programas para equipas e comunidades locais.',
+    image: 'src/assets/projectos/8.jpeg',
+    tags: ['Formação', 'Comunidades', 'Educação'],
+  },
 ]
 
-/*
-|--------------------------------------------------------------------------
-| Número de cards visíveis
-|--------------------------------------------------------------------------
-*/
+const activeIndex = ref(0)
+const isPaused = ref(false)
 
-const cardsPerView = ref(4)
+let autoplayTimer = null
 
-const updateCardsPerView = () => {
-  if (window.innerWidth <= 600) {
-    cardsPerView.value = 1
-  } else if (window.innerWidth <= 960) {
-    cardsPerView.value = 2
-  } else {
-    cardsPerView.value = 4
-  }
+const activeProject = computed(() => projects[activeIndex.value])
 
-  /*
-   * Evita que o índice actual fique fora dos limites
-   */
-  const maxIndex = Math.max(
-    0,
-    projects.length - cardsPerView.value
-  )
-
-  if (activeProjectSlide.value > maxIndex) {
-    activeProjectSlide.value = maxIndex
-  }
-}
-
-/*
-|--------------------------------------------------------------------------
-| Movimento do carrossel
-|--------------------------------------------------------------------------
-*/
-
-const maxSlide = computed(() =>
-  Math.max(
-    0,
-    projects.length - cardsPerView.value
-  )
-)
-
-const trackStyle = computed(() => ({
-  transform: `translateX(-${
-    activeProjectSlide.value *
-    (100 / cardsPerView.value)
-  }%)`
-}))
-
-/*
-|--------------------------------------------------------------------------
-| Progresso
-|--------------------------------------------------------------------------
-*/
-
-const progressStyle = computed(() => {
-  const total = maxSlide.value || 1
-
-  const progress =
-    ((activeProjectSlide.value / total) * 100)
-
-  return {
-    width: `${Math.max(8, progress)}%`
-  }
-})
-
-/*
-|--------------------------------------------------------------------------
-| Navegação
-|--------------------------------------------------------------------------
-*/
-
-const goToProjectSlide = (direction) => {
-  if (!projects.length) {
-    return
-  }
-
-  let next =
-    activeProjectSlide.value + direction
-
-  /*
-   * Loop infinito
-   */
-  if (next > maxSlide.value) {
-    next = 0
-  }
-
-  if (next < 0) {
-    next = maxSlide.value
-  }
-
-  activeProjectSlide.value = next
-
+const setActiveProject = (index) => {
+  if (index === activeIndex.value) return
+  activeIndex.value = index
   restartAutoPlay()
 }
 
-/*
-|--------------------------------------------------------------------------
-| Auto Play
-|--------------------------------------------------------------------------
-*/
+const nextProject = () => {
+  activeIndex.value = (activeIndex.value + 1) % projects.length
+}
 
 const startAutoPlay = () => {
   stopAutoPlay()
-
   autoplayTimer = setInterval(() => {
-    if (!isPaused.value) {
-      goToProjectSlide(1)
-    }
-  }, 4500)
+    if (!isPaused.value) nextProject()
+  }, 5500)
 }
 
 const stopAutoPlay = () => {
@@ -353,688 +295,860 @@ const stopAutoPlay = () => {
   }
 }
 
-const pauseAutoPlay = () => {
-  isPaused.value = true
-}
-
-const resumeAutoPlay = () => {
-  isPaused.value = false
-}
-
-/*
-|--------------------------------------------------------------------------
-| Reiniciar autoplay depois de navegação manual
-|--------------------------------------------------------------------------
-*/
-
 const restartAutoPlay = () => {
   stopAutoPlay()
   startAutoPlay()
 }
 
-/*
-|--------------------------------------------------------------------------
-| Lifecycle
-|--------------------------------------------------------------------------
-*/
+const pauseAutoPlay = () => { isPaused.value = true }
+const resumeAutoPlay = () => { isPaused.value = false }
 
 onMounted(() => {
-  updateCardsPerView()
-
-  window.addEventListener(
-    'resize',
-    updateCardsPerView
-  )
-
   startAutoPlay()
 })
 
 onBeforeUnmount(() => {
   stopAutoPlay()
-
-  window.removeEventListener(
-    'resize',
-    updateCardsPerView
-  )
 })
 </script>
 
 <style scoped>
 /* =========================================================
-   SECTION
+   BASE
 ========================================================= */
-
 .projects-section {
+  --ink: #0d3b5c;
+  --ink-soft: #1a4a6b;
+  --muted: #667085;
+  --green: #1a7b3c;
+  --green-bright: #52d094;
+  --line: rgba(13, 59, 92, 0.08);
+  --bg: #f7faf8;
+
   position: relative;
   overflow: hidden;
   background:
-    radial-gradient(
-      circle at 10% 20%,
-      rgba(26, 123, 60, 0.05),
-      transparent 30%
-    ),
+    radial-gradient(circle at 8% 12%, rgba(26, 123, 60, 0.06), transparent 32%),
+    radial-gradient(circle at 92% 85%, rgba(26, 123, 60, 0.05), transparent 40%),
+    linear-gradient(180deg, #f7faf8 0%, #eef5f0 100%);
+  -webkit-font-smoothing: antialiased;
+}
+/* =========================================================
+   HERO
+========================================================= */
+.projects-hero {
+  position: relative;
+  height: 235px;
+  min-height: 235px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background-image: url('src/assets/projectos/hero-projectos.jpeg');
+  background-size: cover;
+  background-position: center 55%;
+  isolation: isolate;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    radial-gradient(120% 90% at 85% 15%, rgba(26, 123, 60, 0.3), transparent 55%),
     linear-gradient(
-      180deg,
-      #f7faf8 0%,
-      #edf4ef 100%
+      100deg,
+      rgba(4, 24, 37, 0.96) 0%,
+      rgba(4, 24, 37, 0.82) 45%,
+      rgba(4, 24, 37, 0.42) 100%
     );
+}
+
+.hero-grain {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  opacity: 0.08;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.hero-content {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+}
+
+.hero-inner {
+  width: min(1240px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.hero-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.66rem;
+  font-weight: 500;
+}
+
+.hero-breadcrumb .is-active { color: #fff; }
+
+.hero-kicker-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 5px;
+}
+
+.hero-line {
+  width: 34px;
+  height: 1.5px;
+  background: var(--green-bright);
+  border-radius: 4px;
+}
+
+.hero-kicker {
+  margin: 0;
+  color: var(--green-bright);
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.hero-title {
+  max-width: 720px;
+  margin: 0;
+  color: #fff;
+  font-size: clamp(1rem, 4.6vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+}
+
+.hero-title span { color: #7fe6b1; }
+
+.hero-description {
+  max-width: 560px;
+  margin: 7px 0 0;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.73rem;
+  line-height: 1.45;
+}
+
+.hero-scroll {
+  position: absolute;
+  right: 35px;
+  bottom: 18px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.58rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.hero-scroll-line {
+  display: block;
+  width: 42px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.35);
+  animation: scrollPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { transform: scaleX(1); opacity: 0.5; }
+  50% { transform: scaleX(1.35); opacity: 1; }
+}
+
+/* =========================================================
+   SHELL
+========================================================= */
+.projects-shell {
+  max-width: 1280px !important;
+  padding: 90px 24px 110px !important;
 }
 
 /* =========================================================
    HEADER
 ========================================================= */
-
 .section-heading {
-  max-width: 760px;
-  margin: 0 auto 3rem;
-  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.heading-row {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 60px;
+  align-items: end;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid var(--line);
 }
 
 .section-eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-
   margin-bottom: 0.75rem;
-
-  color: #1a7b3c;
-
+  color: var(--green);
   font-size: 0.72rem;
   font-weight: 800;
-
-  letter-spacing: 0.18em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
 }
 
-.section-eyebrow::before,
-.section-eyebrow::after {
+.section-eyebrow::before {
   content: '';
-
-  width: 24px;
+  width: 26px;
   height: 1px;
-
-  background: #1a7b3c;
-
-  opacity: 0.45;
+  background: var(--green);
+  opacity: 0.55;
 }
 
 .section-header {
   margin: 0;
-
-  color: #0d3b5c;
-
-  font-size: clamp(
-    2rem,
-    4vw,
-    3rem
-  );
-
+  color: var(--ink);
+  font-size: clamp(2rem, 4vw, 3rem);
   font-weight: 800;
-
-  line-height: 1.1;
+  line-height: 1.05;
   letter-spacing: -0.04em;
 }
 
+.section-header em {
+  color: var(--green);
+  font-style: normal;
+  font-weight: 800;
+}
+
 .section-subtitle {
-  max-width: 620px;
-
-  margin: 1rem auto 0;
-
-  color: #667085;
-
+  margin: 0;
+  color: var(--muted);
   font-size: 0.95rem;
-  line-height: 1.7;
+  line-height: 1.75;
 }
 
-/* =========================================================
-   CAROUSEL
-========================================================= */
-
-.projects-carousel-shell {
-  position: relative;
-
-  width: 100%;
-  padding: 0 1px;
-}
-
-.projects-carousel-viewport {
-  width: 100%;
-
-  overflow: hidden;
-
-  padding: 12px 4px 22px;
-}
-
-.projects-carousel-track {
+.section-stats {
   display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
 
-  margin: 0 -10px;
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
 
-  transition:
-    transform 0.8s
-    cubic-bezier(
-      0.22,
-      1,
-      0.36,
-      1
-    );
+.stat strong {
+  color: var(--ink);
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
 
-  will-change: transform;
+.stat span {
+  color: var(--muted);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.stat-divider {
+  width: 1px;
+  height: 30px;
+  background: var(--line);
 }
 
 /* =========================================================
-   CARD
+   SHOWCASE (featured + lista)
 ========================================================= */
+.showcase {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 28px;
+  align-items: stretch;
+  /* Altura unificada para featured e lista */
+  height: 540px;
+}
 
-.project-card {
+/* ---------- Featured (mais compacto) ---------- */
+.featured {
   position: relative;
-
-  flex: 0 0
-    calc(
-      25% - 20px
-    );
-
-  min-width: 0;
-
-  margin: 0 10px;
-
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
-
-  background: #ffffff;
-
-  border: 1px solid
-    rgba(
-      13,
-      59,
-      92,
-      0.08
-    );
-
-  border-radius: 20px;
-
-  box-shadow:
-    0 8px 24px
-      rgba(
-        13,
-        59,
-        92,
-        0.07
-      );
-
-  transition:
-    transform 0.45s
-      cubic-bezier(
-        0.22,
-        1,
-        0.36,
-        1
-      ),
-    box-shadow 0.45s ease,
-    border-color 0.45s ease;
-}
-
-.project-card:hover {
-  transform:
-    translateY(-8px);
-
-  border-color:
-    rgba(
-      26,
-      123,
-      60,
-      0.2
-    );
-
-  box-shadow:
-    0 20px 40px
-      rgba(
-        13,
-        59,
-        92,
-        0.14
-      );
-}
-
-/* =========================================================
-   IMAGE
-========================================================= */
-
-.project-image-wrap {
-  position: relative;
-
-  height: 190px;
-
-  overflow: hidden;
-
-  background: #dfe8e2;
-}
-
-.project-image {
-  width: 100%;
+  border-radius: 22px;
+  background: #0b2b3f;
   height: 100%;
-
-  transition:
-    transform 0.7s
-    cubic-bezier(
-      0.22,
-      1,
-      0.36,
-      1
-    );
+  box-shadow:
+    0 25px 50px -25px rgba(13, 59, 92, 0.32),
+    0 8px 20px -8px rgba(13, 59, 92, 0.14);
+  animation: featuredRise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.project-card:hover
-.project-image {
-  transform: scale(1.07);
+@keyframes featuredRise {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.project-image-overlay {
+.featured-media {
   position: absolute;
   inset: 0;
+  overflow: hidden;
+}
 
+.featured-image {
+  width: 100%;
+  height: 100%;
+}
+
+.featured-gradient {
+  position: absolute;
+  inset: 0;
   background:
     linear-gradient(
       180deg,
-      rgba(13, 59, 92, 0.02)
-        35%,
-      rgba(13, 59, 92, 0.55)
-        100%
+      rgba(5, 31, 47, 0.1) 0%,
+      rgba(5, 31, 47, 0.35) 45%,
+      rgba(5, 31, 47, 0.95) 100%
     );
-
-  pointer-events: none;
 }
 
-.project-number {
+.featured-number {
   position: absolute;
-
-  top: 14px;
-  right: 14px;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  width: 40px;
-  height: 40px;
-
-  border-radius: 50%;
-
-  background:
-    rgba(
-      255,
-      255,
-      255,
-      0.92
-    );
-
-  color: #0d3b5c;
-
-  font-size: 0.72rem;
+  top: 22px;
+  left: 24px;
+  z-index: 2;
+  color: #fff;
+  font-size: 0.95rem;
   font-weight: 800;
-
-  box-shadow:
-    0 6px 16px
-      rgba(
-        0,
-        0,
-        0,
-        0.12
-      );
-
-  backdrop-filter: blur(8px);
+  letter-spacing: 0.05em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
-/* =========================================================
-   CONTENT
-========================================================= */
+.featured-number em {
+  color: rgba(255, 255, 255, 0.55);
+  font-style: normal;
+  font-weight: 600;
+  font-size: 0.78rem;
+}
 
-.project-content {
+.featured-tags {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 2;
   display: flex;
-
-  flex-direction: column;
-
-  min-height: 205px;
-
-  padding: 1.25rem;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-width: 60%;
+  justify-content: flex-end;
 }
 
-.project-meta {
-  margin-bottom: 0.55rem;
-}
-
-.project-category {
-  color: #1a7b3c;
-
-  font-size: 0.65rem;
-
+.featured-tag {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #fff;
+  font-size: 0.58rem;
   font-weight: 800;
-
   letter-spacing: 0.12em;
+  text-transform: uppercase;
+  backdrop-filter: blur(10px);
+}
 
+.featured-body {
+  position: relative;
+  z-index: 2;
+  margin-top: auto;
+  padding: 30px 30px 26px;
+  color: #fff;
+}
+
+.featured-kicker {
+  display: inline-block;
+  margin-bottom: 10px;
+  color: #7fe6b1;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
 }
 
-.project-title {
-  margin: 0 0 0.55rem;
-
-  color: #0d3b5c;
-
-  font-size: 1rem;
-
-  font-weight: 750;
-
-  line-height: 1.3;
+.featured-title {
+  margin: 0 0 10px;
+  font-size: clamp(1.35rem, 2.1vw, 1.85rem);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
 }
 
-.project-description {
-  flex: 1;
-
-  margin: 0;
-
-  color: #667085;
-
-  font-size: 0.78rem;
-
+.featured-description {
+  max-width: 480px;
+  margin: 0 0 18px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.86rem;
   line-height: 1.6;
 }
 
-.project-link {
+.featured-cta {
   display: inline-flex;
-
   align-items: center;
-
-  gap: 0.4rem;
-
-  width: fit-content;
-
-  margin-top: 1rem;
-
-  color: #1a7b3c;
-
-  font-size: 0.7rem;
-
+  gap: 10px;
+  padding: 11px 20px;
+  border-radius: 999px;
+  background: #7fe6b1;
+  color: #041826;
+  font-size: 0.72rem;
   font-weight: 800;
-
-  letter-spacing: 0.08em;
-
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   text-decoration: none;
-
   transition:
-    gap 0.3s ease,
-    color 0.3s ease;
+    gap 0.35s ease,
+    background 0.35s ease,
+    transform 0.35s ease;
 }
 
-.project-link:hover {
-  gap: 0.7rem;
-
-  color: #0d5c2b;
+.featured-cta:hover {
+  gap: 16px;
+  background: #a4f0c7;
+  transform: translateY(-2px);
 }
 
-/* =========================================================
-   ARROWS
-========================================================= */
+.featured-progress {
+  position: relative;
+  height: 3px;
+  margin-top: 22px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.15);
+}
 
-.project-carousel-btn {
-  position: absolute;
+.featured-progress-bar {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #52d094, #a4f0c7);
+  transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
 
-  top: 50%;
-
-  z-index: 10;
-
+/* ---------- Lista com scroll ---------- */
+.project-list {
+  position: relative;
   display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 22px 22px 0;
+  border-radius: 22px;
+  background: #fff;
+  border: 1px solid var(--line);
+  box-shadow: 0 20px 40px -25px rgba(13, 59, 92, 0.18);
+  animation: featuredRise 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+  overflow: hidden;
+}
 
+.project-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 14px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.project-list-count {
+  color: var(--green);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Wrapper com scroll */
+.project-list-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 8px;
+  margin-right: -8px;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(26, 123, 60, 0.3) transparent;
+
+  /* Máscaras suaves topo/base */
+  mask-image: linear-gradient(
+    180deg,
+    transparent 0,
+    #000 12px,
+    #000 calc(100% - 12px),
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    180deg,
+    transparent 0,
+    #000 12px,
+    #000 calc(100% - 12px),
+    transparent 100%
+  );
+}
+
+/* Scrollbar WebKit */
+.project-list-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.project-list-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.project-list-scroll::-webkit-scrollbar-thumb {
+  background: rgba(26, 123, 60, 0.25);
+  border-radius: 999px;
+  transition: background 0.3s ease;
+}
+
+.project-list-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(26, 123, 60, 0.5);
+}
+
+.project-list-items {
+  list-style: none;
+  padding: 6px 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-list-item {
+  opacity: 0;
+  transform: translateX(-12px);
+  animation: itemIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: calc(200ms + var(--delay, 0ms));
+}
+
+@keyframes itemIn {
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.project-list-btn {
+  display: grid;
+  grid-template-columns: 26px 48px 1fr 22px;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 10px;
+  border: none;
+  background: transparent;
+  border-radius: 12px;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  transition:
+    background 0.35s ease,
+    transform 0.35s ease;
+}
+
+.project-list-btn:hover {
+  background: rgba(26, 123, 60, 0.06);
+  transform: translateX(2px);
+}
+
+.project-list-item.is-active .project-list-btn {
+  background: linear-gradient(
+    90deg,
+    rgba(26, 123, 60, 0.09) 0%,
+    rgba(26, 123, 60, 0.02) 100%
+  );
+}
+
+.item-index {
+  color: #98a2b3;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+  transition: color 0.35s ease;
+}
+
+.project-list-item.is-active .item-index {
+  color: var(--green);
+}
+
+.item-thumb {
+  position: relative;
+  display: block;
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #dfe8e2;
+  flex-shrink: 0;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.project-list-item.is-active .item-thumb {
+  transform: scale(1.08);
+}
+
+.item-thumb-img {
+  width: 100%;
+  height: 100%;
+  filter: grayscale(0.35);
+  transition: filter 0.4s ease;
+}
+
+.project-list-item.is-active .item-thumb-img,
+.project-list-btn:hover .item-thumb-img {
+  filter: grayscale(0);
+}
+
+.item-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.item-copy strong {
+  color: var(--ink);
+  font-size: 0.84rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.item-copy em {
+  color: var(--muted);
+  font-style: normal;
+  font-size: 0.7rem;
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.item-arrow {
+  display: flex;
   align-items: center;
   justify-content: center;
-
-  width: 46px;
-  height: 46px;
-
-  transform:
-    translateY(-50%);
-
-  border: 1px solid
-    rgba(
-      26,
-      123,
-      60,
-      0.15
-    );
-
-  border-radius: 50%;
-
-  background:
-    rgba(
-      255,
-      255,
-      255,
-      0.95
-    );
-
-  color: #1a7b3c;
-
-  cursor: pointer;
-
-  box-shadow:
-    0 10px 25px
-      rgba(
-        13,
-        59,
-        92,
-        0.12
-      );
-
-  backdrop-filter:
-    blur(10px);
-
+  color: #cbd5e1;
   transition:
-    transform 0.3s ease,
-    background 0.3s ease,
-    box-shadow 0.3s ease;
+    color 0.35s ease,
+    transform 0.35s ease;
 }
 
-.project-carousel-btn:hover {
-  transform:
-    translateY(-50%)
-    scale(1.08);
-
-  background: #1a7b3c;
-
-  color: #ffffff;
-
-  box-shadow:
-    0 14px 30px
-      rgba(
-        26,
-        123,
-        60,
-        0.25
-      );
+.project-list-item.is-active .item-arrow {
+  color: var(--green);
+  transform: translateX(4px);
 }
 
-.project-carousel-prev {
-  left: -24px;
+.project-list-btn:hover .item-arrow {
+  color: var(--green);
+  transform: translateX(4px);
 }
 
-.project-carousel-next {
-  right: -24px;
-}
-
-/* =========================================================
-   FOOTER / PROGRESS
-========================================================= */
-
-.carousel-footer {
+/* Hint no fundo da lista */
+.project-list-hint {
   display: flex;
-
   align-items: center;
-
-  gap: 1rem;
-
-  max-width: 600px;
-
-  margin: 1rem auto 0;
-}
-
-.carousel-progress {
-  position: relative;
-
-  flex: 1;
-
-  height: 3px;
-
-  overflow: hidden;
-
-  border-radius: 999px;
-
-  background:
-    rgba(
-      13,
-      59,
-      92,
-      0.1
-    );
-}
-
-.carousel-progress-active {
-  display: block;
-
-  height: 100%;
-
-  border-radius: inherit;
-
-  background:
-    linear-gradient(
-      90deg,
-      #1a7b3c,
-      #2b9b55
-    );
-
-  transition:
-    width 0.6s
-    cubic-bezier(
-      0.22,
-      1,
-      0.36,
-      1
-    );
-}
-
-.carousel-counter {
-  display: flex;
-
-  align-items: center;
-
-  gap: 0.35rem;
-
-  min-width: 65px;
-
-  color: #98a2b3;
-
-  font-size: 0.7rem;
-
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 0 12px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.62rem;
   font-weight: 700;
-}
-
-.carousel-counter strong {
-  color: #0d3b5c;
-
-  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  pointer-events: none;
 }
 
 /* =========================================================
-   TABLET
+   TRANSIÇÕES
 ========================================================= */
+.fade-slide-enter-active,
+.fade-slide-leave-active {
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.fade-slide-enter-from {
+  opacity: 0;
+  transform: translateY(12px) scale(1.02);
+}
+
+.fade-slide-leave-to {
+  opacity: 0;
+  transform: translateY(-8px) scale(0.99);
+}
+
+/* =========================================================
+   RESPONSIVO
+========================================================= */
+@media (max-width: 1100px) {
+  .showcase {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .featured {
+    height: 480px;
+  }
+
+  .project-list {
+    height: auto;
+    max-height: 520px;
+    padding-bottom: 0;
+  }
+
+  .project-list-scroll {
+    max-height: 400px;
+  }
+}
 
 @media (max-width: 960px) {
-  .project-card {
-    flex-basis:
-      calc(
-        50% - 20px
-      );
+  .projects-shell {
+    padding: 70px 20px 90px !important;
   }
 
-  .project-image-wrap {
-    height: 180px;
+  .heading-row {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding-bottom: 2rem;
   }
 
-  .project-carousel-prev {
-    left: -15px;
-  }
-
-  .project-carousel-next {
-    right: -15px;
+  .section-stats {
+    gap: 1.6rem;
   }
 }
 
-/* =========================================================
-   MOBILE
-========================================================= */
+@media (max-width: 780px) {
+  .projects-hero {
+    background-position: 62% center;
+  }
+
+  .hero-overlay {
+    background: linear-gradient(
+      180deg,
+      rgba(5, 31, 47, 0.72),
+      rgba(5, 31, 47, 0.94)
+    );
+  }
+
+  .hero-inner { width: calc(100% - 32px); }
+  .hero-scroll { display: none; }
+
+  .featured-body {
+    padding: 26px 22px 22px;
+  }
+
+  .featured-tags {
+    max-width: 90%;
+    position: static;
+    padding: 20px 22px 0;
+    justify-content: flex-start;
+  }
+
+  .featured-number {
+    position: static;
+    display: inline-block;
+    padding: 20px 0 0 22px;
+  }
+}
 
 @media (max-width: 600px) {
-  .projects-section {
-    padding-top: 4rem !important;
-    padding-bottom: 4rem !important;
+  .projects-shell {
+    padding: 60px 16px 80px !important;
   }
 
-  .section-heading {
-    margin-bottom: 2rem;
+  .section-stats {
+    gap: 1rem;
   }
 
-  .section-header {
-    font-size: 1.8rem;
+  .stat-divider { display: none; }
+
+  .featured {
+    height: 420px;
   }
 
-  .section-subtitle {
+  .featured-title {
+    font-size: 1.4rem;
+  }
+
+  .featured-description {
     font-size: 0.82rem;
   }
 
-  .project-card {
-    flex-basis:
-      calc(
-        100% - 20px
-      );
+  .featured-cta {
+    padding: 10px 18px;
+    font-size: 0.68rem;
   }
 
-  .project-image-wrap {
-    height: 210px;
+  .project-list {
+    padding: 18px 14px 0;
+    max-height: 460px;
   }
 
-  .project-content {
-    min-height: 190px;
+  .project-list-scroll {
+    max-height: 340px;
   }
 
-  .project-carousel-btn {
-    width: 40px;
-    height: 40px;
+  .project-list-btn {
+    grid-template-columns: 22px 44px 1fr 18px;
+    gap: 10px;
+    padding: 9px 8px;
   }
 
-  .project-carousel-prev {
-    left: 5px;
+  .item-thumb {
+    width: 44px;
+    height: 44px;
   }
 
-  .project-carousel-next {
-    right: 5px;
-  }
-
-  .carousel-footer {
-    max-width: 90%;
-  }
+  .item-copy strong { font-size: 0.78rem; }
+  .item-copy em { font-size: 0.66rem; }
 }
 
 /* =========================================================
-   REDUZIR MOVIMENTO
+   ACESSIBILIDADE
 ========================================================= */
-
-@media (
-  prefers-reduced-motion: reduce
-) {
-  .projects-carousel-track,
-  .project-card,
-  .project-image,
-  .project-carousel-btn,
-  .project-link {
+@media (prefers-reduced-motion: reduce) {
+  .featured,
+  .project-list,
+  .project-list-item,
+  .featured-cta,
+  .project-list-btn,
+  .item-thumb,
+  .item-arrow,
+  .hero-scroll-line,
+  .fade-slide-enter-active,
+  .fade-slide-leave-active,
+  .project-list-scroll {
+    animation: none !important;
     transition: none !important;
+    scroll-behavior: auto !important;
+  }
+
+  .project-list-item {
+    opacity: 1;
+    transform: none;
   }
 }
 </style>

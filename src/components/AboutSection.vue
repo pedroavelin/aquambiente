@@ -1,5 +1,5 @@
 <template>
-  <section id="about" class="about-section py-12">
+  <section id="mission" class="about-section py-12">
     <v-container fluid>
       <!-- About and Vision Section -->
       <v-row align="stretch" class="mb-12 about-row">
@@ -53,7 +53,7 @@
       </v-row>
 
       <!-- Statistics Section -->
-      <v-row class="stats-row">
+      <v-row id="team" class="stats-row">
         <v-col cols="6" sm="3">
           <div class="stat-card">
             <v-icon
