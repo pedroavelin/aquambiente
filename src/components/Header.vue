@@ -235,7 +235,7 @@
       ],
     },
     { label: 'PROJECTOS', to: { path: '/', hash: '#projects' } },
-    { label: 'ACADEMIA',  to: { path: '/', hash: '#academy' } },
+    { label: 'ACADEMIA',  to: '/academia' },
     { label: 'NOTÍCIAS',  to: { path: '/', hash: '#news' } },
     { label: 'CONTACTOS', to: '/contactos' },
   ]
@@ -245,7 +245,7 @@
     { title: 'EMPRESA',    to: '/about',     icon: 'mdi-domain' },
     { title: 'SERVIÇOS',   to: { path: '/', hash: '#services' }, icon: 'mdi-tools' },
     { title: 'PROJECTOS',  to: { path: '/', hash: '#projects' }, icon: 'mdi-folder-multiple-outline' },
-    { title: 'ACADEMIA',   to: { path: '/', hash: '#academy' }, icon: 'mdi-school-outline' },
+    { title: 'ACADEMIA',   to: '/academia', icon: 'mdi-school-outline' },
     { title: 'NOTÍCIAS',   to: { path: '/', hash: '#news' }, icon: 'mdi-newspaper-variant-outline' },
     { title: 'CONTACTOS',  to: '/contactos', icon: 'mdi-phone' },
   ]

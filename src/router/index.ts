@@ -9,6 +9,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Index from '@/pages/index.vue'
 import Contact from '@/pages/contact.vue'
 import About from '@/pages/about.vue'
+import Academia from '@/pages/academia.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,6 +25,10 @@ const router = createRouter({
     {
       path: '/about',
       component: About,
+    },
+    {
+      path: '/academia',
+      component: Academia,
     },
   ],
 })
