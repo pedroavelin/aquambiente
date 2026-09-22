@@ -282,7 +282,7 @@
   display: flex;
   align-items: center;
   overflow: hidden;
-  background-image: url("src/assets/empresa/banner-emp.jpeg");
+  background-image: url("@/assets/empresa/banner-emp.jpeg");
   background-size: cover;
   background-position: center 55%;
   animation: riseIn 0.8s ease-out both;

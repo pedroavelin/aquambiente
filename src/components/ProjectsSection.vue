@@ -343,7 +343,7 @@ onBeforeUnmount(() => {
   display: flex;
   align-items: center;
   overflow: hidden;
-  background-image: url('src/assets/projectos/hero-projectos.jpeg');
+  background-image: url('@/assets/projectos/hero-projectos.jpeg');
   background-size: cover;
   background-position: center 55%;
   isolation: isolate;
