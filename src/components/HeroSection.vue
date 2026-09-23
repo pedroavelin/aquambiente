@@ -127,9 +127,9 @@
   import { onMounted, onUnmounted, ref } from 'vue'
 
   const heroImages = [
-    'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1600&h=800&fit=crop&auto=format&q=85',
-    'https://images.unsplash.com/photo-1497250681960-ef046c08a56e?w=1600&h=800&fit=crop&auto=format&q=85',
-    'https://images.unsplash.com/photo-1501004318641-b39e6451bec6?w=1600&h=800&fit=crop&auto=format&q=85',
+    'src/assets/hero/bg1.png',
+    'src/assets/hero/bg2.png',
+    'src/assets/hero/bg3.png',
   ]
 
   const isLoading = ref(true)
@@ -212,6 +212,7 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  opacity: 0.4;
 }
 
 .hero-background :deep(.v-window__left .v-btn),
@@ -231,7 +232,14 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.35);
+  background:
+    linear-gradient(
+      90deg,
+      rgba(2, 18, 28, 0.72) 0%,
+      rgba(2, 18, 28, 0.45) 38%,
+      rgba(2, 18, 28, 0.58) 100%
+    ),
+    rgba(0, 0, 0, 0.18);
   z-index: 1;
   pointer-events: none;
 }
