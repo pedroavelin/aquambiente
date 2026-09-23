@@ -120,13 +120,18 @@
 </template>
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
-
+import projectsGallery1 from '@/assets/projectos/1.jpeg'
+import projectsGallery2 from '@/assets/projectos/2.jpeg'
+import projectsGallery3 from '@/assets/projectos/3.jpeg'
+import projectsGallery4 from '@/assets/projectos/4.jpeg'
+import projectsGallery5 from '@/assets/projectos/5.jpeg'
+import projectsGallery6 from '@/assets/projectos/6.jpeg'
 const projects = [
   {
     id: 1,
     title: 'Monitorização Ambiental',
     description: 'Porto do Soyo.',
-    image: 'https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=2000&h=1200&fit=crop',
+    image: projectsGallery1,
     tags: ['Monitorização', 'Auditoria', 'Conformidade'],
     client: 'Porto do Soyo', year: '2023', location: 'Soyo, Zaire'
   },
@@ -134,7 +139,7 @@ const projects = [
     id: 2,
     title: 'Estudo de Impacte Ambiental',
     description: 'Projecto mineiro.',
-    image: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=2000&h=1200&fit=crop',
+    image: projectsGallery2,
     tags: ['Consultoria', 'Impacte', 'Sustentabilidade'],
     client: 'Sector Mineiro', year: '2022', location: 'Lunda Sul'
   },
@@ -142,7 +147,7 @@ const projects = [
     id: 3,
     title: 'Monitorização Contínua',
     description: 'Município de Viana.',
-    image: 'https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=2000&h=1200&fit=crop',
+    image: projectsGallery3,
     tags: ['Monitorização', 'Qualidade', 'Relatórios'],
     client: 'Administração Municipal', year: '2024', location: 'Viana, Luanda'
   },
@@ -150,7 +155,7 @@ const projects = [
     id: 4,
     title: 'Laboratório Ambiental',
     description: 'Análise físico-química.',
-    image: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=2000&h=1200&fit=crop',
+    image: projectsGallery4,
     tags: ['Consultoria', 'Conformidade', 'Regulamentação'],
     client: 'Vários', year: '2023', location: 'Luanda'
   },
@@ -158,7 +163,7 @@ const projects = [
     id: 5,
     title: 'Gestão de Resíduos Urbanos',
     description: 'Plano de recolha e valorização em cidade.',
-    image: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=2000&h=1200&fit=crop',
+    image: projectsGallery5,
     tags: ['Sustentabilidade', 'Resíduos', 'Logística'],
     client: 'Município', year: '2024', location: 'Luanda'
   },
@@ -166,26 +171,10 @@ const projects = [
     id: 6,
     title: 'Avaliação de Impacte',
     description: 'Nova infraestrutura rodoviária.',
-    image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=2000&h=1200&fit=crop',
+    image: projectsGallery6,
     tags: ['Consultoria', 'Impacte', 'Planeamento'],
     client: 'Sector Público', year: '2023', location: 'Benguela'
   },
-  {
-    id: 7,
-    title: 'Qualidade do Ar',
-    description: 'Zonas industriais.',
-    image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=2000&h=1200&fit=crop',
-    tags: ['Monitorização', 'Tecnologia', 'Ar'],
-    client: 'Zona Industrial', year: '2024', location: 'Luanda'
-  },
-  {
-    id: 8,
-    title: 'Formação Ambiental',
-    description: 'Equipas e comunidades.',
-    image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=2000&h=1200&fit=crop',
-    tags: ['Formação', 'Educação', 'Comunidades'],
-    client: 'Vários', year: '2024', location: 'Angola'
-  }
 ]
 
 const sectionRef = ref(null)
@@ -392,9 +381,9 @@ const railProgressStyle = computed(() => ({
 
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: start;
   gap: 1.1rem;
-
+  margin-left: 20px;
   transform: translateY(-50%);
   opacity: 1;
   visibility: visible;
