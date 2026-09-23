@@ -205,61 +205,70 @@
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 
+import project1 from '@/assets/projectos/1.jpeg'
+import project2 from '@/assets/projectos/2.jpeg'
+import project3 from '@/assets/projectos/3.jpeg'
+import project4 from '@/assets/projectos/4.jpeg'
+import project5 from '@/assets/projectos/5.jpeg'
+import project6 from '@/assets/projectos/6.jpeg'
+import project7 from '@/assets/projectos/7.jpeg'
+import project8 from '@/assets/projectos/8.jpeg'
+
 const projects = [
   {
     id: 1,
     title: 'Monitorização Ambiental',
     description: 'Porto do Soyo.',
-    image: '@/assets/projectos/1.jpeg',
+    image: project1,
     tags: ['Auditoria', 'Conformidade', 'Relatório'],
   },
   {
     id: 2,
     title: 'Estudo de Impacte Ambiental',
     description: 'Projecto mineiro.',
-    image: '@/assets/projectos/2.jpeg',
+    image: project2,
     tags: ['Reciclagem', 'Resíduos', 'Sustentabilidade'],
   },
   {
     id: 3,
     title: 'Monitorização Ambiental Contínua',
     description: 'Município de Viana.',
-    image: '@/assets/projectos/3.jpeg',
+    image: project3,
     tags: ['Monitorização', 'Qualidade', 'Relatórios'],
   },
   {
     id: 4,
     title: 'Laboratório Ambiental',
     description: 'Análise físico-química.',
-    image: '@/assets/projectos/4.jpeg',
+    image: project4,
     tags: ['Conformidade', 'Regulamentação', 'Consultoria'],
   },
   {
     id: 5,
     title: 'Gestão de Resíduos Urbanos',
     description: 'Plano de recolha e valorização em cidade.',
-    image: '@/assets/projectos/5.jpeg',
+    image: project5,
     tags: ['Resíduos', 'Logística', 'Sustentabilidade'],
   },
   {
     id: 6,
     title: 'Avaliação de Impacte Ambiental',
     description: 'Estudo para implementação de nova infraestrutura.',
-    image: '@/assets/projectos/6.jpeg',
+    image: project6,
     tags: ['Impacte', 'Planeamento', 'Consultoria'],
   },
   {
     id: 7,
     title: 'Monitorização de Qualidade do Ar',
     description: 'Análise contínua para zonas industriais.',
-    image: '@/assets/projectos/7.jpeg',
+    image: project7,
     tags: ['Ar', 'Monitorização', 'Tecnologia'],
   },
   {
     id: 8,
     title: 'Formação Ambiental',
     description: 'Programas para equipas e comunidades locais.',
-    image: '@/assets/projectos/8.jpeg',
+    image: project8,
     tags: ['Formação', 'Comunidades', 'Educação'],
   },
 ]
