@@ -125,12 +125,11 @@
 
 <script lang="ts" setup>
   import { onMounted, onUnmounted, ref } from 'vue'
-
-  const heroImages = [
-    'src/assets/hero/bg1.png',
-    'src/assets/hero/bg2.png',
-    'src/assets/hero/bg3.png',
-  ]
+  import bg1 from '@/assets/hero/bg1.png'
+  import bg2 from '@/assets/hero/bg2.png'
+  import bg3 from '@/assets/hero/bg3.png'
+  
+  const heroImages = [bg1, bg2, bg3]
 
   const isLoading = ref(true)
   const activeSlide = ref(0)
