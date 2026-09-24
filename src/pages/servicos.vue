@@ -9,35 +9,52 @@
           <div class="hero-breadcrumb">
             <span>Início</span>
             <v-icon icon="mdi-chevron-right" size="16" />
-            <span>Serviços</span>
+            <span class="is-active">Serviços</span>
           </div>
 
-          <div class="hero-line" aria-hidden="true" />
-
-          <p class="hero-kicker">SERVIÇOS</p>
+          <div class="hero-kicker-row">
+            <span class="hero-line" aria-hidden="true" />
+            <p class="hero-kicker">SERVIÇOS</p>
+          </div>
 
           <h1 class="hero-title">
-            Soluções ambientais pensadas para o
-            <span class="hero-title__accent">crescimento responsável</span>
+            Soluções ambientais com
+            <em>visão de futuro</em>
           </h1>
 
           <p class="hero-description">
-            A Aquambiente apoia empresas, instituições e projetos com respostas técnicas,
-            regulatórias e operacionais que reduzem riscos, aumentam eficiência e reforçam a
-            sustentabilidade.
+            A Aquambiente combina experiência técnica, rigor regulatório e execução prática para
+            entregar resultados sustentáveis e confiáveis.
           </p>
         </div>
       </div>
 
       <div class="hero-scroll">
-        <span>Deslize para explorar</span>
-        <v-icon icon="mdi-arrow-down" size="18" />
+        <span>Explorar</span>
+        <span class="hero-scroll-line" aria-hidden="true" />
       </div>
     </section>
 
     <!-- ===================== HIGHLIGHTS ===================== -->
     <section class="services-highlights">
       <v-container>
+        <header class="highlights-heading" v-reveal>
+          <div class="highlights-heading__row">
+            <div class="highlights-heading__title">
+              <span class="highlights-eyebrow">Serviços</span>
+              <h2>
+                Serviços em
+                <em>destaque.</em>
+              </h2>
+            </div>
+
+            <p class="highlights-subtitle">
+              Uma abordagem técnica e prática para apoiar decisões, reduzir riscos e construir
+              resultados ambientais consistentes.
+            </p>
+          </div>
+        </header>
+
         <v-row>
           <v-col
             v-for="(highlight, i) in highlights"
@@ -360,9 +377,9 @@ const resetTilt = (e: MouseEvent) => {
   height: 235px;
   min-height: 235px;
   overflow: hidden;
-  background-image: url('/src/assets/contact/ct1.jpg');
-  background-size: contain;
-  background-position: center;
+  background-image: url('/src/assets/servicos/s1.png');
+  background-size: 100% 100%;
+  background-position: container;
 }
 
 .hero-overlay {
@@ -386,20 +403,27 @@ const resetTilt = (e: MouseEvent) => {
   display: flex;
   align-items: center;
   gap: 7px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   color: rgba(255, 255, 255, 0.65);
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   font-weight: 500;
 }
 
-.hero-breadcrumb span:last-child {
+.hero-breadcrumb .is-active {
   color: #ffffff;
 }
 
+.hero-kicker-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
 .hero-line {
-  width: 38px;
-  height: 2px;
-  margin-bottom: 9px;
+  display: block;
+  width: 34px;
+  height: 1.5px;
   background: #52d094;
   border-radius: 4px;
 }
@@ -456,11 +480,11 @@ const resetTilt = (e: MouseEvent) => {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  margin: 0 0 4px;
+  margin: 0;
   color: #52d094;
   font-size: 0.58rem;
   font-weight: 800;
-  letter-spacing: 0.15rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
 }
 .kicker-dot {
@@ -480,32 +504,22 @@ const resetTilt = (e: MouseEvent) => {
   max-width: 720px;
   margin: 0;
   color: #ffffff;
-  font-size: clamp(1.65rem, 4vw, 2.7rem);
-  line-height: 1.05;
-  font-weight: 800;
-  letter-spacing: -0.045em;
-  text-wrap: balance;
+  font-size: clamp(1rem, 4.4vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -0.035em;
 }
-.hero-title__accent {
-  color: #61d39a;
-  position: relative;
-}
-.hero-title__accent::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -6px;
-  height: 6px;
-  background: linear-gradient(90deg, rgba(97, 211, 154, 0.5), transparent);
-  border-radius: 4px;
+.hero-title em {
+  color: #7fe6b1;
+  font-style: normal;
+  font-weight: 700;
 }
 
 .hero-description {
-  max-width: 570px;
+  max-width: 580px;
   margin: 8px 0 0;
   color: rgba(255, 255, 255, 0.78);
-  font-size: 0.75rem;
+  font-size: 0.74rem;
   line-height: 1.45;
 }
 
@@ -516,11 +530,18 @@ const resetTilt = (e: MouseEvent) => {
   z-index: 3;
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 10px;
   color: rgba(255, 255, 255, 0.55);
   font-size: 0.58rem;
   text-transform: uppercase;
-  letter-spacing: 0.08rem;
+  letter-spacing: 0.16em;
+}
+
+.hero-scroll-line {
+  display: block;
+  width: 30px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.55);
 }
 
 /* Summary card */
@@ -601,6 +622,62 @@ const resetTilt = (e: MouseEvent) => {
   inset: 0;
   background: linear-gradient(180deg, rgba(46, 125, 50, 0.03), transparent 55%);
   pointer-events: none;
+}
+
+.highlights-heading {
+  position: relative;
+  margin-bottom: 3rem;
+}
+
+.highlights-heading__row {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 3.75rem;
+  align-items: end;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid rgba(18, 59, 43, 0.12);
+}
+
+.highlights-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 0.75rem;
+  color: var(--brand-600);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.highlights-eyebrow::before {
+  content: '';
+  width: 26px;
+  height: 1px;
+  background: var(--brand-600);
+  opacity: 0.55;
+}
+
+.highlights-heading h2 {
+  margin: 0;
+  color: var(--brand-900);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+
+.highlights-heading h2 em {
+  color: var(--brand-600);
+  font-style: normal;
+  font-weight: 800;
+}
+
+.highlights-subtitle {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.75;
 }
 
 .highlight-card {
@@ -1021,6 +1098,11 @@ const resetTilt = (e: MouseEvent) => {
 
 /* ===================== RESPONSIVE ===================== */
 @media (max-width: 960px) {
+  .highlights-heading__row {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
   .cta-strip__content {
     flex-direction: column;
     align-items: flex-start;
@@ -1051,12 +1133,11 @@ const resetTilt = (e: MouseEvent) => {
 
   .hero-line {
     width: 30px;
-    margin-bottom: 7px;
   }
 
   .hero-kicker {
     font-size: 0.52rem;
-    letter-spacing: 0.12rem;
+    letter-spacing: 0.12em;
   }
 
   .hero-title {

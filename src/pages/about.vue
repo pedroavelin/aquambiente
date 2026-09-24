@@ -35,6 +35,24 @@
 
     <PartnersStrip />
 
+    <section class="about-intro-heading">
+      <div class="container">
+        <header class="section-head section-head--intro">
+          <div class="section-head__left">
+            <span class="tag">01 — Empresa</span>
+            <h2>
+              Conheça a nossa forma de
+              <em>criar impacto positivo.</em>
+            </h2>
+          </div>
+          <p class="section-head__right">
+            Experiência técnica, compromisso ambiental e soluções pensadas para responder aos
+            desafios reais de cada organização.
+          </p>
+        </header>
+      </div>
+    </section>
+
     <AboutSection />
 
     <!-- ================= SERVICES ================= -->
@@ -585,6 +603,14 @@ em {
 /* ============================================================
    SECTION HEADS
 ============================================================ */
+.about-intro-heading {
+  padding-top: 88px;
+}
+
+.about-intro-heading .section-head {
+  margin-bottom: 0;
+}
+
 .section-head {
   display: grid;
   grid-template-columns: 1.2fr 1fr;
