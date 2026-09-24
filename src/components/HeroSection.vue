@@ -55,7 +55,7 @@
               size="small"
               class="font-weight-bold"
               color="green-accent-4"
-              href="#services"
+              to="/servicos"
             >
               <v-icon class="me-1" color="white">mdi-briefcase-outline</v-icon>
               NOSSOS SERVIÇOS
@@ -66,7 +66,7 @@
               variant="outlined"
               color="white"
               class="font-weight-bold"
-              href="#contact"
+              to="/contactos"
             >
               <v-icon class="me-1" color="green">mdi-whatsapp </v-icon>
               FALAR CONNOSCO

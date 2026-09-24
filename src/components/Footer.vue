@@ -60,10 +60,10 @@
             <h4 class="footer-title">Serviços</h4>
             <ul class="footer-list">
               <li v-for="s in services" :key="s">
-                <a href="#services">
+                <router-link to="/servicos">
                   <span class="link-arrow">›</span>
                   <span class="link-text">{{ s }}</span>
-                </a>
+                </router-link>
               </li>
             </ul>
           </v-col>
@@ -123,7 +123,7 @@ const socials = [
 const navLinks = [
   { label: 'Início',     to: '/' },
   { label: 'Empresa',    to: '/about' },
-  { label: 'Serviços',   to: { path: '/', hash: '#services' } },
+  { label: 'Serviços',   to: '/servicos' },
   { label: 'Projectos',  to: '/projects' },
   { label: 'Academia',   to: '/academia' },
   { label: 'Notícias',   to: { path: '/', hash: '#news' } },

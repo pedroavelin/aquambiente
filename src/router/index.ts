@@ -11,6 +11,7 @@ import Contact from '@/pages/contact.vue'
 import About from '@/pages/about.vue'
 import Academia from '@/pages/academia.vue'
 import ProjectsPage from '@/pages/projects.vue'
+import ServicosPage from '@/pages/servicos.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -30,6 +31,14 @@ const router = createRouter({
     {
       path: '/academia',
       component: Academia,
+    },
+    {
+      path: '/servicos',
+      component: ServicosPage,
+    },
+    {
+      path: '/services',
+      component: ServicosPage,
     },
     {
       path: '/projects',

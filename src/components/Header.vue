@@ -227,12 +227,12 @@
     },
     {
       label: 'SERVIÇOS',
-      to: { path: '/', hash: '#services' },
+      to: '/servicos',
       children: [
-        { label: 'Consultoria Ambiental', to: { path: '/', hash: '#services' }, icon: 'mdi-leaf' },
-        { label: 'Gestão de Resíduos',    to: { path: '/', hash: '#services' }, icon: 'mdi-recycle' },
-        { label: 'Monitorização',         to: { path: '/', hash: '#services' }, icon: 'mdi-chart-line' },
-        { label: 'Licenciamento',         to: { path: '/', hash: '#services' }, icon: 'mdi-file-document-check-outline' },
+        { label: 'Consultoria Ambiental', to: '/servicos', icon: 'mdi-leaf' },
+        { label: 'Gestão de Resíduos',    to: '/servicos', icon: 'mdi-recycle' },
+        { label: 'Monitorização',         to: '/servicos', icon: 'mdi-chart-line' },
+        { label: 'Licenciamento',         to: '/servicos', icon: 'mdi-file-document-check-outline' },
       ],
     },
     { label: 'PROJECTOS', to: '/projects' },
@@ -244,7 +244,7 @@
   const mobileNavItems = [
     { title: 'INÍCIO',     to: '/',          icon: 'mdi-home' },
     { title: 'EMPRESA',    to: '/about',     icon: 'mdi-domain' },
-    { title: 'SERVIÇOS',   to: { path: '/', hash: '#services' }, icon: 'mdi-tools' },
+    { title: 'SERVIÇOS',   to: '/servicos', icon: 'mdi-tools' },
     { title: 'PROJECTOS',  to: '/projects', icon: 'mdi-folder-multiple-outline' },
     { title: 'ACADEMIA',   to: '/academia', icon: 'mdi-school-outline' },
     { title: 'NOTÍCIAS',   to: { path: '/', hash: '#news' }, icon: 'mdi-newspaper-variant-outline' },
