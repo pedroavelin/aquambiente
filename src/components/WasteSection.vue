@@ -93,8 +93,8 @@
   </section>
 </template>
 
-<script setup>
-const wasteImageUrl = 'https://images.pexels.com/photos/2219024/pexels-photo-2219024.jpeg?auto=compress&cs=tinysrgb&w=1200'
+<script lang="ts" setup>
+  import wasteImageUrl from '@/assets/empresa/do-resido-ao-recursos.jpeg'
 </script>
 
 <style scoped>

@@ -4,7 +4,7 @@
       <!-- About and Vision Section -->
       <v-row align="stretch" class="mb-12 about-row">
         <!-- Left - Dark Box with About -->
-        <v-col class="mb-6 mb-md-0 about-col" cols="12" md="6">
+        <v-col class="mb-2 mb-md-0 about-col" cols="12" md="6">
           <div class="about-box">
             <h2 class="about-title mb-4">SOBRE A AQUAMBIENTE</h2>
 
@@ -12,10 +12,9 @@
               A Aquambiente – Consultoria Ambiental & Gestão de Resíduos, Lda. é uma empresa angolana especializada em soluções ambientais.
             </p>
 
-            <p class="about-text mb-6">
+            <p class="about-text mb-2">
               Trabalhamos para promover o desenvolvimento sustentável através de serviços de consultoria, gestão de resíduos, monitorização ambiental e oportunidades sustentáveis.
             </p>
-
             <v-btn
               class="text-white font-weight-bold"
               color="green-accent-4"
@@ -26,7 +25,7 @@
         </v-col>
 
         <!-- Center - Image -->
-        <v-col cols="12" md="3" class="mb-6 mb-md-0 about-col">
+        <v-col cols="12" md="3" class="mb-2 mb-md-0 about-col">
           <div
             class="about-visual"
             :style="{ backgroundImage: `linear-gradient(135deg, rgba(17, 94, 66, 0.25), rgba(15, 45, 61, 0.6)), url('${aboutImage}')` }"

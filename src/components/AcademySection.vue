@@ -8,9 +8,9 @@
         ====================================================== -->
         <div class="academy-image-wrapper">
           <v-img
-            src="https://images.unsplash.com/photo-1552664730-d307ca884978"
-            cover
             class="academy-image"
+            cover
+            :src="formationImage"
           />
         </div>
 
@@ -117,6 +117,7 @@
 
 
 <script lang="ts" setup>
+  import formationImage from '@/assets/empresa/formacao.jpeg'
 
 const upcomingCourses = [
   {
