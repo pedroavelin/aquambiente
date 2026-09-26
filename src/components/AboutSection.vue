@@ -4,11 +4,7 @@
       <!-- About and Vision Section -->
       <v-row align="stretch" class="mb-12 about-row">
         <!-- Left - Dark Box with About -->
-        <v-col
-          class="mb-6 mb-md-0 about-col"
-          cols="12"
-          md="4"
-        >
+        <v-col class="mb-6 mb-md-0 about-col" cols="12" md="6">
           <div class="about-box">
             <h2 class="about-title mb-4">SOBRE A AQUAMBIENTE</h2>
 
@@ -24,22 +20,21 @@
               class="text-white font-weight-bold"
               color="green-accent-4"
             >
-              COMECE A EMPRESA
+              CONHEÇA A EMPRESA
             </v-btn>
           </div>
         </v-col>
 
         <!-- Center - Image -->
-        <v-col cols="12" md="4" class="mb-6 mb-md-0 about-col">
+        <v-col cols="12" md="3" class="mb-6 mb-md-0 about-col">
           <div class="about-visual">
             <div class="about-visual__overlay">
-              <span class="about-visual__label">Reciclagem em casa</span>
             </div>
           </div>
         </v-col>
 
         <!-- Right - Green Box with Vision -->
-        <v-col cols="12" md="4" class="about-col">
+        <v-col cols="12" md="3" class="about-col">
           <div class="vision-box">
             <div class="vision-quote">❝</div>
 
@@ -136,8 +131,8 @@
 
 .about-col {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: start;
+  justify-content: start;
   padding: 0 !important;
   margin: 0;
 }
@@ -146,7 +141,7 @@
   background: linear-gradient(135deg, #0f2d3d 0%, #0d4a62 60%, #0c6b52 100%);
   color: white;
   padding: 1.5rem 1.25rem;
-  border-radius: 0;
+  border-radius: 12px 0 0 12px;
   width: 100%;
   height: 100%;
   display: flex;
@@ -160,6 +155,12 @@
   font-size: 1.8rem;
   font-weight: 700;
   color: white;
+  width: 100%;
+  text-align: left;
+}
+
+.about-box .v-btn {
+  align-self: flex-start;
 }
 
 .about-text {
@@ -167,6 +168,8 @@
   font-size: 0.9rem;
   line-height: 1.5;
   margin-bottom: 0.75rem;
+  width: 100%;
+  text-align: left;
 }
 
 .about-visual {
@@ -178,7 +181,7 @@
   border-radius: 0;
   overflow: hidden;
   background-image: linear-gradient(135deg, rgba(17, 94, 66, 0.25), rgba(15, 45, 61, 0.6)),
-    url('https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=900&q=80');
+    url('src/assets/empresa/about-in-index.jpeg');
   background-size: cover;
   background-position: center;
   box-shadow: 0 18px 36px rgba(17, 24, 39, 0.12);
@@ -203,7 +206,7 @@
   background: linear-gradient(135deg, #1a7b3c 0%, #2f9d5c 55%, #78b76c 100%);
   color: white;
   padding: 1.5rem 1.25rem;
-  border-radius: 0;
+  border-radius: 0 12px 12px 0;
   min-height: 190px;
   width: 100%;
   height: 100%;

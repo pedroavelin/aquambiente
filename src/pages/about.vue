@@ -14,7 +14,6 @@
 
           <div class="hero-line" />
           <p class="hero-kicker">SOBRE A AQUAMBIENTE</p>
-
           <h1>
             Soluções ambientais
             <span>com impacto positivo.</span>
