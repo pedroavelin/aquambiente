@@ -51,21 +51,21 @@
           <!-- CTA Buttons -->
           <div class="cta-buttons">
             <v-btn
-            rounded
               size="small"
-              class="font-weight-bold"
-              color="green-accent-4"
+              class="font-weight-normal"
+              color="deep-purple-darken-4"
+              rounded="sm"
               to="/servicos"
             >
               <v-icon class="me-1" color="white">mdi-briefcase-outline</v-icon>
               NOSSOS SERVIÇOS
             </v-btn>
             <v-btn
-            rounded
               size="small"
               variant="outlined"
               color="white"
-              class="font-weight-bold"
+              rounded="sm"
+              class="font-weight-normal"
               to="/contactos"
             >
               <v-icon class="me-1" color="green">mdi-whatsapp </v-icon>
@@ -125,9 +125,9 @@
 
 <script lang="ts" setup>
   import { onMounted, onUnmounted, ref } from 'vue'
-  import bg1 from '@/assets/hero/bg1.png'
-  import bg2 from '@/assets/hero/bg2.png'
-  import bg3 from '@/assets/hero/bg3.png'
+  import bg1 from '@/assets/hero/bg1.jpg'
+  import bg2 from '@/assets/hero/bg2.jpg'
+  import bg3 from '@/assets/hero/bg3.jpg'
   
   const heroImages = [bg1, bg2, bg3]
 
@@ -231,14 +231,14 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background:
-    linear-gradient(
-      90deg,
-      rgba(2, 18, 28, 0.72) 0%,
-      rgba(2, 18, 28, 0.45) 38%,
-      rgba(2, 18, 28, 0.58) 100%
-    ),
-    rgba(0, 0, 0, 0.18);
+background:
+  linear-gradient(
+    90deg,
+    rgba(2, 18, 28, 0.28) 0%,
+    rgba(2, 18, 28, 0.12) 38%,
+    rgba(2, 18, 28, 0.22) 100%
+  ),
+  rgba(0, 0, 0, 0.04);
   z-index: 1;
   pointer-events: none;
 }
@@ -261,9 +261,10 @@
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   color: #66bb6a;
 }
+
 .hero-title-blue {
-  font-family: 'Black Ops One', cursive;
-  color: #0d90ed;
+  font-family: 'Black Ops One';
+  color: #0D47A1;
 }
 
 .hero-divider {

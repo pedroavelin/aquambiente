@@ -166,7 +166,6 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-
 /* ---------- Reveal on scroll (directive local) ---------- */
 const vReveal = {
   mounted(el: HTMLElement, binding: { value?: { delay?: number } }) {

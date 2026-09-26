@@ -1,263 +1,198 @@
 <template>
-  <section id="services" class="services-section py-16">
+  <section id="services" class="services-section py-12">
     <v-container>
-      <div class="section-header mb-12">
-        <p class="section-kicker">SERVIÇOS</p>
-        <h2 class="text-h3 font-weight-bold mb-4">Soluções ambientais com visão de futuro</h2>
-        <p class="text-h6 text-grey-darken-1">
-          A Aquambiente combina experiência técnica, rigor regulatório e execução prática para
-          entregar resultados sustentáveis e confiáveis.
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">O QUE FAZEMOS</p>
+          <h2 class="section-title">Soluções ambientais para decisões mais sustentáveis</h2>
+        </div>
+        <p class="section-intro">
+          Unimos conhecimento técnico e experiência prática para ajudar organizações a reduzir
+          riscos e melhorar o seu desempenho ambiental.
         </p>
       </div>
 
       <v-row>
-        <v-col v-for="service in services" :key="service.id" cols="12" md="3" sm="6">
-          <div
-            class="service-card"
-            :style="{
-              backgroundImage: `linear-gradient(180deg, rgba(18, 35, 28, 0.1), rgba(18, 35, 28, 0.78)), url('${service.image}')`,
-              transitionDelay: `${(service.id - 1) * 70}ms`,
-            }"
-          >
-            <div class="service-card__content">
-              <div class="service-icon">
-                <v-icon color="white" :icon="service.icon" size="34" />
-              </div>
+        <v-col v-for="service in services" :key="service.title" cols="12" sm="6" md="3">
+          <article class="service-card">
+            <v-icon :color="service.iconColor || 'green-accent-4'" :icon="service.icon" size="36" />
+            <h3>{{ service.title }}</h3>
 
-              <h3 class="service-title">{{ service.title }}</h3>
-
-              <p class="service-description">{{ service.description }}</p>
-
-              <span class="service-link">Saiba mais</span>
-            </div>
-          </div>
+            <router-link
+              :aria-label="`Saiba mais sobre ${service.title}`"
+              class="service-more"
+              to="/servicos"
+            >
+              Saiba mais
+              <v-icon end icon="mdi-arrow-right" size="small" />
+            </router-link>
+          </article>
         </v-col>
       </v-row>
+
     </v-container>
   </section>
 </template>
 
-<script lang="ts" setup>
-import { onBeforeUnmount, onMounted } from 'vue'
-
-let observer: IntersectionObserver | null = null
-
+<script setup lang="ts">
 const services = [
   {
-    id: 1,
-    icon: 'mdi-leaf',
-    title: 'Consultoria Ambiental',
-    description: 'Estratégias personalizadas para licenciamento, estudos e apoio à decisão.',
-    image:
-      'https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=900&q=80',
+    title: 'Consultoria ambiental',
+    icon: 'mdi-flower-outline',
   },
   {
-    id: 2,
+    title: 'Gestão de resíduos',
     icon: 'mdi-recycle',
-    title: 'Gestão de Resíduos',
-    description: 'Planeamento, segregação e otimização dos fluxos de resíduos e materiais.',
-    image:
-      'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=900&q=80',
   },
   {
-    id: 3,
-    icon: 'mdi-eye-check',
-    title: 'Monitorização',
-    description: 'Acompanhamento contínuo com indicadores, relatórios e avaliação de desempenho.',
-    image:
-      'https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=900&q=80',
+    title: 'Monitorização da água',
+    icon: 'mdi-water',
+    iconColor: 'blue-darken-4',
   },
   {
-    id: 4,
-    icon: 'mdi-wind-power',
     title: 'Qualidade do Ar',
-    description: 'Diagnóstico técnico e medidas preventivas para proteção do ambiente e da saúde.',
-    image:
-      'https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=900&q=80',
+    icon: 'mdi-cloud-outline',
+    iconColor: 'blue-darken-4',
   },
   {
-    id: 5,
-    icon: 'mdi-volume-mute',
-    title: 'Ruído',
-    description: 'Avaliações acústicas para conformidade, conforto e mitigação de impactos.',
-    image:
-      'https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&fit=crop&w=900&q=80',
+    title: 'Ruído e vibração',
+    icon: 'mdi-vibrate',
+     iconColor: 'blue-darken-4',
   },
   {
-    id: 6,
-    icon: 'mdi-file-document-check',
-    title: 'Licenciamento',
-    description: 'Gestão documental e apoio na tramitação de processos junto às autoridades.',
-    image:
-      'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80',
+    title: 'Licenciamento Ambiental',
+    icon: 'mdi-file-certificate-outline',
   },
   {
-    id: 7,
-    icon: 'mdi-medical-bag',
-    title: 'Higiene e Segurança',
-    description: 'Programas orientados para condições seguras, saudáveis e conformes.',
-    image:
-      'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=900&q=80',
+    title: 'Higiene e segurança no trabalho',
+    icon: 'mdi-hard-hat',
+    iconColor: 'orange',
   },
   {
-    id: 8,
-    icon: 'mdi-book-open-variant',
-    title: 'Formação',
-    description: 'Sessões práticas e especializadas para reforçar conhecimento e boas práticas.',
-    image:
-      'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80',
+    title: 'Formação e academia',
+    icon: 'mdi-school-outline',
+    iconColor: 'blue-darken-4',
   },
 ]
-
-onMounted(() => {
-  const revealCards = document.querySelectorAll('.service-card')
-
-  if (!('IntersectionObserver' in window)) {
-    revealCards.forEach((card) => card.classList.add('is-visible'))
-    return
-  }
-
-  observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible')
-          observer?.unobserve(entry.target)
-        }
-      })
-    },
-    { threshold: 0.15 },
-  )
-
-  revealCards.forEach((card) => observer?.observe(card))
-})
-
-onBeforeUnmount(() => {
-  observer?.disconnect()
-})
 </script>
 
 <style scoped>
 .services-section {
-  background: linear-gradient(180deg, #f6f8f5 0%, #edf2ee 100%);
+  background: #f4f7f3;
 }
 
-.section-header {
-  text-align: center;
-  max-width: 900px;
-  margin-inline: auto;
+.section-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 2rem;
 }
 
 .section-kicker {
-  margin: 0 0 0.75rem;
-  color: #2e7d32;
-  font-size: 0.78rem;
+  color: #16834a;
+  font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.18rem;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.75rem;
+}
+
+.section-title {
+  color: #16352b;
+  font-size: clamp(1.75rem, 3vw, 2.75rem);
+  line-height: 1.1;
+  max-width: 620px;
+}
+
+.section-intro {
+  color: #52635b;
+  max-width: 380px;
 }
 
 .service-card {
-  position: relative;
-  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #fff;
+  border-top: 3px solid #0d47a1;
   border-radius: 10px;
-  overflow: hidden;
-  background-size: cover;
-  background-position: center;
-  box-shadow: 0 18px 36px rgba(17, 24, 39, 0.12);
-  opacity: 0;
-  transform: translateY(24px);
-  transition:
-    transform 0.6s ease,
-    box-shadow 0.3s ease,
-    opacity 0.6s ease;
-}
-
-.service-card.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.service-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.76));
+  box-shadow: 0 4px 14px rgba(22, 53, 43, 0.12);
+  height: 100%;
+  padding: 1.5rem;
+  text-align: center;
+  transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
 }
 
 .service-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 24px 40px rgba(17, 24, 39, 0.18);
+  transform: scale(1.03);
+  border-top-color: #16834a;
+  box-shadow: 0 8px 20px rgba(22, 53, 43, 0.18);
 }
 
-.service-card__content {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  min-height: 280px;
-  padding: 1rem 1rem 1.125rem;
-  color: white;
-}
-
-.service-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 52px;
-  height: 52px;
-  margin-bottom: 0.85rem;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.14);
-  backdrop-filter: blur(4px);
-  border: 1px solid rgba(255, 255, 255, 0.24);
-}
-
-.service-title {
-  font-weight: 700;
+.service-card h3 {
+  color: #0d47a1;
   font-size: 1.1rem;
-  line-height: 1.25;
-  margin: 0 0 0.35rem;
-  color: #ffffff;
+  margin: 1rem 0 0.65rem;
+  transition: color 220ms ease;
 }
 
-.service-description {
-  margin: 0.3rem 0 0.75rem;
-  color: rgba(255, 255, 255, 0.84);
-  font-size: 0.85rem;
-  line-height: 1.45;
-}
-
-.service-link {
+.service-more {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
   margin-top: auto;
-  margin-inline: auto;
-  gap: 0.35rem;
-  width: fit-content;
-  min-width: 120px;
-  padding: 0.5rem 0.8rem;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.14);
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  color: #ffffff;
-  font-size: 0.8rem;
+  color: #16834a;
+  font-size: 0.9rem;
   font-weight: 600;
-  letter-spacing: 0.02em;
-  transition: background-color 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+  text-decoration: none;
 }
 
-.service-card:hover .service-link {
-  background: rgba(46, 125, 50, 0.85);
-  border-color: rgba(46, 125, 50, 0.95);
-  transform: translateY(-1px);
+.service-more:hover,
+.service-card:hover .service-more {
+  color: #16834a;
 }
 
-@media (max-width: 960px) {
+.service-more :deep(.v-icon) {
+  transition: transform 220ms ease;
+}
+
+.service-more:hover :deep(.v-icon),
+.service-card:hover .service-more :deep(.v-icon) {
+  transform: translateX(3px);
+}
+
+.service-card:hover h3 {
+  color: #16834a;
+}
+
+.service-card p {
+  color: #64736c;
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.section-action {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+@media (max-width: 700px) {
+  .section-heading {
+    align-items: start;
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
   .service-card,
-  .service-card__content {
-    min-height: 250px;
+  .service-card h3,
+  .service-more :deep(.v-icon) {
+    transition: none;
+  }
+
+  .service-card:hover {
+    transform: none;
   }
 }
 </style>

@@ -91,11 +91,10 @@
       <!-- CTA + Mobile -->
       <div class="navbar-actions">
         <v-btn
-          rounded
+          rounded="sm"
           class="text-white font-weight-bold d-none d-sm-flex cta-btn"
-          color="green-accent-4"
+          color="green-darken-1"
           size="small"
-          height="34"
           elevation="4"
           variant="flat"
           to="/contactos"
