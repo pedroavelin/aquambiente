@@ -27,7 +27,10 @@
 
         <!-- Center - Image -->
         <v-col cols="12" md="3" class="mb-6 mb-md-0 about-col">
-          <div class="about-visual">
+          <div
+            class="about-visual"
+            :style="{ backgroundImage: `linear-gradient(135deg, rgba(17, 94, 66, 0.25), rgba(15, 45, 61, 0.6)), url('${aboutImage}')` }"
+          >
             <div class="about-visual__overlay">
             </div>
           </div>
@@ -117,6 +120,10 @@
   </section>
 </template>
 
+<script setup lang="ts">
+  import aboutImage from '@/assets/empresa/about-in-index.jpeg'
+</script>
+
 <style scoped>
 .about-section {
   background: white;
@@ -180,8 +187,6 @@
   width: 100%;
   border-radius: 0;
   overflow: hidden;
-  background-image: linear-gradient(135deg, rgba(17, 94, 66, 0.25), rgba(15, 45, 61, 0.6)),
-    url('src/assets/empresa/about-in-index.jpeg');
   background-size: cover;
   background-position: center;
   box-shadow: 0 18px 36px rgba(17, 24, 39, 0.12);
