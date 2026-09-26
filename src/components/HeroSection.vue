@@ -88,8 +88,8 @@
             </div>
 
             <div class="pillar-item">
-              <div class="pillar-icon">
-                <v-icon color="green-accent-4" size="28">mdi-chart-box</v-icon>
+              <div class="pillar-icon pillar-icon-indigo">
+                <v-icon color="white" size="28">mdi-chart-box</v-icon>
               </div>
               <div>
                 <h4 class="pillar-title">Qualidade</h4>
@@ -108,8 +108,8 @@
             </div>
 
             <div class="pillar-item">
-              <div class="pillar-icon">
-                <v-icon color="green-accent-4" size="28">mdi-shield-check</v-icon>
+              <div class="pillar-icon pillar-icon-indigo">
+                <v-icon color="white" size="28">mdi-shield-check</v-icon>
               </div>
               <div>
                 <h4 class="pillar-title">Conformidade</h4>
@@ -356,6 +356,10 @@ background:
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.pillar-icon-indigo {
+  background: rgba(63, 81, 181, 0.2);
 }
 
 .pillar-title {
