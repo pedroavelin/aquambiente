@@ -70,7 +70,7 @@
             <span class="cine-scene-rule"></span>
 
             <span class="cine-scene-category">
-              {{ project.tags[0] }}
+              {{ project.activity }}
             </span>
           </div>
 
@@ -79,29 +79,21 @@
           </h3>
 
           <p class="cine-scene-subtitle">
-            {{ project.description }}
+            {{ project.summary }}
           </p>
 
           <div class="cine-scene-footer">
             <dl class="cine-scene-facts">
-              <div>
-                <dt>Cliente</dt>
-                <dd>{{ project.client || 'Confidencial' }}</dd>
-              </div>
-              <div>
-                <dt>Ano</dt>
-                <dd>{{ project.year || '2024' }}</dd>
-              </div>
-              <div>
-                <dt>Localização</dt>
-                <dd>{{ project.location || 'Angola' }}</dd>
+              <div v-for="(tag, tagIndex) in project.tags" :key="tag">
+                <dt>Área {{ String(tagIndex + 1).padStart(2, '0') }}</dt>
+                <dd>{{ tag }}</dd>
               </div>
             </dl>
 
-            <button type="button" class="cine-scene-link">
+            <router-link :to="`/projectos/${project.id}`" class="cine-scene-link">
               <span>Ver projecto completo</span>
               <span class="cine-scene-link-line"></span>
-            </button>
+            </router-link>
           </div>
         </div>
       </article>
@@ -111,95 +103,51 @@
     <footer class="cine-footer">
       <span class="cine-footer-mark">—</span>
 
-      <a href="#" class="cine-footer-link" @click.prevent>
+      <router-link to="/projectos" class="cine-footer-link">
         Ver arquivo completo
         <span class="cine-footer-arrow">→</span>
-      </a>
+      </router-link>
     </footer>
   </section>
 </template>
-<script setup>
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
-import projectsGallery1 from '@/assets/projectos/1.jpeg'
-import projectsGallery2 from '@/assets/projectos/2.jpeg'
-import projectsGallery3 from '@/assets/projectos/3.jpeg'
-import projectsGallery4 from '@/assets/projectos/4.jpeg'
-import projectsGallery5 from '@/assets/projectos/5.jpeg'
-import projectsGallery6 from '@/assets/projectos/6.jpeg'
-const projects = [
-  {
-    id: 1,
-    title: 'Monitorização Ambiental',
-    description: 'Porto do Soyo.',
-    image: projectsGallery1,
-    tags: ['Monitorização', 'Auditoria', 'Conformidade'],
-    client: 'Porto do Soyo', year: '2023', location: 'Soyo, Zaire'
-  },
-  {
-    id: 2,
-    title: 'Estudo de Impacte Ambiental',
-    description: 'Projecto mineiro.',
-    image: projectsGallery2,
-    tags: ['Consultoria', 'Impacte', 'Sustentabilidade'],
-    client: 'Sector Mineiro', year: '2022', location: 'Lunda Sul'
-  },
-  {
-    id: 3,
-    title: 'Monitorização Contínua',
-    description: 'Município de Viana.',
-    image: projectsGallery3,
-    tags: ['Monitorização', 'Qualidade', 'Relatórios'],
-    client: 'Administração Municipal', year: '2024', location: 'Viana, Luanda'
-  },
-  {
-    id: 4,
-    title: 'Laboratório Ambiental',
-    description: 'Análise físico-química.',
-    image: projectsGallery4,
-    tags: ['Consultoria', 'Conformidade', 'Regulamentação'],
-    client: 'Vários', year: '2023', location: 'Luanda'
-  },
-  {
-    id: 5,
-    title: 'Gestão de Resíduos Urbanos',
-    description: 'Plano de recolha e valorização em cidade.',
-    image: projectsGallery5,
-    tags: ['Sustentabilidade', 'Resíduos', 'Logística'],
-    client: 'Município', year: '2024', location: 'Luanda'
-  },
-  {
-    id: 6,
-    title: 'Avaliação de Impacte',
-    description: 'Nova infraestrutura rodoviária.',
-    image: projectsGallery6,
-    tags: ['Consultoria', 'Impacte', 'Planeamento'],
-    client: 'Sector Público', year: '2023', location: 'Benguela'
-  },
-]
+<script setup lang="ts">
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, type ComponentPublicInstance } from 'vue'
+import { useProjectsStore } from '@/stores/projects'
+
+const projectsStore = useProjectsStore()
+const projects = computed(() => projectsStore.projects.slice(0, 4))
 
 const sectionRef = ref(null)
 const isSectionVisible = ref(true)
 
-const sceneRefs = ref([])
+const sceneRefs = ref<HTMLElement[]>([])
 
-const visibleIndexes = ref([])
+const visibleIndexes = ref<number[]>([])
 
 const activeIndex = ref(0)
 
 const scrollProgress = ref(0)
 
-const setSceneRef = (el, index) => {
-  if (el) sceneRefs.value[index] = el
+const setSceneRef = (element: Element | ComponentPublicInstance | null, index: number) => {
+  if (element instanceof HTMLElement) sceneRefs.value[index] = element
 }
 
 /* =========================================================
  * IntersectionObserver — revela cenas e define a activa
  * ========================================================= */
 
-let observer = null
-let sectionObserver = null
+let observer: IntersectionObserver | null = null
+let sectionObserver: IntersectionObserver | null = null
 
-onMounted(() => {
+const observeScenes = () => {
+  observer?.disconnect()
+  sceneRefs.value.forEach((element, index) => {
+    element.dataset.index = String(index)
+    observer?.observe(element)
+  })
+}
+
+onMounted(async () => {
   sectionObserver = new IntersectionObserver(
     (entries) => {
       const entry = entries[0]
@@ -238,14 +186,10 @@ onMounted(() => {
     }
   )
 
-  sceneRefs.value.forEach((el, index) => {
-    if (el) {
-      el.dataset.index = index
-      observer.observe(el)
-    }
-  })
-
   window.addEventListener('scroll', handleScroll, { passive: true })
+  await projectsStore.loadProjects()
+  await nextTick()
+  observeScenes()
 })
 
 onBeforeUnmount(() => {
@@ -258,11 +202,7 @@ onBeforeUnmount(() => {
  * Parallax por scroll
  * ========================================================= */
 
-const scrollY = ref(0)
-
 const handleScroll = () => {
-  scrollY.value = window.scrollY
-
   if (sectionRef.value) {
     const rect = sectionRef.value.getBoundingClientRect()
     const total = sectionRef.value.offsetHeight - window.innerHeight
@@ -274,7 +214,7 @@ const handleScroll = () => {
   }
 }
 
-const parallaxStyle = (index) => {
+const parallaxStyle = (index: number) => {
   const scene = sceneRefs.value[index]
   if (!scene) return {}
 
@@ -295,7 +235,7 @@ const parallaxStyle = (index) => {
  * Índice lateral
  * ========================================================= */
 
-const scrollToProject = (index) => {
+const scrollToProject = (index: number) => {
   sceneRefs.value[index]?.scrollIntoView({
     behavior: 'smooth',
     block: 'center'
@@ -308,6 +248,18 @@ const railProgressStyle = computed(() => ({
 </script>
 
 <style scoped>
+
+.cine-scene-title[data-v-fd6ea892] {
+    margin: 0;
+    font-family: 'Cormorant Garamond', 'Playfair Display', serif;
+    font-size: clamp(1rem, 4vw, 5rem);
+    font-weight: 400;
+    line-height: 0.98;
+    letter-spacing: 0.025em;
+    color: #fafaf7;
+    max-width: 30ch;
+
+}
 /* =========================================================
    SECTION
 ========================================================= */
@@ -745,6 +697,7 @@ const railProgressStyle = computed(() => ({
   background: none;
 
   color: #b8e986;
+  text-decoration: none;
 
   font-size: 0.72rem;
   font-weight: 700;
