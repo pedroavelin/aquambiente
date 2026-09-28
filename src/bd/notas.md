@@ -1,0 +1,37 @@
+1. Kandy Factory Angola – Unidade Fabril de Confeitaria de Doces de Açúcar
+Actividade: Monitorização Ambiental
+Execução de campanha de monitorização ambiental da unidade fabril, compreendendo o levantamento dos principais aspectos e impactes ambientais associados ao processo de produção de doces de açúcar. Serão avaliados, conforme aplicabilidade, qualidade do ar e emissões atmosféricas, níveis de ruído, gestão e acondicionamento de resíduos, águas residuais, consumo de recursos naturais e condições ambientais das áreas produtivas e de apoio. Os dados obtidos serão analisados face aos requisitos ambientais aplicáveis, culminando na elaboração de relatório técnico com resultados, constatações e recomendações de melhoria.
+
+2. Ponto Cais Byfish – Processamento e Congelamento de Pescados
+Actividade: Estudo de Impacte Ambiental
+Realização de Estudo de Impacte Ambiental para caracterização da situação ambiental de referência da área de implantação e avaliação dos impactes associados às fases de instalação, operação e, quando aplicável, desactivação da unidade de processamento e congelamento de pescados. O estudo compreenderá o levantamento dos componentes físico, biótico e socioeconómico, identificação das fontes de impacte, avaliação da significância dos impactes e definição de medidas de prevenção, minimização, controlo e compensação. Será igualmente estruturado um Plano de Gestão Ambiental e Programa de Monitorização, incluindo indicadores e medidas de acompanhamento do desempenho ambiental. 
+
+3. Parker Betumes, LDA – Central de Asfalto Betuminoso
+Actividade: Estudo de Impacte Ambiental
+Desenvolvimento de Estudo de Impacte Ambiental direcionado à avaliação dos efeitos ambientais decorrentes da implantação e operação da central de produção de misturas betuminosas. Serão analisados aspectos relacionados com emissões atmosféricas e material particulado, armazenamento e utilização de betume e combustíveis, ruído e vibrações, geração e gestão de resíduos, águas residuais e pluviais contaminadas, consumo de água e energia, circulação de veículos e riscos de derrames ou incêndios. O estudo incluirá a avaliação dos impactes ambientais, definição de medidas de mitigação e elaboração do Plano de Gestão e Monitorização Ambiental. 
+
+4. ANGOJORDAN, Lda – Unidade Industrial de Reciclagem de Alumínio
+Actividade: Monitorização Ambiental
+Realização de monitorização do desempenho ambiental da unidade de reciclagem de alumínio, através da avaliação dos aspectos ambientais associados às operações de recepção, armazenamento, processamento, fusão e/ou transformação do alumínio, conforme as actividades efectivamente desenvolvidas. Serão considerados parâmetros como emissões atmosféricas, poeiras, resíduos e escórias do processo, ruído, águas residuais, armazenamento de matérias-primas e produtos, substâncias perigosas e condições de prevenção da contaminação do solo. Os resultados serão consolidados num relatório de monitorização contendo constatações, não conformidades eventualmente identificadas e medidas correctivas/preventivas. 
+
+5. Cooperativa Mineira Mutongo – Unidade de Exploração Mineira
+Actividade: Monitorização Ambiental
+Execução de programa de monitorização ambiental associado às actividades de exploração mineira, com avaliação dos principais factores de pressão ambiental resultantes das operações. O trabalho poderá abranger a monitorização da qualidade das águas superficiais e/ou subterrâneas, solo, poeiras e qualidade do ar, ruído e vibrações, resíduos mineiros, águas de processo, áreas de deposição de materiais e recuperação das áreas intervencionadas. Será efectuada a análise dos resultados e do nível de conformidade ambiental da actividade, com apresentação de recomendações técnicas destinadas à prevenção e redução dos impactes ambientais. 
+
+6. Banco Keve, S.A. – Instituição Financeira
+Actividades: Plano de Gestão de Resíduos, Plano de Emergência e Planta de Emergência
+Plano de Gestão de Resíduos: realização de levantamento e caracterização dos resíduos gerados nas instalações, incluindo papel/cartão, plásticos, resíduos orgânicos, resíduos de equipamentos eléctricos e electrónicos, lâmpadas, toners e outros resíduos específicos. Serão definidos procedimentos para segregação na fonte, acondicionamento, armazenamento temporário, recolha, transporte, valorização e destino final, considerando a classificação dos resíduos e os requisitos ambientais aplicáveis.
+Plano de Emergência: identificação dos principais cenários de emergência susceptíveis de ocorrer nas instalações, nomeadamente incêndio, curto-circuito, derrame de substâncias, acidente, emergência médica e necessidade de evacuação. Serão estabelecidos procedimentos de actuação, responsabilidades, meios de emergência, comunicação, evacuação e articulação com os serviços externos de emergência.
+Planta de Emergência: elaboração da representação gráfica das instalações, com identificação de rotas de evacuação, saídas de emergência, localização de extintores e demais equipamentos de combate a incêndio, primeiros socorros, alarmes, pontos de encontro e demais elementos relevantes para resposta a emergências.
+
+7. SANABEL Group, S.A. – Unidade Industrial de Processamento de Farinha de Trigo
+Actividade: Estudo de Impacte Ambiental
+Realização de Estudo de Impacte Ambiental para avaliação dos impactes decorrentes das actividades de recepção, armazenamento, processamento e acondicionamento de farinha de trigo. O estudo contemplará a caracterização da situação ambiental de referência e análise dos principais aspectos ambientais, incluindo emissões de poeiras, qualidade do ar, ruído, resíduos industriais, águas residuais, consumo de água e energia, circulação de veículos, riscos de incêndio/explosão associados a poeiras e impactes socioeconómicos. Serão propostas medidas de mitigação e estabelecido um programa de gestão e monitorização para acompanhamento do desempenho ambiental da unidade. 
+
+8. ANGÓCAJÚ – Unidade Industrial de Processamento de Castanhas de Caju e Produtos Secos
+Actividade: Monitorização Ambiental
+Execução de monitorização ambiental das actividades de processamento de castanhas de caju e produtos secos, com avaliação dos aspectos ambientais decorrentes das operações de recepção, selecção, processamento, secagem, armazenamento e expedição. Serão avaliados, conforme aplicabilidade, poeiras e qualidade do ar, ruído, resíduos orgânicos e de embalagem, águas residuais, consumo de água e energia, condições de armazenamento e higiene ambiental das instalações. A intervenção resultará num relatório técnico com apresentação dos resultados, avaliação das condições ambientais e recomendações para melhoria do desempenho ambiental. 
+
+9. ANGOINVESTE – Unidade de Fabricação de Caixas Metálicas e Montagem de Geradores Industriais
+Actividade: Monitorização Ambiental
+Realização de monitorização ambiental das actividades de fabricação de caixas metálicas e montagem de geradores industriais, com enfoque nos aspectos ambientais relacionados com corte, soldadura, pintura, montagem, manutenção e testes de equipamentos. Serão avaliadas as condições relacionadas com emissões e fumos provenientes das operações, poeiras, ruído, resíduos metálicos, óleos e lubrificantes usados, filtros, embalagens contaminadas, águas residuais e armazenamento de produtos químicos e combustíveis, quando aplicável. Será elaborado relatório técnico contendo os resultados da avaliação, identificação de eventuais não conformidades e recomendações de medidas preventivas e correctivas. 

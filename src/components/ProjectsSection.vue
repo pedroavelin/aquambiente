@@ -24,8 +24,8 @@
           </h1>
 
           <p class="hero-description">
-            Conheça os projectos que apoiamos em monitorização ambiental,
-            gestão de resíduos e soluções sustentáveis.
+            Conheça trabalhos de monitorização ambiental, estudos de impacte
+            e planos especializados realizados em Angola.
           </p>
         </div>
       </div>
@@ -37,7 +37,7 @@
     </section>
 
     <!-- ================= CONTEÚDO ================= -->
-    <v-container class="projects-shell">
+    <v-container v-if="activeProject" class="projects-shell">
       <!-- Header -->
       <header class="section-heading">
         <div class="heading-row">
@@ -61,15 +61,10 @@
             <strong>{{ String(projects.length).padStart(2, '0') }}</strong>
             <span>Projectos</span>
           </div>
-          <div class="stat-divider" />
+
           <div class="stat">
-            <strong>08</strong>
-            <span>Áreas técnicas</span>
-          </div>
-          <div class="stat-divider" />
-          <div class="stat">
-            <strong>100%</strong>
-            <span>Impacto local</span>
+            <strong>{{ String(activityCount).padStart(2, '0') }}</strong>
+            <span>Actividades</span>
           </div>
         </div>
       </header>
@@ -77,7 +72,7 @@
       <!-- ================= FEATURED + LISTA ================= -->
       <div class="showcase">
         <!-- Projecto em destaque -->
-        <article class="featured">
+        <article class="featured" @mouseenter="pauseAutoPlay" @mouseleave="resumeAutoPlay">
           <div class="featured-media">
             <transition name="fade-slide" mode="out-in">
               <v-img
@@ -118,15 +113,15 @@
                 </h3>
 
                 <p class="featured-description">
-                  {{ activeProject.description }}
+                  {{ activeProject.summary }}
                 </p>
               </div>
             </transition>
 
-            <a href="#" class="featured-cta" @click.prevent>
+            <router-link class="featured-cta" :to="`/projectos/${activeProject.id}`">
               <span>Ver projecto completo</span>
               <v-icon icon="mdi-arrow-right" size="16" />
-            </a>
+            </router-link>
 
             <div class="featured-progress">
               <span
@@ -181,7 +176,7 @@
 
                   <span class="item-copy">
                     <strong>{{ project.title }}</strong>
-                    <em>{{ project.description }}</em>
+                    <em>{{ project.summary }}</em>
                   </span>
 
                   <span class="item-arrow">
@@ -199,126 +194,74 @@
         </aside>
       </div>
     </v-container>
+
+    <v-container v-else class="projects-shell projects-message">
+      <p v-if="projectsStore.loading">A carregar projectos...</p>
+      <p v-else>{{ projectsStore.error || 'Não foi possível carregar os projectos.' }}</p>
+    </v-container>
   </section>
 </template>
 
-<script setup>
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+<script setup lang="ts">
+  import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+  import { useProjectsStore } from '@/stores/projects'
 
-import project1 from '@/assets/projectos/1.jpeg'
-import project2 from '@/assets/projectos/2.jpeg'
-import project3 from '@/assets/projectos/3.jpeg'
-import project4 from '@/assets/projectos/4.jpeg'
-import project5 from '@/assets/projectos/5.jpeg'
-import project6 from '@/assets/projectos/6.jpeg'
-import project7 from '@/assets/projectos/7.jpeg'
-import project8 from '@/assets/projectos/8.jpeg'
+  const projectsStore = useProjectsStore()
+  const projects = computed(() => projectsStore.projects)
+  const activeIndex = ref(0)
+  const isPaused = ref(false)
+  const activityCount = computed(() => new Set(projects.value.flatMap(project => project.tags)).size)
 
-const projects = [
-  {
-    id: 1,
-    title: 'Monitorização Ambiental',
-    description: 'Porto do Soyo.',
-    image: project1,
-    tags: ['Auditoria', 'Conformidade', 'Relatório'],
-  },
-  {
-    id: 2,
-    title: 'Estudo de Impacte Ambiental',
-    description: 'Projecto mineiro.',
-    image: project2,
-    tags: ['Reciclagem', 'Resíduos', 'Sustentabilidade'],
-  },
-  {
-    id: 3,
-    title: 'Monitorização Ambiental Contínua',
-    description: 'Município de Viana.',
-    image: project3,
-    tags: ['Monitorização', 'Qualidade', 'Relatórios'],
-  },
-  {
-    id: 4,
-    title: 'Laboratório Ambiental',
-    description: 'Análise físico-química.',
-    image: project4,
-    tags: ['Conformidade', 'Regulamentação', 'Consultoria'],
-  },
-  {
-    id: 5,
-    title: 'Gestão de Resíduos Urbanos',
-    description: 'Plano de recolha e valorização em cidade.',
-    image: project5,
-    tags: ['Resíduos', 'Logística', 'Sustentabilidade'],
-  },
-  {
-    id: 6,
-    title: 'Avaliação de Impacte Ambiental',
-    description: 'Estudo para implementação de nova infraestrutura.',
-    image: project6,
-    tags: ['Impacte', 'Planeamento', 'Consultoria'],
-  },
-  {
-    id: 7,
-    title: 'Monitorização de Qualidade do Ar',
-    description: 'Análise contínua para zonas industriais.',
-    image: project7,
-    tags: ['Ar', 'Monitorização', 'Tecnologia'],
-  },
-  {
-    id: 8,
-    title: 'Formação Ambiental',
-    description: 'Programas para equipas e comunidades locais.',
-    image: project8,
-    tags: ['Formação', 'Comunidades', 'Educação'],
-  },
-]
+  let autoplayTimer: ReturnType<typeof setInterval> | null = null
 
-const activeIndex = ref(0)
-const isPaused = ref(false)
+  const activeProject = computed(() => projects.value[activeIndex.value])
 
-let autoplayTimer = null
-
-const activeProject = computed(() => projects[activeIndex.value])
-
-const setActiveProject = (index) => {
-  if (index === activeIndex.value) return
-  activeIndex.value = index
-  restartAutoPlay()
-}
-
-const nextProject = () => {
-  activeIndex.value = (activeIndex.value + 1) % projects.length
-}
-
-const startAutoPlay = () => {
-  stopAutoPlay()
-  autoplayTimer = setInterval(() => {
-    if (!isPaused.value) nextProject()
-  }, 5500)
-}
-
-const stopAutoPlay = () => {
-  if (autoplayTimer) {
-    clearInterval(autoplayTimer)
-    autoplayTimer = null
+  function setActiveProject (index: number) {
+    if (index === activeIndex.value) return
+    activeIndex.value = index
+    restartAutoPlay()
   }
-}
 
-const restartAutoPlay = () => {
-  stopAutoPlay()
-  startAutoPlay()
-}
+  function nextProject () {
+    if (projects.value.length === 0) return
+    activeIndex.value = (activeIndex.value + 1) % projects.value.length
+  }
 
-const pauseAutoPlay = () => { isPaused.value = true }
-const resumeAutoPlay = () => { isPaused.value = false }
+  function startAutoPlay () {
+    stopAutoPlay()
+    autoplayTimer = setInterval(() => {
+      if (!isPaused.value) nextProject()
+    }, 5500)
+  }
 
-onMounted(() => {
-  startAutoPlay()
-})
+  function stopAutoPlay () {
+    if (autoplayTimer) {
+      clearInterval(autoplayTimer)
+      autoplayTimer = null
+    }
+  }
 
-onBeforeUnmount(() => {
-  stopAutoPlay()
-})
+  function restartAutoPlay () {
+    stopAutoPlay()
+    startAutoPlay()
+  }
+
+  function pauseAutoPlay () {
+    isPaused.value = true
+  }
+
+  function resumeAutoPlay () {
+    isPaused.value = false
+  }
+
+  onMounted(() => {
+    void projectsStore.loadProjects()
+    startAutoPlay()
+  })
+
+  onBeforeUnmount(() => {
+    stopAutoPlay()
+  })
 </script>
 
 <style scoped>
@@ -696,6 +639,7 @@ onBeforeUnmount(() => {
   margin: 0 0 10px;
   font-size: clamp(1.35rem, 2.1vw, 1.85rem);
   font-weight: 800;
+  color:white;
   line-height: 1.12;
   letter-spacing: -0.03em;
 }
