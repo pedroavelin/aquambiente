@@ -249,17 +249,6 @@ const railProgressStyle = computed(() => ({
 
 <style scoped>
 
-.cine-scene-title[data-v-fd6ea892] {
-    margin: 0;
-    font-family: 'Cormorant Garamond', 'Playfair Display', serif;
-    font-size: clamp(1rem, 4vw, 5rem);
-    font-weight: 400;
-    line-height: 0.98;
-    letter-spacing: 0.025em;
-    color: #fafaf7;
-    max-width: 30ch;
-
-}
 /* =========================================================
    SECTION
 ========================================================= */
@@ -586,14 +575,14 @@ const railProgressStyle = computed(() => ({
   margin: 0;
 
   font-family: 'Cormorant Garamond', 'Playfair Display', serif;
-  font-size: clamp(3rem, 8vw, 7rem);
+  font-size: clamp(3rem, 3vw, 7rem);
   font-weight: 400;
   line-height: 0.98;
-  letter-spacing: -0.025em;
+  letter-spacing: 0.025em;
 
   color: #fafaf7;
 
-  max-width: 18ch;
+  max-width: 38ch;
 }
 
 .cine-scene-title-line {
