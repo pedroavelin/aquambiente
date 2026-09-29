@@ -1,6 +1,6 @@
 <template>
   <section class="academia-page">
-    <!-- HERO -->
+    <!-- HERO (inalterado) -->
     <section class="academia-hero">
       <div class="hero-overlay" />
       <div class="hero-grain" />
@@ -38,60 +38,122 @@
     </section>
 
     <!-- CONTEÚDO -->
-    <v-container class="academia-shell">
-      <header class="section-header">
-        <div class="section-header-left">
-          <span class="section-number">01</span>
-          <p class="section-kicker">Programas</p>
-        </div>
+    <section class="academia-shell">
+      <div class="academia-inner">
+        <!-- INTRO EDITORIAL -->
+        <header class="intro">
+          <div class="intro-meta">
+            <span class="intro-number">01</span>
+            <span class="intro-divider" />
+            <span class="intro-label">Programas de Formação</span>
+          </div>
 
-        <div class="section-header-right">
-          <h2 class="section-title">
-            Capacitação profissional para
-            <strong>desafios ambientais reais.</strong>
-          </h2>
+          <div class="intro-grid">
+            <h2 class="intro-title">
+              Capacitação profissional para
+              <em>desafios ambientais reais.</em>
+            </h2>
 
-          <p class="section-description">
-            Formação prática, acompanhamento técnico e conteúdos alinhados às
-            exigências do mercado ambiental atual — para operar com mais
-            segurança, eficiência e consciência ambiental.
-          </p>
-        </div>
-      </header>
+            <div class="intro-aside">
+              <p class="intro-description">
+                Formação prática, acompanhamento técnico e conteúdos alinhados
+                às exigências do mercado ambiental atual — para operar com mais
+                segurança, eficiência e consciência ambiental.
+              </p>
 
-      <div class="course-grid">
-        <article
-          v-for="(course, index) in courses"
-          :key="course.title"
-          class="course-card"
-          :style="{ '--delay': `${index * 40}ms` }"
+              <ul class="intro-stats">
+                <li>
+                  <strong>06</strong>
+                  <span>Programas ativos</span>
+                </li>
+                <li>
+                  <strong>100%</strong>
+                  <span>Foco prático</span>
+                </li>
+                <li>
+                  <strong>B2B</strong>
+                  <span>Empresas & Instituições</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </header>
+
+        <!-- LISTA EDITORIAL -->
+        <div
+          class="course-list"
+          @mousemove="onMouseMove"
+          @mouseleave="onMouseLeave"
         >
-          <div class="course-media">
-            <v-img class="course-image" cover :src="course.image" />
-            <div class="course-gradient" />
+          <div class="course-list-head">
+            <span class="col-index">Nº</span>
+            <span class="col-title">Programa</span>
+            <span class="col-tag">Área</span>
+            <span class="col-action" />
           </div>
 
-          <div class="course-body">
-            <span class="course-badge">{{ course.badge }}</span>
-            <h3 class="course-title">{{ course.title }}</h3>
-            <p class="course-description">{{ course.description }}</p>
+          <article
+            v-for="(course, index) in courses"
+            :key="course.title"
+            class="course-row"
+            :class="{ 'is-active': activeIndex === index }"
+            @mouseenter="onMouseEnter(index)"
+          >
+            <span class="row-index">{{ String(index + 1).padStart(2, '0') }}</span>
 
-            <span class="course-cta">
-              Saber mais
-              <v-icon icon="mdi-arrow-right" size="16" />
+            <div class="row-main">
+              <h3 class="row-title">{{ course.title }}</h3>
+              <p class="row-description">{{ course.description }}</p>
+            </div>
+
+            <span class="row-tag">{{ course.badge }}</span>
+
+            <span class="row-arrow">
+              <v-icon icon="mdi-arrow-right" size="20" />
             </span>
-          </div>
+          </article>
 
-          <span class="course-index">{{ String(index + 1).padStart(2, '0') }}</span>
-        </article>
+          <!-- PREVIEW FLUTUANTE -->
+          <div
+            class="course-preview"
+            :class="{ 'is-visible': activeIndex !== null }"
+            :style="{
+              transform: `translate3d(${mouseX}px, ${mouseY}px, 0)`,
+            }"
+          >
+            <div
+              v-for="(course, index) in courses"
+              :key="course.title"
+              class="preview-image"
+              :class="{ 'is-active': activeIndex === index }"
+              :style="{ backgroundImage: `url(${course.image})` }"
+            />
+          </div>
+        </div>
+
+        <!-- CTA FINAL -->
+        <footer class="academia-cta">
+          <div class="cta-inner">
+            <p class="cta-kicker">Pronto para começar?</p>
+            <h3 class="cta-title">
+              Fale com a nossa equipa e desenhe o
+              <em>programa certo para a sua organização.</em>
+            </h3>
+            <a class="cta-button" href="#contactos">
+              Solicitar proposta
+              <v-icon icon="mdi-arrow-right" size="18" />
+            </a>
+          </div>
+        </footer>
       </div>
-    </v-container>
+    </section>
 
     <PartnersStrip />
   </section>
 </template>
 
 <script lang="ts" setup>
+  import { ref } from 'vue'
   import c1 from '@/assets/flayer-course/c1.jpeg'
   import c2 from '@/assets/flayer-course/c2.jpeg'
   import c3 from '@/assets/flayer-course/c3.jpeg'
@@ -104,41 +166,59 @@
     {
       image: c1,
       title: 'Gestão de Resíduos Sólidos',
-      badge: 'Curso 01',
+      badge: 'Gestão',
       description: 'Fundamentos para uma gestão eficiente, segura e regulamentada.',
     },
     {
       image: c2,
       title: 'Monitoramento Ambiental',
-      badge: 'Curso 02',
+      badge: 'Técnico',
       description: 'Acompanhamento técnico de variáveis ambientais e indicadores de desempenho.',
     },
     {
       image: c3,
       title: 'Licenciamento Ambiental',
-      badge: 'Curso 03',
+      badge: 'Regulatório',
       description: 'Processos, requisitos e melhores práticas para adequação ambiental.',
     },
     {
       image: c4,
       title: 'Higiene e Segurança no Trabalho',
-      badge: 'Curso 04',
+      badge: 'Segurança',
       description: 'Estratégias para reduzir riscos e promover ambientes mais seguros.',
     },
     {
       image: c5,
       title: 'Estudo de Impacto Ambiental',
-      badge: 'Curso 05',
+      badge: 'Avaliação',
       description: 'Metodologias para avaliação, diagnóstico e mitigação de impactos.',
     },
     {
       image: c6,
       title: 'Sustentabilidade e Compliance',
-      badge: 'Curso 06',
+      badge: 'Compliance',
       description: 'Aplicação de critérios de sustentabilidade e conformidade regulatória.',
     },
   ]
 
+  const activeIndex = ref<number | null>(null)
+  const mouseX = ref(0)
+  const mouseY = ref(0)
+
+  const onMouseEnter = (index: number) => {
+    activeIndex.value = index
+  }
+
+  const onMouseMove = (e: MouseEvent) => {
+    const target = e.currentTarget as HTMLElement
+    const rect = target.getBoundingClientRect()
+    mouseX.value = e.clientX - rect.left
+    mouseY.value = e.clientY - rect.top
+  }
+
+  const onMouseLeave = () => {
+    activeIndex.value = null
+  }
 </script>
 
 <style scoped>
@@ -147,7 +227,7 @@
     --c-ink: #0b2b3f;
     --c-ink-soft: #173d57;
     --c-muted: #5b6b7d;
-    --c-line: rgba(11, 43, 63, 0.08);
+    --c-line: rgba(11, 43, 63, 0.1);
     --c-green: #0f8a5f;
     --c-green-bright: #52d094;
     --c-bg: #f7faf8;
@@ -158,7 +238,7 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* ============ HERO (altura original) ============ */
+  /* ============ HERO (INALTERADO) ============ */
   .academia-hero {
     position: relative;
     height: 235px;
@@ -297,234 +377,486 @@
 
   /* ============ SHELL ============ */
   .academia-shell {
-    max-width: 1240px !important;
-    padding: 80px 24px 110px !important;
+    background: var(--c-bg);
+    padding: 110px 24px 130px;
   }
 
-  /* ============ SECTION HEADER ============ */
-  .section-header {
-    display: grid;
-    grid-template-columns: 200px 1fr;
-    gap: 60px;
-    align-items: start;
-    padding-bottom: 55px;
-    margin-bottom: 55px;
-    border-bottom: 1px solid var(--c-line);
+  .academia-inner {
+    max-width: 1240px;
+    margin: 0 auto;
   }
 
-  .section-header-left {
+  /* ============ INTRO ============ */
+  .intro {
+    margin-bottom: 80px;
+  }
+
+  .intro-meta {
     display: flex;
     align-items: center;
-    gap: 14px;
-    padding-top: 8px;
+    gap: 18px;
+    margin-bottom: 44px;
   }
 
-  .section-number {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 46px;
-    height: 46px;
-    border-radius: 50%;
-    border: 1px solid rgba(15, 138, 95, 0.3);
+  .intro-number {
     color: var(--c-green);
     font-size: 0.85rem;
-    font-weight: 700;
-    letter-spacing: 0.05em;
+    font-weight: 800;
+    letter-spacing: 0.1em;
   }
 
-  .section-kicker {
+  .intro-divider {
+    display: block;
+    width: 48px;
+    height: 1px;
+    background: var(--c-line);
+  }
+
+  .intro-label {
+    color: var(--c-muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+  }
+
+  .intro-grid {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .intro-title {
     margin: 0;
+    color: var(--c-ink);
+    font-size: clamp(2.2rem, 4.5vw, 4rem);
+    font-weight: 500;
+    line-height: 1.04;
+    letter-spacing: -0.045em;
+  }
+
+  .intro-title em {
+    display: block;
     color: var(--c-green);
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  .intro-aside {
+    padding-top: 12px;
+  }
+
+  .intro-description {
+    margin: 0;
+    color: var(--c-muted);
+    font-size: 1.05rem;
+    line-height: 1.75;
+  }
+
+  .intro-stats {
+    list-style: none;
+    padding: 0;
+    margin: 36px 0 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    border-top: 1px solid var(--c-line);
+    padding-top: 28px;
+  }
+
+  .intro-stats li {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .intro-stats strong {
+    color: var(--c-ink);
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+  }
+
+  .intro-stats span {
+    color: var(--c-muted);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* ============ LISTA EDITORIAL ============ */
+  .course-list {
+    position: relative;
+    border-top: 1px solid var(--c-line);
+  }
+
+  .course-list-head {
+    display: grid;
+    grid-template-columns: 60px 1fr 140px 60px;
+    gap: 28px;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--c-line);
+    color: var(--c-muted);
     font-size: 0.68rem;
     font-weight: 700;
     letter-spacing: 0.22em;
     text-transform: uppercase;
   }
 
-  .section-title {
-    margin: 0;
-    color: var(--c-ink-soft);
-    font-size: clamp(1.8rem, 3.4vw, 2.9rem);
-    font-weight: 600;
-    line-height: 1.14;
-    letter-spacing: -0.035em;
-  }
-
-  .section-title strong {
-    display: block;
-    color: var(--c-green);
-    font-weight: 700;
-  }
-
-  .section-description {
-    margin: 22px 0 0;
-    max-width: 680px;
-    color: var(--c-muted);
-    font-size: 0.98rem;
-    line-height: 1.75;
-  }
-
-  /* ============ GRID ============ */
-  .course-grid {
+  .course-row {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: 60px 1fr 140px 60px;
     gap: 28px;
-  }
-
-  /* ============ CARD ============ */
-  .course-card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    border-radius: 24px;
-    background: var(--c-surface);
-    border: 1px solid var(--c-line);
-    box-shadow: 0 1px 2px rgba(11, 43, 63, 0.04);
+    align-items: center;
+    padding: 32px 0;
+    border-bottom: 1px solid var(--c-line);
     cursor: pointer;
-    transition:
-      transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
-      box-shadow 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
-      border-color 0.3s ease;
-  }
-
-  .course-card:hover {
-    transform: translateY(-6px);
-    border-color: rgba(15, 138, 95, 0.22);
-    box-shadow:
-      0 24px 48px -18px rgba(11, 43, 63, 0.22),
-      0 8px 16px -8px rgba(11, 43, 63, 0.1);
-  }
-
-  .course-media {
     position: relative;
-    aspect-ratio: 4 / 5;
-    overflow: hidden;
-    background: #0b2b3f;
+    z-index: 2;
+    transition: padding 0.4s ease;
   }
 
-  .course-image {
-    width: 100%;
-    height: 100%;
-    transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
-  }
-
-  .course-card:hover .course-image {
-    transform: scale(1.06);
-  }
-
-  .course-gradient {
+  .course-row::before {
+    content: '';
     position: absolute;
-    inset: 0;
+    left: -24px;
+    right: -24px;
+    top: 0;
+    bottom: 0;
     background: linear-gradient(
-      180deg,
-      transparent 40%,
-      rgba(5, 31, 47, 0.35) 70%,
-      rgba(5, 31, 47, 0.85) 100%
+      90deg,
+      rgba(15, 138, 95, 0.05) 0%,
+      rgba(15, 138, 95, 0) 100%
     );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: -1;
   }
 
-  .course-body {
-    position: relative;
-    padding: 24px 26px 28px;
+  .course-row.is-active::before {
+    opacity: 1;
+  }
+
+  .course-row.is-active {
+    padding-left: 12px;
+  }
+
+  .row-index {
+    color: var(--c-muted);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    transition: color 0.3s ease;
+  }
+
+  .course-row.is-active .row-index {
+    color: var(--c-green);
+  }
+
+  .row-main {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 6px;
+    min-width: 0;
   }
 
-  .course-badge {
-    display: inline-flex;
-    align-self: flex-start;
-    padding: 5px 12px;
-    border-radius: 999px;
-    background: rgba(15, 138, 95, 0.1);
-    color: var(--c-green);
-    font-size: 0.62rem;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-  }
-
-  .course-title {
-    margin: 4px 0 0;
-    color: var(--c-ink-soft);
-    font-size: 1.28rem;
+  .row-title {
+    margin: 0;
+    color: var(--c-ink);
+    font-size: 1.4rem;
     font-weight: 600;
     line-height: 1.25;
     letter-spacing: -0.025em;
+    transition: color 0.3s ease;
   }
 
-  .course-description {
+  .course-row.is-active .row-title {
+    color: var(--c-green);
+  }
+
+  .row-description {
     margin: 0;
     color: var(--c-muted);
-    font-size: 0.88rem;
-    line-height: 1.65;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    max-width: 560px;
   }
 
-  .course-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 12px;
-    color: var(--c-green);
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    transition: gap 0.3s ease;
-  }
-
-  .course-card:hover .course-cta {
-    gap: 14px;
-  }
-
-  .course-index {
-    position: absolute;
-    top: 20px;
-    right: 22px;
-    z-index: 2;
-    color: rgba(255, 255, 255, 0.85);
-    font-size: 0.72rem;
+  .row-tag {
+    justify-self: start;
+    padding: 6px 14px;
+    border: 1px solid var(--c-line);
+    border-radius: 999px;
+    color: var(--c-ink-soft);
+    font-size: 0.68rem;
     font-weight: 700;
     letter-spacing: 0.14em;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+    text-transform: uppercase;
+    transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
+  }
+
+  .course-row.is-active .row-tag {
+    border-color: var(--c-green);
+    color: var(--c-green);
+    background: rgba(15, 138, 95, 0.06);
+  }
+
+  .row-arrow {
+    justify-self: end;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--c-line);
+    color: var(--c-ink-soft);
+    transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .course-row.is-active .row-arrow {
+    background: var(--c-green);
+    border-color: var(--c-green);
+    color: #ffffff;
+    transform: rotate(-45deg);
+  }
+
+  /* ============ PREVIEW FLUTUANTE ============ */
+  .course-preview {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 340px;
+    height: 240px;
+    pointer-events: none;
+    z-index: 5;
+    opacity: 0;
+    margin-left: -170px;
+    margin-top: -120px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow:
+      0 40px 80px -20px rgba(11, 43, 63, 0.4),
+      0 20px 40px -20px rgba(11, 43, 63, 0.3);
+    transition:
+      opacity 0.35s ease,
+      transform 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
+    will-change: transform, opacity;
+  }
+
+  .course-preview.is-visible {
+    opacity: 1;
+  }
+
+  .preview-image {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transform: scale(1.08);
+    transition: opacity 0.4s ease, transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .preview-image.is-active {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* ============ CTA FINAL ============ */
+  .academia-cta {
+    margin-top: 100px;
+  }
+
+  .cta-inner {
+    position: relative;
+    overflow: hidden;
+    padding: 70px 60px;
+    border-radius: 32px;
+    background: linear-gradient(135deg, #0b2b3f 0%, #0f3a52 100%);
+    color: #ffffff;
+  }
+
+  .cta-inner::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 60%;
+    height: 200%;
+    background: radial-gradient(
+      circle,
+      rgba(82, 208, 148, 0.18) 0%,
+      transparent 60%
+    );
+    pointer-events: none;
+  }
+
+  .cta-kicker {
+    margin: 0 0 20px;
+    color: var(--c-green-bright);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+  }
+
+  .cta-title {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    max-width: 680px;
+    font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+  }
+
+  .cta-title em {
+    display: block;
+    color: var(--c-green-bright);
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  .cta-button {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 40px;
+    padding: 16px 32px;
+    border-radius: 999px;
+    background: var(--c-green-bright);
+    color: #04202c;
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: gap 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 12px 32px -8px rgba(82, 208, 148, 0.5);
+  }
+
+  .cta-button:hover {
+    gap: 18px;
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px -8px rgba(82, 208, 148, 0.6);
   }
 
   /* ============ RESPONSIVO ============ */
-  @media (max-width: 960px) {
+  @media (max-width: 1024px) {
+    .intro-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .course-list-head,
+    .course-row {
+      grid-template-columns: 50px 1fr 120px 50px;
+      gap: 20px;
+    }
+  }
+
+  @media (max-width: 768px) {
     .academia-hero {
       height: 210px;
       min-height: 210px;
     }
 
     .academia-shell {
-      padding: 60px 20px 80px !important;
+      padding: 70px 20px 90px;
     }
 
-    .section-header {
-      grid-template-columns: 1fr;
-      gap: 20px;
-      padding-bottom: 40px;
-      margin-bottom: 40px;
+    .intro {
+      margin-bottom: 50px;
     }
 
-    .course-grid {
-      gap: 22px;
+    .intro-stats {
+      grid-template-columns: 1fr 1fr;
     }
-  }
 
-  @media (max-width: 600px) {
-    .hero-scroll {
+    .course-list-head {
       display: none;
     }
 
-    .course-media {
-      aspect-ratio: 5 / 4;
+    .course-row {
+      grid-template-columns: 40px 1fr 44px;
+      grid-template-areas:
+        'index title arrow'
+        'index tag tag';
+      gap: 8px 16px;
+      align-items: start;
+      padding: 24px 0;
     }
 
-    .course-body {
-      padding: 20px 20px 24px;
+    .row-index {
+      grid-area: index;
+      padding-top: 4px;
+    }
+
+    .row-main {
+      grid-area: title;
+    }
+
+    .row-title {
+      font-size: 1.1rem;
+    }
+
+    .row-description {
+      font-size: 0.85rem;
+      margin-top: 6px;
+    }
+
+    .row-tag {
+      grid-area: tag;
+      margin-top: 12px;
+    }
+
+    .row-arrow {
+      grid-area: arrow;
+      width: 38px;
+      height: 38px;
+    }
+
+    .course-row.is-active {
+      padding-left: 0;
+    }
+
+    .course-row::before {
+      left: 0;
+      right: 0;
+    }
+
+    /* Preview desativado no mobile (sem hover) */
+    .course-preview {
+      display: none;
+    }
+
+    .cta-inner {
+      padding: 50px 32px;
+      border-radius: 24px;
+    }
+
+    .cta-button {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .academia-shell {
+      padding: 50px 16px 70px;
+    }
+
+    .intro-stats {
+      grid-template-columns: 1fr;
+      gap: 16px;
     }
   }
 </style>
