@@ -6,13 +6,14 @@
 
 // Composables
 import { createRouter, createWebHistory } from 'vue-router'
-import Index from '@/pages/index.vue'
-import Contact from '@/pages/contact.vue'
 import About from '@/pages/about.vue'
 import Academia from '@/pages/academia.vue'
+import Contact from '@/pages/contact.vue'
+import Index from '@/pages/index.vue'
 import ProjectsPage from '@/pages/projects.vue'
 import ProjectsDetails from '@/pages/projectsDetails.vue'
 import ServicosPage from '@/pages/servicos.vue'
+import SolutionDetails from '@/pages/solutionDetails.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -42,6 +43,10 @@ const router = createRouter({
       component: ServicosPage,
     },
     {
+      path: '/servicos/:id',
+      component: SolutionDetails,
+    },
+    {
       path: '/projects',
       component: ProjectsPage,
     },
@@ -58,7 +63,7 @@ const router = createRouter({
       component: ProjectsDetails,
     },
   ],
-  scrollBehavior(to, from, savedPosition) {
+  scrollBehavior (to, from, savedPosition) {
     if (savedPosition) {
       return savedPosition
     }

@@ -37,7 +37,7 @@
               <router-link
                 :aria-label="`Saiba mais sobre ${service.title}`"
                 class="service-more"
-                to="/servicos"
+                :to="`/servicos/${service.id}`"
               >
                 Saiba mais
                 <v-icon end icon="mdi-arrow-right" size="small" />
@@ -78,8 +78,10 @@
                   <div class="sector-icon">
                     <v-icon :icon="sector.icon" size="19" />
                   </div>
+
                   <h3>{{ sector.title }}</h3>
                 </div>
+
                 <p>{{ sector.description }}</p>
               </div>
             </article>
@@ -93,6 +95,7 @@
 <script setup lang="ts">
   const services = [
     {
+      id: 1,
       title: 'Consultoria Ambiental',
       description:
         'Licenciamento, estudos ambientais e apoio técnico para decisões responsáveis e conformes.',
@@ -103,6 +106,7 @@
       accent: '#87502e',
     },
     {
+      id: 2,
       title: 'Gestão de Resíduos',
       description:
         'Segregação, recolha e valorização de resíduos para uma gestão mais eficiente e sustentável.',
@@ -113,6 +117,7 @@
       accent: '#328b3c',
     },
     {
+      id: 3,
       title: 'Monitorização Ambiental',
       description:
         'Acompanhamento da qualidade do ar, água, solo e ruído com relatórios técnicos especializados.',
@@ -123,6 +128,7 @@
       accent: '#176092',
     },
     {
+      id: 4,
       title: 'Formação',
       description:
         'Cursos e capacitações em ambiente, gestão de resíduos, higiene e segurança no trabalho.',
