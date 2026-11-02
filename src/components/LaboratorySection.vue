@@ -123,10 +123,6 @@
                   05
                 </div>
 
-                <div class="device-featured-label">
-                  EQUIPAMENTO DE CAMPO
-                </div>
-
                 <div class="device-visual">
                   <img
                     :src="devices[4].image"
@@ -194,7 +190,7 @@ const laboratorySection = ref<HTMLElement | null>(null)
 
 const devices = [
   {
-    title: 'Analisador de\nQualidade da Água',
+    title: 'Estação da qualidade do ar,\nHAZ SCANER MODELO HIM 6000.',
     image: new URL(
       '@/assets/laboratorio_monitorizacao/e1.png',
       import.meta.url
@@ -208,21 +204,21 @@ const devices = [
     ).href,
   },
   {
-    title: 'Medidor de\nGases e VOCs',
+    title: 'Hanna Instruments HI98594 – Medidor Multiparamétro da qualidade da água',
     image: new URL(
       '@/assets/laboratorio_monitorizacao/e3.png',
       import.meta.url
     ).href,
   },
   {
-    title: 'Sonómetro\nIntegrador',
+    title: 'CEM DT-8852\nSonómetro Digital',
     image: new URL(
       '@/assets/laboratorio_monitorizacao/e4.png',
       import.meta.url
     ).href,
   },
   {
-    title: 'GPS / Equipamento\nde Campo',
+    title: 'Temtop LKC-1000\nMedidor Portátil da Qualidade do Ar',
     image: new URL(
       '@/assets/laboratorio_monitorizacao/e5.png',
       import.meta.url
@@ -636,13 +632,13 @@ onBeforeUnmount(() => {
   align-items: center;
   justify-content: flex-end;
 
-  padding: 0.55rem;
+  padding: 0;
 
   overflow: hidden;
 
-  border: 1px solid rgba(13, 59, 92, 0.08);
+  border: 0;
 
-  border-radius: 13px;
+  border-radius: 0;
 
   background:
     linear-gradient(
@@ -650,9 +646,6 @@ onBeforeUnmount(() => {
       rgba(255, 255, 255, 0.95),
       rgba(238, 248, 244, 0.82)
     );
-
-  box-shadow:
-    0 8px 25px rgba(13, 59, 92, 0.07);
 
   opacity: 0;
 

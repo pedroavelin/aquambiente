@@ -14,7 +14,7 @@
           <span class="icon-ring">
             <v-icon icon="mdi-phone" size="x-small" />
           </span>
-          <span class="contact-text">+244 925 668 789</span>
+          <span class="contact-text">+244 945 428 008</span>
         </a>
         <span aria-hidden="true" class="divider" />
         <a
@@ -181,7 +181,7 @@
 
                 <a class="drawer-info-link" href="tel:+244925668789">
                   <v-icon icon="mdi-phone" size="x-small" />
-                  <span>+244 925 668 789</span>
+                  <span>+244 945 428 008</span>
                 </a>
 
                 <a class="drawer-info-link" href="mailto:geral@aquambiente.ao">

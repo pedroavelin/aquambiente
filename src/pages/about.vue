@@ -207,7 +207,7 @@
               <div class="contact__ico"><v-icon>mdi-phone-outline</v-icon></div>
               <div>
                 <span>Telefone</span>
-                <strong>+244 925 668 789</strong>
+                <strong>+244 945 428 008</strong>
               </div>
             </li>
             <li>
