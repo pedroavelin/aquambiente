@@ -100,7 +100,7 @@
       description:
         'Licenciamento, estudos ambientais e apoio técnico para decisões responsáveis e conformes.',
       image:
-        'https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=85',
+        '../src/assets/home/formacao.jpeg',
       imageAlt: 'Profissionais a analisar um projeto numa sala de reuniões',
       icon: 'mdi-leaf',
       accent: '#87502e',
@@ -111,7 +111,7 @@
       description:
         'Segregação, recolha e valorização de resíduos para uma gestão mais eficiente e sustentável.',
       image:
-        'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=900&q=85',
+        '../src/assets/home/recolha.jpeg',
       imageAlt: 'Contentores de reciclagem para diferentes tipos de resíduos',
       icon: 'mdi-recycle',
       accent: '#328b3c',
@@ -122,7 +122,7 @@
       description:
         'Acompanhamento da qualidade do ar, água, solo e ruído com relatórios técnicos especializados.',
       image:
-        'https://images.unsplash.com/photo-1516937941344-00b4e0337589?auto=format&fit=crop&w=900&q=85',
+        '../src/assets/home/monitorizacao_ambiental.jpeg',
       imageAlt: 'Técnico a realizar medições ambientais no terreno',
       icon: 'mdi-chart-box-outline',
       accent: '#176092',
@@ -133,7 +133,7 @@
       description:
         'Cursos e capacitações em ambiente, gestão de resíduos, higiene e segurança no trabalho.',
       image:
-        'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=900&q=85',
+        '../src/assets/home/formacao1.jpeg',
       imageAlt: 'Formador a orientar uma sessão de aprendizagem em sala',
       icon: 'mdi-school',
       accent: '#0872a5',

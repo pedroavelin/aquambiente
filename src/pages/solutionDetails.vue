@@ -13,7 +13,7 @@
         <div class="detail-heading">
           <span class="detail-index">Solução {{ String(solution.id).padStart(2, '0') }}</span>
           <h1 class="detail-breadcrumb-current">{{ solution.title }}</h1>
-          <p>{{ solution.activity }}</p>
+          <!-- <p>{{ solution.activity }}</p> -->
         </div>
       </div>
     </section>

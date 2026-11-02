@@ -140,7 +140,7 @@ const services = [
 ]
 
 const contacts = [
-  { icon: 'mdi-phone',                  text: '+244 912 345 678',            href: 'tel:+244912345678' },
+  { icon: 'mdi-phone',                  text: '+244 945 428 008',            href: 'tel:+244912345678' },
   { icon: 'mdi-email-outline',          text: 'info@aquambiente.com',        href: 'mailto:info@aquambiente.com' },
   { icon: 'mdi-map-marker',             text: 'Luanda, Angola',              href: '#' },
   { icon: 'mdi-clock-time-four-outline',text: 'Seg - Sáb: 08:00 - 18:00',    href: '#' },
