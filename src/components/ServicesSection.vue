@@ -152,8 +152,11 @@
     {
       title: 'Indústria',
       icon: 'mdi-factory',
-      image:
-        'https://images.unsplash.com/photo-1567789884554-0b844b597180?auto=format&fit=crop&w=1200&q=85',
+      image: 
+        new URL(
+          '@/assets/projectos/angojordan.jpg',
+          import.meta.url
+        ).href,
       imageAlt: 'Instalação industrial com estruturas metálicas',
       accent: '#328b3c',
     },
@@ -161,7 +164,10 @@
       title: 'Mineração',
       icon: 'mdi-pickaxe',
       image:
-        'https://images.unsplash.com/photo-1516937941344-00b4e0337589?auto=format&fit=crop&w=1000&q=85',
+        new URL(
+          '@/assets/projectos/cooperativamineiramutungo.jpg',
+          import.meta.url
+        ).href,
       imageAlt: 'Instalações técnicas e equipamentos numa área de exploração',
       accent: '#176092',
     },
@@ -169,7 +175,10 @@
       title: 'Petróleo e gás',
       icon: 'mdi-fish',
       image:
-        'https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=1000&q=85',
+        new URL(
+          '@/assets/projectos/pontocais.jpg',
+          import.meta.url
+        ).href,
       imageAlt: 'Oceano e actividade costeira ligados ao sector das pescas',
       accent: '#0872a5',
     },
@@ -177,23 +186,32 @@
       title: 'Construção',
       icon: 'mdi-crane',
       image:
-        'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1000&q=85',
+        new URL(
+          '@/assets/projectos/1.jpeg',
+          import.meta.url
+        ).href,
       imageAlt: 'Profissionais a trabalhar num estaleiro de construção',
       accent: '#87502e',
     },
     {
       title: 'Comércio e serviço',
       icon: 'mdi-crane',
-      image:
-        'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1000&q=85',
+       image:
+        new URL(
+          '@/assets/projectos/sanabel.png',
+          import.meta.url
+        ).href,
       imageAlt: 'Profissionais a trabalhar num estaleiro de construção',
       accent: '#87502e',
     },
     {
       title: 'Instituições públicas',
       icon: 'mdi-crane',
-      image:
-        'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1000&q=85',
+       image:
+        new URL(
+          '@/assets/projectos/3.jpeg',
+          import.meta.url
+        ).href,
       imageAlt: 'Profissionais a trabalhar num estaleiro de construção',
       accent: '#87502e',
     },
