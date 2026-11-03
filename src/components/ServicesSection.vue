@@ -100,7 +100,7 @@
       description:
         'Licenciamento, estudos ambientais e apoio técnico para decisões responsáveis e conformes.',
       image:
-        '@/assets/home/formacao.jpeg',
+        '../src/assets/home/formacao.jpeg',
       imageAlt: 'Profissionais a analisar um projeto numa sala de reuniões',
       icon: 'mdi-leaf',
       accent: '#87502e',
@@ -111,7 +111,7 @@
       description:
         'Segregação, recolha e valorização de resíduos para uma gestão mais eficiente e sustentável.',
       image:
-        '@/assets/home/recolha.jpeg',
+        '../src/assets/home/recolha.jpeg',
       imageAlt: 'Contentores de reciclagem para diferentes tipos de resíduos',
       icon: 'mdi-recycle',
       accent: '#328b3c',
@@ -122,7 +122,7 @@
       description:
         'Acompanhamento da qualidade do ar, água, solo e ruído com relatórios técnicos especializados.',
       image:
-        '@/assets/home/monitorizacao_ambiental.jpeg',
+        '../src/assets/home/monitorizacao_ambiental.jpeg',
       imageAlt: 'Técnico a realizar medições ambientais no terreno',
       icon: 'mdi-chart-box-outline',
       accent: '#176092',
@@ -133,7 +133,7 @@
       description:
         'Cursos e capacitações em ambiente, gestão de resíduos, higiene e segurança no trabalho.',
       image:
-        '@/assets/home/formacao1.jpeg',
+        '../src/assets/home/formacao1.jpeg',
       imageAlt: 'Formador a orientar uma sessão de aprendizagem em sala',
       icon: 'mdi-school',
       accent: '#0872a5',
