@@ -54,7 +54,7 @@
               size="small"
               class="font-weight-normal"
               color="deep-purple-darken-4"
-              rounded="sm"
+              rounded="lg"
               to="/servicos"
             >
               <v-icon class="me-1" color="white">mdi-briefcase-outline</v-icon>
@@ -64,7 +64,7 @@
               size="small"
               variant="outlined"
               color="white"
-              rounded="sm"
+              rounded="lg"
               class="font-weight-normal"
               to="/contactos"
             >

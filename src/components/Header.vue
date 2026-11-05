@@ -91,7 +91,7 @@
       <!-- CTA + Mobile -->
       <div class="navbar-actions">
         <v-btn
-          rounded="sm"
+         rounded="lg"
           class="text-white font-weight-bold d-none d-sm-flex cta-btn"
           color="green-darken-1"
           size="small"
@@ -167,7 +167,7 @@
               <v-btn
                 class="drawer-cta"
                 color="green-accent-4"
-                rounded
+                rounded="lg"
                 block
                 size="large"
                 to="/contactos"

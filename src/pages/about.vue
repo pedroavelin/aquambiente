@@ -96,11 +96,6 @@
                 <span>{{ it }}</span>
               </li>
             </ul>
-
-            <div class="svc__foot">
-              <span>Saber mais</span>
-              <v-icon icon="mdi-arrow-right" size="16" />
-            </div>
           </article>
         </div>
       </div>

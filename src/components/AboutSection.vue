@@ -6,7 +6,7 @@
         <!-- Left - Dark Box with About -->
         <v-col class="mb-2 mb-md-0 about-col" cols="12" md="6">
           <div class="about-box">
-            <h2 class="about-title mb-4">SOBRE A AQUAMBIENTE</h2>
+            <h2 class="about-title mb-4">AQUAMBIENTE</h2>
 
             <p class="about-text mb-4">
               A Aquambiente – Consultoria Ambiental & Gestão de Resíduos, Lda. é uma empresa angolana especializada em soluções ambientais.
@@ -15,12 +15,6 @@
             <p class="about-text mb-2">
               Trabalhamos para promover o desenvolvimento sustentável através de serviços de consultoria, gestão de resíduos, monitorização ambiental e oportunidades sustentáveis.
             </p>
-            <v-btn
-              class="text-white font-weight-bold"
-              color="green-accent-4"
-            >
-              CONHEÇA A EMPRESA
-            </v-btn>
           </div>
         </v-col>
 
