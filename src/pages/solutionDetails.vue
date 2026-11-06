@@ -95,7 +95,7 @@ h1.detail-breadcrumb-current{
   color: #fff;
   background:
     linear-gradient(90deg, rgba(7, 29, 34, .88), rgba(7, 29, 34, .48) 68%, rgba(7, 29, 34, .2)),
-    url('https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D') center 48% / cover no-repeat,
+    url('https://images.unsplash.com/photo-1560179707-f14e90ef3623?q=80&w=2073&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D') center 48% / cover no-repeat,
     linear-gradient(115deg, #123b48, #247548);
 }
 
@@ -183,6 +183,11 @@ h1.detail-breadcrumb-current{
 
 .solution-description :deep(li) {
   margin: .35rem 0;
+}
+
+.solution-description :deep(a) {
+  color: var(--detail-green);
+  font-weight: 700;
 }
 
 .back-link {

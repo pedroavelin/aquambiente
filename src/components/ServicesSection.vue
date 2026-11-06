@@ -35,7 +35,7 @@
               <p>{{ service.description }}</p>
 
               <router-link
-                :aria-label="`Saiba mais sobre ${service.title}`"
+                :aria-label="` ${service.title}`"
                 class="service-more"
                 :to="`/servicos/${service.id}`"
               >
@@ -341,7 +341,7 @@
   padding-top: 2rem;
   padding: 2rem;
   background-image:
-    url('https://images.unsplash.com/photo-1498925008800-019c7d59d903?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+    url('@/assets/home/bg_sectoress_atendemos.jpg');
   background-position: center;
   background-size: cover;
   border: 1px solid rgba(223, 231, 226, 0.8);

@@ -61,7 +61,7 @@
             variant="outlined"
             size="small"
           >
-            SAIBA MAIS
+            SAIBA MAISs
           </v-btn>
 
         </div>

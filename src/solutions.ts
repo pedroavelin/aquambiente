@@ -16,6 +16,10 @@ function escapeHtml (value: string): string {
 
 function renderInlineMarkdown (value: string): string {
   return escapeHtml(value)
+    .replace(
+      /\[([^\]]+)\]\((https:\/\/wa\.me\/244945428008)\)/g,
+      '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>',
+    )
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.+?)\*/g, '<em>$1</em>')
     .replace(/\[([^\]]+)\]/g, '$1')

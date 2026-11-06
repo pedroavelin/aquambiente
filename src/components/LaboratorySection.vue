@@ -114,64 +114,44 @@
               </div>
 
 
-              <!-- CENTRO -->
-              <div
-                class="device-card device-card-center"
-                style="--delay: 240ms"
-              >
-                <div class="device-number">
-                  05
-                </div>
+        <!-- CENTRO -->
+<div class="device-card device-card-center" style="--delay: 240ms">
+  <div class="device-number">04</div>
 
-                <div class="device-visual">
-                  <img
-                    :src="devices[4].image"
-                    :alt="devices[4].title"
-                    class="device-image"
-                  >
-                </div>
+  <div class="device-visual">
+    <img :src="devices[3].image" :alt="devices[3].title" class="device-image">
+  </div>
 
-                <div class="device-title-wrap">
-                  <p class="device-title">
-                    {{ devices[4].title }}
-                  </p>
-                </div>
+  <div class="device-title-wrap">
+    <p class="device-title">{{ devices[3].title }}</p>
+  </div>
 
-                <div class="device-card-line" />
-              </div>
+  <div class="device-card-line" />
+</div>
 
+<!-- DIREITA -->
+<div class="device-stack device-stack-right">
+  <div
+    v-for="(device, index) in devices.slice(2, 3)"
+    :key="device.title"
+    class="device-card"
+    :style="{ '--delay': `${360 + index * 120}ms` }"
+  >
+    <div class="device-number">
+      0{{ index + 3 }}
+    </div>
 
-              <!-- DIREITA -->
-              <div class="device-stack device-stack-right">
+    <div class="device-visual">
+      <img :src="device.image" :alt="device.title" class="device-image">
+    </div>
 
-                <div
-                  v-for="(device, index) in devices.slice(2, 4)"
-                  :key="device.title"
-                  class="device-card"
-                  :style="{ '--delay': `${360 + index * 120}ms` }"
-                >
-                  <div class="device-number">
-                    0{{ index + 3 }}
-                  </div>
+    <div class="device-title-wrap">
+      <p class="device-title">{{ device.title }}</p>
+    </div>
 
-                  <div class="device-visual">
-                    <img
-                      :src="device.image"
-                      :alt="device.title"
-                      class="device-image"
-                    >
-                  </div>
-
-                  <div class="device-title-wrap">
-                    <p class="device-title">
-                      {{ device.title }}
-                    </p>
-                  </div>
-
-                  <div class="device-card-line" />
-                </div>
-
-              </div>
+    <div class="device-card-line" />
+  </div>
+</div>
 
             </div>
           </div>
@@ -193,13 +173,6 @@ const devices = [
     title: 'Estação da qualidade do ar,\nHAZ SCANER MODELO HIM 6000.',
     image: new URL(
       '@/assets/laboratorio_monitorizacao/e1.png',
-      import.meta.url
-    ).href,
-  },
-  {
-    title: 'Amostrador de\nPartículas (PM2.5 / PM10)',
-    image: new URL(
-      '@/assets/laboratorio_monitorizacao/e2.png',
       import.meta.url
     ).href,
   },

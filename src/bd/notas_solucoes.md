@@ -21,7 +21,7 @@ A Aquambiente apoia empresas, projectos industriais, mineiros, petrolíferos, in
 
 Ajudamos as organizações a identificar riscos, cumprir os requisitos ambientais aplicáveis e adoptar práticas responsáveis, contribuindo para a sustentabilidade das suas operações.
 
-**[Solicitar Proposta]** | **[Falar com um Especialista]**
+**[Solicitar Proposta](https://wa.me/244945428008)** | **[Falar com um Especialista](https://wa.me/244945428008)**
 
 2. GESTÃO DE RESÍDUOS
 Actividade: Gestão de resíduos
@@ -260,7 +260,7 @@ Propostas de medidas de controlo, prevenção e melhoria do desempenho ambiental
 
 Aquambiente — Tecnologia, conhecimento e compromisso com o ambiente.
 
-**[Solicitar Proposta]** | **[Falar com um Especialista]**
+**[Solicitar Proposta](https://wa.me/244945428008)** | **[Falar com um Especialista](https://wa.me/244945428008)**
 
 4. FORMAÇÃO
 Actividade: Formação profissional
