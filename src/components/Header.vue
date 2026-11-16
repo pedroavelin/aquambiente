@@ -208,9 +208,8 @@
   const scrollProgress = ref(0)
 
   const topSocials = [
-    { icon: 'mdi-facebook',  href: '#',  label: 'Facebook'  },
-    { icon: 'mdi-linkedin',  href: '#',  label: 'LinkedIn'  },
-    { icon: 'mdi-instagram', href: '#', label: 'Instagram' },
+    { icon: 'mdi-facebook', href: 'https://web.facebook.com/profile.php?id=100064835778393', label: 'Facebook' },
+    { icon: 'mdi-music-note', href: 'https://www.tiktok.com/@aquambiente?_r=1&_t=ZS-9BJPObps4yG', label: 'TikTok' },
   ]
 
   const navItems = [

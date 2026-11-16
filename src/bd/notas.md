@@ -1,4 +1,4 @@
-1. Kandy Factory Angola – Unidade Fabril de Confeitaria de Doces de Açúcar
+1. Candy Factory Angola – Unidade Fabril de Confeitaria de Doces de Açúcar
 Actividade: Monitorização Ambiental
 Execução de campanha de monitorização ambiental da unidade fabril, compreendendo o levantamento dos principais aspectos e impactes ambientais associados ao processo de produção de doces de açúcar. Serão avaliados, conforme aplicabilidade, qualidade do ar e emissões atmosféricas, níveis de ruído, gestão e acondicionamento de resíduos, águas residuais, consumo de recursos naturais e condições ambientais das áreas produtivas e de apoio. Os dados obtidos serão analisados face aos requisitos ambientais aplicáveis, culminando na elaboração de relatório técnico com resultados, constatações e recomendações de melhoria.
 

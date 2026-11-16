@@ -35,6 +35,7 @@
                 color="white"
                 :href="s.href"
                 target="_blank"
+                rel="noopener noreferrer"
                 class="social-btn"
                 :style="{ '--i': i }"
                 :aria-label="s.label"
@@ -79,7 +80,7 @@
                 :style="{ '--i': i }"
               >
                 <v-icon size="18">{{ c.icon }}</v-icon>
-                <a :href="c.href">{{ c.text }}</a>
+                <router-link :to="c.href">{{ c.text }}</router-link>
               </div>
             </div>
           </v-col>
@@ -114,10 +115,8 @@ const footerRef = ref(null)
 let observer = null
 
 const socials = [
-  { icon: 'mdi-facebook',  href: 'https://facebook.com',  label: 'Facebook'  },
-  { icon: 'mdi-twitter',   href: 'https://twitter.com',   label: 'Twitter'   },
-  { icon: 'mdi-linkedin',  href: 'https://linkedin.com',  label: 'LinkedIn'  },
-  { icon: 'mdi-instagram', href: 'https://instagram.com', label: 'Instagram' },
+  { icon: 'mdi-facebook', to: 'https://web.facebook.com/profile.php?id=100064835778393', label: 'Facebook' },
+  { icon: 'mdi-music-note', to: 'https://www.tiktok.com/@aquambiente?_r=1&_t=ZS-9BJPObps4yG', label: 'TikTok' },
 ]
 
 const navLinks = [
@@ -141,7 +140,7 @@ const services = [
 
 const contacts = [
   { icon: 'mdi-phone',                  text: '+244 945 428 008',            href: 'tel:+244912345678' },
-  { icon: 'mdi-email-outline',          text: 'info@aquambiente.com',        href: 'mailto:info@aquambiente.com' },
+  { icon: 'mdi-email-outline',          text: 'geral@aquambiente.com',        href: 'mailto:info@aquambiente.com' },
   { icon: 'mdi-map-marker',             text: 'Luanda, Angola',              href: '#' },
   { icon: 'mdi-clock-time-four-outline',text: 'Seg - Sáb: 08:00 - 18:00',    href: '#' },
 ]

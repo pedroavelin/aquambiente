@@ -223,16 +223,15 @@
 
               <div class="social-links">
 
-                <a href="#" aria-label="LinkedIn">
-                  <v-icon icon="mdi-linkedin" />
-                </a>
-
-                <a href="#" aria-label="Facebook">
-                  <v-icon icon="mdi-facebook" />
-                </a>
-
-                <a href="#" aria-label="Instagram">
-                  <v-icon icon="mdi-instagram" />
+                <a
+                  v-for="social in socialLinks"
+                  :key="social.icon"
+                  :aria-label="social.label"
+                  :href="social.href"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <v-icon :icon="social.icon" />
                 </a>
 
               </div>
@@ -269,29 +268,38 @@
 
 
             <p class="form-intro">
-              Preencha o formulário abaixo e a nossa equipa
-              entrará em contacto consigo brevemente.
+              Preencha o formulário abaixo. Abriremos o WhatsApp com a sua
+              mensagem para que possa confirmar o envio.
             </p>
 
 
-            <v-form class="contact-form">
+            <v-form
+              ref="formRef"
+              class="contact-form"
+              @submit.prevent="sendContactMessage"
+            >
 
               <v-row>
 
                 <v-col cols="12" md="6">
                   <v-text-field
+                    v-model="fullName"
                     label="Nome completo"
                     placeholder="O seu nome"
                     prepend-inner-icon="mdi-account-outline"
                     variant="outlined"
                     density="comfortable"
                     hide-details="auto"
+                    :rules="[requiredRule('O nome completo')]"
+                    autocomplete="name"
+                    required
                   />
                 </v-col>
 
 
                 <v-col cols="12" md="6">
                   <v-text-field
+                    v-model="email"
                     label="Email"
                     placeholder="nome@empresa.com"
                     type="email"
@@ -299,37 +307,47 @@
                     variant="outlined"
                     density="comfortable"
                     hide-details="auto"
+                    :rules="[emailRule]"
+                    autocomplete="email"
+                    required
                   />
                 </v-col>
 
 
                 <v-col cols="12" md="6">
                   <v-text-field
+                    v-model="phone"
                     label="Telefone"
                     placeholder="+244 900 000 000"
+                    type="tel"
                     prepend-inner-icon="mdi-phone-outline"
                     variant="outlined"
                     density="comfortable"
                     hide-details="auto"
+                    :rules="[phoneRule]"
+                    autocomplete="tel"
+                    required
                   />
                 </v-col>
 
 
                 <v-col cols="12" md="6">
                   <v-text-field
+                    v-model="subject"
                     label="Assunto"
                     placeholder="Como podemos ajudar?"
                     prepend-inner-icon="mdi-text-box-outline"
                     variant="outlined"
                     density="comfortable"
                     hide-details="auto"
+                    :rules="[requiredRule('O assunto')]"
+                    required
                   />
                 </v-col>
-
-
                 <v-col cols="12">
 
                   <v-textarea
+                    v-model="contactMessage"
                     label="Mensagem"
                     placeholder="Descreva brevemente o seu projecto ou necessidade..."
                     rows="5"
@@ -337,13 +355,11 @@
                     prepend-inner-icon="mdi-message-text-outline"
                     variant="outlined"
                     hide-details="auto"
+                    :rules="[requiredRule('A mensagem')]"
+                    required
                   />
-
                 </v-col>
-
               </v-row>
-
-
               <div class="form-footer">
 
                 <div class="privacy-note">
@@ -353,10 +369,9 @@
                   />
 
                   <span>
-                    Os seus dados serão tratados de forma confidencial.
+                    A mensagem será preparada no WhatsApp e só será enviada após a sua confirmação.
                   </span>
                 </div>
-
 
                 <v-btn
                   class="submit-btn"
@@ -365,25 +380,29 @@
                   rounded="lg"
                   type="submit"
                   elevation="0"
+                  :disabled="!isFormValid || isSubmitting"
+                  :loading="isSubmitting"
                 >
-                  Enviar mensagem
-
+                  Continuar no WhatsApp
                   <v-icon
-                    icon="mdi-arrow-right"
+                    icon="mdi-whatsapp"
                     class="btn-icon"
                   />
                 </v-btn>
-
               </div>
-
+              <v-alert
+                v-if="formNotice"
+                type="error"
+                density="compact"
+                variant="tonal"
+                role="alert"
+              >
+                {{ formNotice }}
+              </v-alert>
             </v-form>
-
           </div>
-
         </v-col>
-
       </v-row>
-
 
       <!-- =========================================================
            MAP
@@ -428,10 +447,104 @@
 
 <script setup lang="ts">
 
+import { computed, ref } from 'vue'
 import GoogleAngolaMap from '@/components/GoogleAngolaMap.vue'
+import Color from 'vuetify/directives/color'
 
+interface ContactFormInstance {
+  validate: () => Promise<{ valid: boolean }>
+}
+
+const formRef = ref<ContactFormInstance | null>(null)
+const fullName = ref('')
+const email = ref('')
+const phone = ref('')
+const subject = ref('')
+const contactMessage = ref('')
+const formNotice = ref('')
+const isSubmitting = ref(false)
+
+const socialLinks = [
+  { icon: 'mdi-facebook', href: 'https://web.facebook.com/profile.php?id=100064835778393', label: 'Facebook' },
+  { icon: 'mdi-tiktok', href: 'https://www.tiktok.com/@aquambiente?_r=1&_t=ZS-9BJPObps4yG', label: 'TikTok' },
+]
+
+const whatsappNumber = '244945428008'
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+const isValidPhoneNumber = (value: string) => {
+  const digitCount = value.replace(/\D/g, '').length
+  return digitCount >= 7 && digitCount <= 15
+}
+
+const isFormValid = computed(() =>
+  Boolean(
+    fullName.value.trim() &&
+      emailPattern.test(email.value.trim()) &&
+      isValidPhoneNumber(phone.value) &&
+      subject.value.trim() &&
+      contactMessage.value.trim(),
+  ),
+)
+
+const requiredRule = (label: string) => (value: string | null | undefined) =>
+  Boolean(value?.trim()) || `${label} é obrigatório`
+
+const emailRule = (value: string | null | undefined) => {
+  const normalizedEmail = value?.trim() ?? ''
+
+  if (!normalizedEmail) {
+    return 'O email é obrigatório'
+  }
+
+  return emailPattern.test(normalizedEmail) || 'Introduza um email válido'
+}
+
+const phoneRule = (value: string | null | undefined) => {
+  const normalizedPhone = value?.trim() ?? ''
+
+  if (!normalizedPhone) {
+    return 'O telefone é obrigatório'
+  }
+
+  return isValidPhoneNumber(normalizedPhone) || 'Introduza um telefone válido'
+}
+
+const sendContactMessage = async () => {
+  if (!isFormValid.value || isSubmitting.value) {
+    return
+  }
+
+  isSubmitting.value = true
+
+  try {
+    const validation = await formRef.value?.validate()
+
+    if (!validation?.valid) {
+      return
+    }
+    const message = [
+      'Pedido de contacto - Aquambiente',
+      '',
+      `Nome: ${fullName.value.trim()}`,
+      `Email: ${email.value.trim()}`,
+      `Telefone: ${phone.value.trim()}`,
+      `Assunto: ${subject.value.trim()}`,
+      '',
+      'Mensagem:',
+      contactMessage.value.trim(),
+    ].join('\n')
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`
+
+    window.location.assign(whatsappUrl)
+  } catch (error) {
+    console.error('Failed to open WhatsApp contact message', error)
+    formNotice.value = 'Não foi possível abrir o WhatsApp. Tente novamente ou contacte-nos diretamente.'
+  } finally {
+    isSubmitting.value = false
+  }
+}
 </script>
-
 
 <style scoped>
 
