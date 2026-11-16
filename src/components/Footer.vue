@@ -31,14 +31,14 @@
                 :key="s.icon"
                 :icon="s.icon"
                 size="small"
-                variant="text"
                 color="white"
-                :href="s.href"
+                :href="s.to"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="social-btn"
                 :style="{ '--i': i }"
                 :aria-label="s.label"
+                variant="text"
               />
             </div>
           </v-col>

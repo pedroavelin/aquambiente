@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/mnt/home102/aquambie/public_html/
+    - /bin/cp -R dist/. $DEPLOYPATH

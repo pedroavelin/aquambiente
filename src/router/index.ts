@@ -10,6 +10,7 @@ import About from '@/pages/about.vue'
 import Academia from '@/pages/academia.vue'
 import Contact from '@/pages/contact.vue'
 import Index from '@/pages/index.vue'
+import NotFound from '@/pages/notFound.vue'
 import ProjectsPage from '@/pages/projects.vue'
 import ProjectsDetails from '@/pages/projectsDetails.vue'
 import ServicosPage from '@/pages/servicos.vue'
@@ -61,6 +62,11 @@ const router = createRouter({
     {
       path: '/projectos/:id',
       component: ProjectsDetails,
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'not-found',
+      component: NotFound,
     },
   ],
   scrollBehavior (to, from, savedPosition) {
